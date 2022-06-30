@@ -24,3 +24,9 @@
 
 ### `npm run prepare`
 Инициализирует pre-commit git хук c husky, хук  запускает prettier для файлов коммита.
+
+### `npm run predeploy`
+Создает билд проекта для размещения его на GH-pages.
+
+### `npm run deploy`
+Размещает проект на GH-pages.
