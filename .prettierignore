@@ -4,6 +4,9 @@
 *.txt
 *.ico
 
+# Configuration files
+.tsconfig.json
+
 # pre-commit hooks
 .husky
 

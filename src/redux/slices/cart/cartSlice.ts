@@ -1,6 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit';
+// Libs
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState = {
+// Types
+import { PizzaInterface } from '../generalTypes';
+import { CartStateInterface } from './types';
+
+const initialState: CartStateInterface = {
 	doughTypes: ['Тонкое', 'Традиционное'],
 	pizzas: [],
 };
@@ -9,8 +14,19 @@ export const cartSlice = createSlice({
 	name: 'cart',
 	initialState,
 	reducers: {
-		addPizza: (state, action) => {
-			const newPizza = action.payload;
+		addPizza: (
+			state,
+			action: PayloadAction<{
+				pizza: PizzaInterface;
+				doughIndex: number;
+				sizeIndex: number;
+			}>
+		) => {
+			const newPizza = {
+				...action.payload.pizza,
+				doughIndex: action.payload.doughIndex,
+				sizeIndex: action.payload.sizeIndex,
+			};
 
 			const pizzaInCart = state.pizzas.find(
 				(obj) =>
@@ -44,21 +60,21 @@ export const cartSlice = createSlice({
 					a.doughIndex - b.doughIndex
 			);
 		},
-		increasePizzaQuantity: (state, action) => {
+		increasePizzaQuantity: (state, action: PayloadAction<string>) => {
 			const pizza = state.pizzas.find(
 				(obj) => obj.cartId === action.payload
 			);
-			pizza.quantity++;
+			pizza && pizza.quantity++;
 		},
-		decreasePizzaQuantity: (state, action) => {
+		decreasePizzaQuantity: (state, action: PayloadAction<string>) => {
 			const pizza = state.pizzas.find(
 				(obj) => obj.cartId === action.payload
 			);
-			if (pizza.quantity > 1) {
+			if (pizza && pizza.quantity > 1) {
 				pizza.quantity--;
 			}
 		},
-		removePizzaFromCart: (state, action) => {
+		removePizzaFromCart: (state, action: PayloadAction<string>) => {
 			state.pizzas = state.pizzas.filter(
 				(p) => p.cartId !== action.payload
 			);
@@ -68,26 +84,6 @@ export const cartSlice = createSlice({
 		},
 	},
 });
-
-export const selectCartItems = (state) => state.cart.pizzas;
-
-export const selectPizzaQuantityById = (id) => (state) => {
-	if (state.cart.pizzas.length < 1) return 0;
-	return state.cart.pizzas
-		.filter((obj) => obj.id === id)
-		.reduce((prev, curr) => prev + curr.quantity, 0);
-};
-
-export const selectCartTotalItemsCost = (state) =>
-	state.cart.pizzas.reduce(
-		(prev, curr) => prev + curr.quantity * curr.price,
-		0
-	);
-
-export const selectCartTotalItemsCount = (state) =>
-	state.cart.pizzas.reduce((prev, curr) => prev + curr.quantity, 0);
-
-export const selectDoughTypes = (state) => state.cart.doughTypes;
 
 export const {
 	addPizza,

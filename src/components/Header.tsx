@@ -1,19 +1,26 @@
+// Libs
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+// Assets
 import { pizzaLogoSvg } from '../assets';
 import { ReactComponent as HeaderCartIconSvg } from '../assets/header/headerCartIcon.svg';
+
+// Components
 import Search from './Search/Search';
+
+// Redux
 import {
 	selectCartTotalItemsCount,
 	selectCartTotalItemsCost,
-} from '../redux/slices/cartSlice';
+} from '../redux/slices/cart/selectors';
 
-function Header() {
+const Header: React.FC = () => {
 	const { pathname } = useLocation();
 
-	const totalCount = useSelector(selectCartTotalItemsCount);
-	const totalSum = useSelector(selectCartTotalItemsCost);
+	const totalCount: number = useSelector(selectCartTotalItemsCount);
+	const totalSum: number = useSelector(selectCartTotalItemsCost);
 
 	return (
 		<div className="header">
@@ -44,6 +51,6 @@ function Header() {
 			</div>
 		</div>
 	);
-}
+};
 
 export default Header;

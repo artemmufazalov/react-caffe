@@ -1,8 +1,11 @@
+// Libs
 import React from 'react';
+
+// Components
 import NotFoundBlock from '../components/NotFoundBlock/NotFoundBlock';
 
-function NotFound() {
+const NotFound: React.FC = () => {
 	return <NotFoundBlock />;
-}
+};
 
 export default NotFound;

@@ -1,18 +1,28 @@
+// Libs
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import debounce from 'lodash.debounce';
 
+// Styles
 import styles from './Search.module.scss';
+
+// Assets
 import { searchFieldCrossSvg, searchIconSvg } from '../../assets';
-import { setSearchValue as setGlobalSearchValue } from '../../redux/slices/filterSlice.js';
 
-function Search() {
-	const dispatch = useDispatch();
+// Redux
+import { useAppDispatch } from '../../redux/store';
+import { setSearchValue as setGlobalSearchValue } from '../../redux/slices/filter/filterSlice';
+import { selectSearchValue } from '../../redux/slices/filter/selectors';
 
-	const searchFieldRef = React.useRef();
+const Search: React.FC = () => {
+	const dispatch = useAppDispatch();
 
-	const searchValue = useSelector((state) => state.filter.searchValue);
-	const [componentSearchValue, setComponentSearchValue] = React.useState();
+	const searchFieldRef = React.useRef<HTMLInputElement>(null);
+
+	const searchValue: string = useSelector(selectSearchValue);
+
+	const [componentSearchValue, setComponentSearchValue] =
+		React.useState<string>('');
 
 	React.useEffect(() => {
 		setComponentSearchValue(searchValue);
@@ -21,18 +31,23 @@ function Search() {
 	const onClearSearchField = () => {
 		setComponentSearchValue('');
 		dispatch(setGlobalSearchValue(''));
-		searchFieldRef.current.focus();
+
+		// Оператор опциональной последовательности,
+		// последовательность после ? выполняется только если с объектом searchFieldRef.current все ок
+		searchFieldRef.current?.focus();
 	};
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const initSearch = React.useCallback(
-		debounce((str) => {
+		debounce((str: string) => {
 			dispatch(setGlobalSearchValue(str));
 		}, 500),
 		[]
 	);
 
-	const onSearchFieldChange = (event) => {
+	const onSearchFieldChange = (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
 		setComponentSearchValue(event.target.value);
 		initSearch(event.target.value);
 	};
@@ -58,6 +73,6 @@ function Search() {
 			)}
 		</div>
 	);
-}
+};
 
 export default Search;

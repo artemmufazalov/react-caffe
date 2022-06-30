@@ -1,29 +1,45 @@
+// Libs
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
+// Assets
 import { ReactComponent as SortOrderSvg } from '../assets/header/sortOrder.svg';
+
+// Types
+import { SortOrder, SortProperty } from '../redux/slices/filter/types';
+
+// Redux
+import { useAppDispatch } from '../redux/store';
 import {
 	setSortingProperty,
 	toggleSortingOrder,
-} from '../redux/slices/filterSlice.js';
+} from '../redux/slices/filter/filterSlice';
+import {
+	selectSortingProperties,
+	selectActiveSortingProperty,
+	selectSortOrder,
+} from '../redux/slices/filter/selectors';
 
-function Sort() {
-	const dispatch = useDispatch();
+const Sort: React.FC = () => {
+	const dispatch = useAppDispatch();
 
-	const sortingProperties = useSelector(
-		(state) => state.filter.sortingProperties
+	const sortingProperties: SortProperty[] = useSelector(
+		selectSortingProperties
 	);
-	const selectedSortingProperty = useSelector(
-		(state) => state.filter.selectedSortingProperty
+	const activeSortingProperty: SortProperty = useSelector(
+		selectActiveSortingProperty
 	);
-	const sortingOrder = useSelector((state) => state.filter.sortingOrder);
+	const sortingOrder: SortOrder = useSelector(selectSortOrder);
 
-	const [isPopupActive, setPopusStatus] = React.useState(false);
-	const sortRef = React.useRef();
+	const [isPopupActive, setPopusStatus] = React.useState<boolean>(false);
+
+	const sortRef = React.useRef<HTMLDivElement>(null);
 
 	React.useEffect(() => {
-		const handleClickOutside = (event) => {
-			if (!event.path.includes(sortRef.current)) {
+		const handleClickOutside = (event: MouseEvent) => {
+			const _event = event as MouseEvent & { path: Node[] };
+
+			if (sortRef.current && !_event.path.includes(sortRef.current)) {
 				setPopusStatus(false);
 			}
 		};
@@ -41,24 +57,22 @@ function Sort() {
 					}
 					onClick={() => dispatch(toggleSortingOrder())}
 				/>
-				<b
-					onClick={() => dispatch(toggleSortingOrder())}
-					cursor="pointer">
+				<b onClick={() => dispatch(toggleSortingOrder())}>
 					Сортировка по:
 				</b>
 				<span onClick={() => setPopusStatus(!isPopupActive)}>
-					{selectedSortingProperty.name}
+					{activeSortingProperty.name}
 				</span>
 			</div>
 			{isPopupActive && (
 				<div className="sort__popup">
 					<ul>
-						{sortingProperties.map((obj, index) => (
+						{sortingProperties.map((obj, index: number) => (
 							<li
 								key={index}
 								className={
 									obj.sortingProperty ===
-									selectedSortingProperty.sortingProperty
+									activeSortingProperty.sortingProperty
 										? 'active'
 										: ''
 								}
@@ -74,6 +88,6 @@ function Sort() {
 			)}
 		</div>
 	);
-}
+};
 
 export default Sort;

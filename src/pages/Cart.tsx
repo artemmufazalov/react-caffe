@@ -1,25 +1,35 @@
+// Libs
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import CartItem from '../components/CartItem';
-import EmptyCart from '../components/EmptyCart';
+// Assets
 import { ReactComponent as CartIconSvg } from '../assets/cart/cartIcon.svg';
 import { ReactComponent as ClearCartSvg } from '../assets/cart/clearCart.svg';
 import { ReactComponent as GoBackArrow } from '../assets/cart/goBackArrow.svg';
+
+// Components
+import CartItem from '../components/CartItem';
+import EmptyCart from '../components/EmptyCart';
+
+// Types
+import { CartPizzaInterface } from '../redux/slices/cart/types';
+
+// Redux
+import { useAppDispatch } from '../redux/store';
+import { clearCart } from '../redux/slices/cart/cartSlice';
 import {
 	selectCartItems,
 	selectCartTotalItemsCost,
 	selectCartTotalItemsCount,
-	clearCart,
-} from '../redux/slices/cartSlice';
+} from '../redux/slices/cart/selectors';
 
-function Cart() {
-	const dispatch = useDispatch();
+const Cart: React.FC = () => {
+	const dispatch = useAppDispatch();
 
-	const pizzas = useSelector(selectCartItems);
-	const totalCount = useSelector(selectCartTotalItemsCount);
-	const totalSum = useSelector(selectCartTotalItemsCost);
+	const pizzas: CartPizzaInterface[] = useSelector(selectCartItems);
+	const totalCount: number = useSelector(selectCartTotalItemsCount);
+	const totalSum: number = useSelector(selectCartTotalItemsCost);
 
 	const cartItems = pizzas.map((p) => <CartItem {...p} key={p.cartId} />);
 
@@ -71,6 +81,6 @@ function Cart() {
 			</div>
 		</div>
 	);
-}
+};
 
 export default Cart;

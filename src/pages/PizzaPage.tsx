@@ -1,26 +1,33 @@
+// Libs
 import React from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import {
-	fetchSinglePizzaById,
-	selectSinglePizzaLoadingStatus,
-} from '../redux/slices/pizzaSlice';
+// Types
+import { PizzaInterface } from '../redux/slices/generalTypes';
+import { LoadingStatusType } from '../redux/slices/pizza/types';
 
-function PizzaPage() {
-	const dispatch = useDispatch();
+// Redux
+import { useAppDispatch } from '../redux/store';
+import { fetchSinglePizzaById } from '../redux/slices/pizza/asyncActions';
+import { selectSinglePizzaLoadingStatus } from '../redux/slices/pizza/selectors';
+
+const PizzaPage: React.FC = () => {
+	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
-	const [pizza, setPizza] = React.useState();
+	const [pizza, setPizza] = React.useState<PizzaInterface>();
 
-	const pizzaLoadingStatus = useSelector(selectSinglePizzaLoadingStatus);
+	const pizzaLoadingStatus: LoadingStatusType = useSelector(
+		selectSinglePizzaLoadingStatus
+	);
 
 	const { id } = useParams();
 
 	React.useEffect(() => {
 		const fetchPizza = async () => {
-			const data = await dispatch(fetchSinglePizzaById(id));
-			setPizza(data.payload);
+			const data = await dispatch(fetchSinglePizzaById(id || ''));
+			setPizza(data.payload as PizzaInterface);
 		};
 		fetchPizza();
 	}, [id, navigate, dispatch]);
@@ -45,6 +52,7 @@ function PizzaPage() {
 			</div>
 		);
 	}
+
 	return (
 		<div className="container">
 			<img src={pizza.imageUrl} alt={pizza.title} />
@@ -52,6 +60,6 @@ function PizzaPage() {
 			<h4>{pizza.price}</h4>
 		</div>
 	);
-}
+};
 
 export default PizzaPage;

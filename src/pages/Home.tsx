@@ -1,23 +1,33 @@
+// Libs
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import qs from 'qs';
 
+// Components
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import PizzaSkeleton from '../components/PizzaBlock/PizzaSkeleton';
 import PizzaBlock from '../components/PizzaBlock/PizzaBlock';
 import Pagination from '../components/Pagination/Pagination';
-import { setCurrentPage, setFilters } from '../redux/slices/filterSlice';
+
+// Types
+import { PizzaInterface } from '../redux/slices/generalTypes';
+import { LoadingStatusType } from '../redux/slices/pizza/types';
+
+// Redux
+import { useAppDispatch } from '../redux/store';
+import { setCurrentPage, setFilters } from '../redux/slices/filter/filterSlice';
+import { fetchPizzas } from '../redux/slices/pizza/asyncActions';
+import { selectFilterValues } from '../redux/slices/filter/selectors';
 import {
-	fetchPizzas,
 	selectPizzasLoadingStatus,
 	selectItems,
-} from '../redux/slices/pizzaSlice';
+} from '../redux/slices/pizza/selectors';
 
-function Home() {
+const Home: React.FC = () => {
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
 	// При первом рендере проверяем строку поиска.
 	// Если там есть параметры, то не производим первый рендер пицц, а ждем, пока спарсятся параметры
@@ -26,25 +36,29 @@ function Home() {
 	const isMount = React.useRef(false);
 
 	const {
-		selectedCategoryIndex,
-		selectedSortingProperty,
+		activeCategoryIndex,
+		activeSortingProperty,
 		sortingOrder,
 		searchValue,
 		currentPage,
-	} = useSelector((state) => state.filter);
+	} = useSelector(selectFilterValues);
 
-	const items = useSelector(selectItems);
-	const pizzasLoadingStatus = useSelector(selectPizzasLoadingStatus);
+	const items: PizzaInterface[] = useSelector(selectItems);
+	const pizzasLoadingStatus: LoadingStatusType = useSelector(
+		selectPizzasLoadingStatus
+	);
 
-	const onPageChange = (event) => {
-		dispatch(setCurrentPage(event.selected + 1));
+	const onPageChange = (page: number) => {
+		dispatch(setCurrentPage(page));
 		window.scrollTo(0, 0);
 	};
 
 	// Проверяем url-параметры при первом рендере, если они есть, то записываем их в state
 	React.useEffect(() => {
 		if (window.location.search) {
-			const params = qs.parse(window.location.search.substring(1));
+			const params: qs.ParsedQs = qs.parse(
+				window.location.search.substring(1)
+			);
 			dispatch(setFilters(params));
 			isParsingFirstInteractionUrlQuery.current = true;
 		}
@@ -54,9 +68,9 @@ function Home() {
 	React.useEffect(() => {
 		if (isMount.current) {
 			const queryString = qs.stringify({
-				sort: selectedSortingProperty.sortingProperty,
+				sort: activeSortingProperty.sortingProperty,
 				order: sortingOrder,
-				categoryId: selectedCategoryIndex,
+				categoryId: activeCategoryIndex,
 				search: searchValue,
 				page: currentPage,
 			});
@@ -65,27 +79,27 @@ function Home() {
 		}
 		isMount.current = true;
 	}, [
-		selectedSortingProperty,
+		activeSortingProperty,
 		sortingOrder,
 		searchValue,
 		currentPage,
-		selectedCategoryIndex,
+		activeCategoryIndex,
 		navigate,
 	]);
 
 	// Если параметры поиска спарсились или их нет, то производим запрос на бек за пиццами
 	React.useEffect(() => {
 		if (!isParsingFirstInteractionUrlQuery.current) {
-			dispatch(fetchPizzas());
+			dispatch(fetchPizzas(''));
 		}
 		isParsingFirstInteractionUrlQuery.current = false;
 	}, [
 		dispatch,
-		selectedSortingProperty,
+		activeSortingProperty,
 		sortingOrder,
 		searchValue,
 		currentPage,
-		selectedCategoryIndex,
+		activeCategoryIndex,
 	]);
 
 	const pizzaBlocks = items.map((pizza) => (
@@ -105,7 +119,7 @@ function Home() {
 			{pizzasLoadingStatus === 'error' && (
 				<div className="content__error-info">
 					<h2>
-						Пиццы не загрузились <icon>😕</icon>
+						Пиццы не загрузились <span>😕</span>
 					</h2>
 					<br />
 					<p>
@@ -125,6 +139,6 @@ function Home() {
 			)}
 		</div>
 	);
-}
+};
 
 export default Home;

@@ -1,28 +1,33 @@
+// Libs
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
+// Assets
 import { ReactComponent as MinusSvg } from '../assets/cart/minus.svg';
 import { ReactComponent as PlusSvg } from '../assets/cart/plus.svg';
 import { ReactComponent as CrossSvg } from '../assets/cart/cross.svg';
+
+// Redux
+import { useAppDispatch } from '../redux/store';
+import { CartPizzaInterface } from '../redux/slices/cart/types';
 import {
 	increasePizzaQuantity,
 	decreasePizzaQuantity,
 	removePizzaFromCart,
-} from '../redux/slices/cartSlice';
+} from '../redux/slices/cart/cartSlice';
 
-function CartItem(props) {
-	const {
-		doughType,
-		sizeIndex,
-		sizes,
-		cartId,
-		title,
-		price,
-		imageUrl,
-		quantity,
-	} = props;
+interface CartItemPropsInterface extends CartPizzaInterface {}
 
-	const dispatch = useDispatch();
+const CartItem: React.FC<CartItemPropsInterface> = ({
+	cartId,
+	title,
+	price,
+	imageUrl,
+	quantity,
+	sizes,
+	sizeIndex,
+	doughType,
+}) => {
+	const dispatch = useAppDispatch();
 
 	const onClickRemove = () => {
 		if (
@@ -78,6 +83,6 @@ function CartItem(props) {
 			</div>
 		</div>
 	);
-}
+};
 
 export default CartItem;

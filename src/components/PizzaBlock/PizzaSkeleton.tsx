@@ -1,7 +1,8 @@
+// Libs
 import React from 'react';
 import ContentLoader from 'react-content-loader';
 
-const PizzaSkeleton = () => (
+const PizzaSkeleton: React.FC = () => (
 	<ContentLoader
 		className="pizza-block"
 		speed={2}

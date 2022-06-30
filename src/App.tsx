@@ -1,16 +1,20 @@
+// Libs
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
+// Styles
 import './scss/app.scss';
+
+// Components
 import Header from './components/Header';
+
+// Pages
 import NotFound from './pages/NotFound';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
 import PizzaPage from './pages/PizzaPage';
 
-// @TODO: Add RTK Query
-
-function App() {
+const App: React.FC = () => {
 	return (
 		<div className="App">
 			<div className="wrapper">
@@ -26,6 +30,6 @@ function App() {
 			</div>
 		</div>
 	);
-}
+};
 
 export default App;

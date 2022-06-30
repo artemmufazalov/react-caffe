@@ -1,6 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+// Libs
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState = {
+// Types
+import {
+	FilterStateInterface,
+	SortProperty,
+	SortOrder,
+	FilterQueryInputParamsInterface,
+} from './types';
+
+const initialState: FilterStateInterface = {
 	categories: [
 		'Все',
 		'Мясные',
@@ -14,11 +23,11 @@ const initialState = {
 		{ name: 'цене', sortingProperty: 'price' },
 		{ name: 'алфавиту', sortingProperty: 'title' },
 	],
-	selectedCategoryIndex: 0,
-	selectedSortingProperty: {
+	activeSortingProperty: {
 		name: 'популярности',
 		sortingProperty: 'rating',
 	},
+	activeCategoryIndex: 0,
 	sortingOrder: 'desc',
 	searchValue: '',
 	currentPage: 1,
@@ -28,50 +37,54 @@ export const filterSlice = createSlice({
 	name: 'filter',
 	initialState,
 	reducers: {
-		selectCategory: (state, action) => {
-			state.selectedCategoryIndex = action.payload;
+		setCategory: (state, action: PayloadAction<number>) => {
+			state.activeCategoryIndex = action.payload;
 		},
-		setSearchValue: (state, action) => {
+		setSearchValue: (state, action: PayloadAction<string>) => {
 			state.searchValue = action.payload;
 		},
-		setSortingProperty: (state, action) => {
-			state.selectedSortingProperty = action.payload;
+		setSortingProperty: (state, action: PayloadAction<SortProperty>) => {
+			state.activeSortingProperty = action.payload;
 		},
 		toggleSortingOrder: (state) => {
 			state.sortingOrder = state.sortingOrder === 'asc' ? 'desc' : 'asc';
 		},
-		setCurrentPage: (state, action) => {
+		setCurrentPage: (state, action: PayloadAction<number>) => {
 			state.currentPage = action.payload;
 		},
-		setFilters: (state, action) => {
+		setFilters: (
+			state,
+			action: PayloadAction<FilterQueryInputParamsInterface>
+		) => {
 			if (action.payload.sort) {
 				let sortingPropery = state.sortingProperties.find(
 					(obj) => obj.sortingProperty === action.payload.sort
 				);
-				state.selectedSortingProperty = sortingPropery;
+				if (sortingPropery) {
+					state.activeSortingProperty = sortingPropery;
+				}
 			}
 
-			state.sortingOrder = action.payload.order || 'desc';
+			state.sortingOrder = (action.payload.order as SortOrder) || 'desc';
 			state.searchValue = action.payload.search || '';
 			state.currentPage = Number(action.payload.page) || 1;
-			state.selectedCategoryIndex =
-				Number(action.payload.categoryId) || 0;
+			state.activeCategoryIndex = Number(action.payload.categoryId) || 0;
 		},
 		dropFilters: (state) => {
-			state.selectedSortingProperty = {
+			state.activeSortingProperty = {
 				name: 'популярности',
 				sortingProperty: 'rating',
 			};
 			state.sortingOrder = 'desc';
 			state.searchValue = '';
 			state.currentPage = 1;
-			state.selectedCategoryIndex = 0;
+			state.activeCategoryIndex = 0;
 		},
 	},
 });
 
 export const {
-	selectCategory,
+	setCategory,
 	setSearchValue,
 	setSortingProperty,
 	toggleSortingOrder,

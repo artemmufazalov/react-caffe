@@ -1,34 +1,55 @@
+// Libs
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
+// Assets
 import { ReactComponent as AddPizzaPlus } from '../../assets/pizzaBlock/addPizzaPlus.svg';
+
+// Redux
+import { useAppDispatch } from '../../redux/store';
+import { PizzaInterface } from '../../redux/slices/generalTypes';
 import {
 	selectDoughTypes,
 	selectPizzaQuantityById,
-	addPizza,
-} from '../../redux/slices/cartSlice';
+} from '../../redux/slices/cart/selectors';
+import { addPizza } from '../../redux/slices/cart/cartSlice';
 
-function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
-	const dispatch = useDispatch();
-	const typesNames = useSelector(selectDoughTypes);
-	const quantity = useSelector(selectPizzaQuantityById(id));
+interface PizzaBlockProps extends PizzaInterface {}
 
-	const [activePizzaSize, setActivePizzaSize] = React.useState(0);
-	const [activePizzaType, setActivePizzaType] = React.useState(0);
+const PizzaBlock: React.FC<PizzaBlockProps> = ({
+	id,
+	title,
+	price,
+	imageUrl,
+	sizes,
+	types,
+	category,
+	rating,
+}) => {
+	const dispatch = useAppDispatch();
+
+	const typesNames: string[] = useSelector(selectDoughTypes);
+	const quantity: number = useSelector(selectPizzaQuantityById(id));
+
+	const [activePizzaSize, setActivePizzaSize] = React.useState<number>(0);
+	const [activePizzaType, setActivePizzaType] = React.useState<number>(0);
 
 	const onClickAddPizza = () => {
-		const pizzaData = {
-			doughIndex: activePizzaType,
-			sizeIndex: activePizzaSize,
-			sizes,
-			id,
-			title,
-			price,
-			imageUrl,
-		};
+		let doughIndex = activePizzaType,
+			sizeIndex = activePizzaSize,
+			pizza = {
+				sizes,
+				types,
+				id,
+				title,
+				price,
+				imageUrl,
+				category,
+				rating,
+			};
 
-		dispatch(addPizza(pizzaData));
+		dispatch(addPizza({ pizza, doughIndex, sizeIndex }));
 	};
 
 	return (
@@ -81,6 +102,6 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
 			</div>
 		</div>
 	);
-}
+};
 
 export default PizzaBlock;
