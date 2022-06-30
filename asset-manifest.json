@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/static/css/main.eebf4e7c.css",
-    "main.js": "/static/js/main.ac113b41.js",
-    "static/media/emptyCart.png": "/static/media/emptyCart.db905d1f4b063162f25b.png",
-    "static/media/pizzaLogo.svg": "/static/media/pizzaLogo.7ea95be892d3756de7a00257818ea43e.svg",
-    "static/media/cartIcon.svg": "/static/media/cartIcon.8049cfffb862ab5a4c9eaf2eba16977e.svg",
-    "static/media/headerCartIcon.svg": "/static/media/headerCartIcon.ee7161f2dcde2fc1577ab72db952e35f.svg",
-    "static/media/clearCart.svg": "/static/media/clearCart.652e00e7c7918db3716eba43b5ae5570.svg",
-    "index.html": "/index.html",
-    "static/media/minus.svg": "/static/media/minus.7809e76468d65f59c3c43bd4f84c659c.svg",
-    "static/media/cross.svg": "/static/media/cross.8c906d9afca476bee7134bf4e98fdaab.svg",
-    "static/media/plus.svg": "/static/media/plus.8c906d9afca476bee7134bf4e98fdaab.svg",
-    "static/media/sortOrder.svg": "/static/media/sortOrder.9efd1bc6672733a9fe3d5bfc3c81d9da.svg",
-    "static/media/searchIcon.svg": "/static/media/searchIcon.fbcc4f7ce61b6bd002dc34752cf65d26.svg",
-    "static/media/addPizzaPlus.svg": "/static/media/addPizzaPlus.bba951fbc414b4bc6afd5dafe2ffd517.svg",
-    "static/media/searchFieldCross.svg": "/static/media/searchFieldCross.b942932e5f003db62ccee9487b433f83.svg",
-    "static/media/goBackArrow.svg": "/static/media/goBackArrow.901c9a85b6b0dced8a5340b1e2f4c8c2.svg",
-    "main.eebf4e7c.css.map": "/static/css/main.eebf4e7c.css.map",
-    "main.ac113b41.js.map": "/static/js/main.ac113b41.js.map"
+    "main.css": "/react-pizza/static/css/main.eebf4e7c.css",
+    "main.js": "/react-pizza/static/js/main.5176812c.js",
+    "static/media/emptyCart.png": "/react-pizza/static/media/emptyCart.db905d1f4b063162f25b.png",
+    "static/media/pizzaLogo.svg": "/react-pizza/static/media/pizzaLogo.7ea95be892d3756de7a00257818ea43e.svg",
+    "static/media/cartIcon.svg": "/react-pizza/static/media/cartIcon.8049cfffb862ab5a4c9eaf2eba16977e.svg",
+    "static/media/headerCartIcon.svg": "/react-pizza/static/media/headerCartIcon.ee7161f2dcde2fc1577ab72db952e35f.svg",
+    "static/media/clearCart.svg": "/react-pizza/static/media/clearCart.652e00e7c7918db3716eba43b5ae5570.svg",
+    "index.html": "/react-pizza/index.html",
+    "static/media/minus.svg": "/react-pizza/static/media/minus.7809e76468d65f59c3c43bd4f84c659c.svg",
+    "static/media/cross.svg": "/react-pizza/static/media/cross.8c906d9afca476bee7134bf4e98fdaab.svg",
+    "static/media/plus.svg": "/react-pizza/static/media/plus.8c906d9afca476bee7134bf4e98fdaab.svg",
+    "static/media/sortOrder.svg": "/react-pizza/static/media/sortOrder.9efd1bc6672733a9fe3d5bfc3c81d9da.svg",
+    "static/media/searchIcon.svg": "/react-pizza/static/media/searchIcon.fbcc4f7ce61b6bd002dc34752cf65d26.svg",
+    "static/media/addPizzaPlus.svg": "/react-pizza/static/media/addPizzaPlus.bba951fbc414b4bc6afd5dafe2ffd517.svg",
+    "static/media/searchFieldCross.svg": "/react-pizza/static/media/searchFieldCross.b942932e5f003db62ccee9487b433f83.svg",
+    "static/media/goBackArrow.svg": "/react-pizza/static/media/goBackArrow.901c9a85b6b0dced8a5340b1e2f4c8c2.svg",
+    "main.eebf4e7c.css.map": "/react-pizza/static/css/main.eebf4e7c.css.map",
+    "main.5176812c.js.map": "/react-pizza/static/js/main.5176812c.js.map"
   },
   "entrypoints": [
     "static/css/main.eebf4e7c.css",
-    "static/js/main.ac113b41.js"
+    "static/js/main.5176812c.js"
   ]
 }
