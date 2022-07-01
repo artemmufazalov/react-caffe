@@ -19,7 +19,7 @@ const EmptyCart: React.FC = () => {
 					страницу.
 				</p>
 				<img src={emptyCartPng} alt="Empty cart" />
-				<Link to="/" className="button button--black">
+				<Link to="../" className="button button--black">
 					<span>Вернуться назад</span>
 				</Link>
 			</div>

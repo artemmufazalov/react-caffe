@@ -38,7 +38,7 @@ const PizzaPage: React.FC = () => {
 				<h2>Ошибка при загрузке данных!</h2>
 				<br />
 				<br />
-				<Link to="/" className="button">
+				<Link to="../" className="button">
 					На главную
 				</Link>
 			</div>
