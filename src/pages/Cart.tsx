@@ -9,8 +9,7 @@ import { ReactComponent as ClearCartSvg } from '../assets/cart/clearCart.svg';
 import { ReactComponent as GoBackArrow } from '../assets/cart/goBackArrow.svg';
 
 // Components
-import CartItem from '../components/CartItem';
-import EmptyCart from '../components/EmptyCart';
+import { CartItem, EmptyCart } from '../components';
 
 // Types
 import { CartPizzaInterface } from '../redux/slices/cart/types';

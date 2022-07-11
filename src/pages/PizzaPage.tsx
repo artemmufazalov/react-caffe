@@ -58,6 +58,10 @@ const PizzaPage: React.FC = () => {
 			<img src={pizza.imageUrl} alt={pizza.title} />
 			<h2>{pizza.title}</h2>
 			<h4>{pizza.price}</h4>
+			<br />
+			<Link to="../" className="button">
+				На главную
+			</Link>
 		</div>
 	);
 };

@@ -8,7 +8,7 @@ import { pizzaLogoSvg } from '../assets';
 import { ReactComponent as HeaderCartIconSvg } from '../assets/header/headerCartIcon.svg';
 
 // Components
-import Search from './Search/Search';
+import { Search } from '.';
 
 // Types
 import { CartPizzaInterface } from '../redux/slices/cart/types';

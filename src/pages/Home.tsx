@@ -1,15 +1,17 @@
 // Libs
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import qs from 'qs';
 
 // Components
-import Categories from '../components/Categories';
-import Sort from '../components/Sort';
-import PizzaSkeleton from '../components/PizzaBlock/PizzaSkeleton';
-import PizzaBlock from '../components/PizzaBlock/PizzaBlock';
-import Pagination from '../components/Pagination/Pagination';
+import {
+	Categories,
+	Sort,
+	PizzaSkeleton,
+	PizzaBlock,
+	Pagination,
+} from '../components';
 
 // Types
 import { PizzaInterface } from '../redux/slices/generalTypes';
