@@ -14,6 +14,7 @@ import { useAppDispatch } from '../../redux/store';
 import { setSearchValue as setGlobalSearchValue } from '../../redux/slices/filter/filterSlice';
 import { selectSearchValue } from '../../redux/slices/filter/selectors';
 
+// FIXME: fix fill value after clear field
 const Search: React.FC = () => {
 	const dispatch = useAppDispatch();
 
@@ -28,15 +29,6 @@ const Search: React.FC = () => {
 		setComponentSearchValue(searchValue);
 	}, [searchValue]);
 
-	const onClearSearchField = () => {
-		setComponentSearchValue('');
-		dispatch(setGlobalSearchValue(''));
-
-		// Оператор опциональной последовательности,
-		// последовательность после ? выполняется только если с объектом searchFieldRef.current все ок
-		searchFieldRef.current?.focus();
-	};
-
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const initSearch = React.useCallback(
 		debounce((str: string) => {
@@ -44,6 +36,16 @@ const Search: React.FC = () => {
 		}, 500),
 		[]
 	);
+
+	const onClearSearchField = () => {
+		setComponentSearchValue('');
+		initSearch.cancel();
+		dispatch(setGlobalSearchValue(''));
+
+		// Оператор опциональной последовательности,
+		// последовательность после ? выполняется только если с объектом searchFieldRef.current все ок
+		searchFieldRef.current?.focus();
+	};
 
 	const onSearchFieldChange = (
 		event: React.ChangeEvent<HTMLInputElement>

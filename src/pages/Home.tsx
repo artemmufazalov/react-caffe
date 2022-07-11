@@ -1,5 +1,5 @@
 // Libs
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import qs from 'qs';
@@ -48,10 +48,13 @@ const Home: React.FC = () => {
 		selectPizzasLoadingStatus
 	);
 
-	const onPageChange = (page: number) => {
-		dispatch(setCurrentPage(page));
-		window.scrollTo(0, 0);
-	};
+	const onPageChange = React.useCallback(
+		(page: number) => {
+			dispatch(setCurrentPage(page));
+			window.scrollTo(0, 0);
+		},
+		[dispatch]
+	);
 
 	// Проверяем url-параметры при первом рендере, если они есть, то записываем их в state
 	React.useEffect(() => {

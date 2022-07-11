@@ -55,31 +55,32 @@ const CartItem: React.FC<CartItemPropsInterface> = ({
 				</p>
 			</div>
 			<div className="cart__item-count">
-				<div
+				<button
+					disabled={quantity < 2}
 					className="button button--outline button--circle cart__item-count-minus"
 					onClick={() => {
 						dispatch(decreasePizzaQuantity(cartId));
 					}}>
 					<MinusSvg />
-				</div>
+				</button>
 				<b>{quantity}</b>
-				<div
+				<button
 					className="button button--outline button--circle cart__item-count-plus"
 					onClick={() => {
 						dispatch(increasePizzaQuantity(cartId));
 					}}>
 					<PlusSvg />
-				</div>
+				</button>
 			</div>
 			<div className="cart__item-price">
 				<b>{price * quantity} ₽</b>
 			</div>
 			<div className="cart__item-remove">
-				<div
+				<button
 					className="button button--outline button--circle"
 					onClick={onClickRemove}>
 					<CrossSvg />
-				</div>
+				</button>
 			</div>
 		</div>
 	);

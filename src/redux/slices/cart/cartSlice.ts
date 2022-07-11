@@ -3,11 +3,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // Types
 import { PizzaInterface } from '../generalTypes';
-import { CartStateInterface } from './types';
+import { CartPizzaInterface, CartStateInterface } from './types';
 
 const initialState: CartStateInterface = {
 	doughTypes: ['Тонкое', 'Традиционное'],
-	pizzas: [],
+	pizzas: JSON.parse(localStorage.getItem('cart') || '') || [],
 };
 
 export const cartSlice = createSlice({
@@ -82,6 +82,9 @@ export const cartSlice = createSlice({
 		clearCart: (state) => {
 			state.pizzas = [];
 		},
+		setCartItems: (state, action: PayloadAction<CartPizzaInterface[]>) => {
+			state.pizzas = action.payload;
+		},
 	},
 });
 
@@ -91,6 +94,7 @@ export const {
 	decreasePizzaQuantity,
 	removePizzaFromCart,
 	clearCart,
+	setCartItems,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

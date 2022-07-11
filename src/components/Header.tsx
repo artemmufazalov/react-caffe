@@ -10,17 +10,25 @@ import { ReactComponent as HeaderCartIconSvg } from '../assets/header/headerCart
 // Components
 import Search from './Search/Search';
 
+// Types
+import { CartPizzaInterface } from '../redux/slices/cart/types';
+
 // Redux
 import {
 	selectCartTotalItemsCount,
 	selectCartTotalItemsCost,
+	selectCartItems,
 } from '../redux/slices/cart/selectors';
+import { useCache } from '../redux/reduxCustomHooks/useCache';
 
 const Header: React.FC = () => {
 	const { pathname } = useLocation();
 
 	const totalCount: number = useSelector(selectCartTotalItemsCount);
 	const totalSum: number = useSelector(selectCartTotalItemsCost);
+	const cartItems: CartPizzaInterface[] = useSelector(selectCartItems);
+
+	useCache<CartPizzaInterface[]>('cart', cartItems);
 
 	return (
 		<div className="header">
@@ -35,8 +43,8 @@ const Header: React.FC = () => {
 					</div>
 				</Link>
 
-				{pathname !== '/cart' && <Search />}
-				{pathname !== '/cart' ? (
+				{!pathname.includes('/cart') && <Search />}
+				{!pathname.includes('/cart') && (
 					<div className="header__cart">
 						<Link to="cart" className="button button--cart">
 							<span>{totalSum} ₽</span>
@@ -45,8 +53,6 @@ const Header: React.FC = () => {
 							<span>{totalCount}</span>
 						</Link>
 					</div>
-				) : (
-					''
 				)}
 			</div>
 		</div>

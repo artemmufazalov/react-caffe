@@ -20,7 +20,7 @@ import {
 	selectSortOrder,
 } from '../redux/slices/filter/selectors';
 
-const Sort: React.FC = () => {
+const Sort: React.FC = React.memo(() => {
 	const dispatch = useAppDispatch();
 
 	const sortingProperties: SortProperty[] = useSelector(
@@ -88,6 +88,6 @@ const Sort: React.FC = () => {
 			)}
 		</div>
 	);
-};
+});
 
 export default Sort;

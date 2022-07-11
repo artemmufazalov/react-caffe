@@ -10,7 +10,7 @@ import {
 	selectCategories,
 } from '../redux/slices/filter/selectors';
 
-const Categories: React.FC = () => {
+const Categories: React.FC = React.memo(() => {
 	const dispatch = useAppDispatch();
 
 	const activeCategoryIndex: number = useSelector(selectActiveCategoryIndex);
@@ -34,6 +34,6 @@ const Categories: React.FC = () => {
 			</div>
 		</div>
 	);
-};
+});
 
 export default Categories;
