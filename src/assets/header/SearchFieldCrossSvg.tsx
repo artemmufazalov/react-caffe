@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SearchFieldCrossSvg = (props) => (
+const SearchFieldCrossSvg = (props: any) => (
 	<svg
 		height="200"
 		viewBox="0 0 200 200"

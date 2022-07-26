@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SearchIconSvg = (props) => (
+const SearchIconSvg = (props: any) => (
 	<svg
 		enableBackground="new 0 0 50 50"
 		height="50px"

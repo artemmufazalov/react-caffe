@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CartIconSvg = (props) => (
+const CartIconSvg = (props: any) => (
 	<svg
 		width="18"
 		height="18"

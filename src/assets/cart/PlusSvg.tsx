@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PlusSvg = (props) => (
+const PlusSvg = (props: any) => (
 	<svg
 		width="10"
 		height="10"

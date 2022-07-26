@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ClearCartSvg = (props) => (
+const ClearCartSvg = (props: any) => (
 	<svg
 		width="20"
 		height="20"

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const GoBackArrowSvg = (props) => (
+const GoBackArrowSvg = (props: any) => (
 	<svg
 		width="8"
 		height="14"

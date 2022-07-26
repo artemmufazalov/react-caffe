@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SortOrderSvg = (props) => (
+const SortOrderSvg = (props: any) => (
 	<svg
 		width="10"
 		height="6"

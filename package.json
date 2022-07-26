@@ -35,6 +35,7 @@
 		"dev": "next dev",
 		"start": "next start",
 		"build": "next build",
+		"buildAndExport": "next build && next export",
 		"pretty": "prettier --config .prettierrc --ignore-path .prettierignore --write **/*.*",
 		"prepare": "husky install",
 		"predeploy": "npm run build",

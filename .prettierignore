@@ -32,6 +32,7 @@ Readme.md
 # production
 /build
 .next
+/out
 
 # testing
 /coverage
