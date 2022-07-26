@@ -1,20 +1,23 @@
 // Libs
 import React from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 // Types
-import { PizzaInterface } from '../redux/slices/generalTypes';
-import { LoadingStatusType } from '../redux/slices/pizza/types';
+import { PizzaInterface } from '../../src/redux/slices/generalTypes';
+import { LoadingStatusType } from '../../src/redux/slices/pizza/types';
 
 // Redux
-import { useAppDispatch } from '../redux/store';
-import { fetchSinglePizzaById } from '../redux/slices/pizza/asyncActions';
-import { selectSinglePizzaLoadingStatus } from '../redux/slices/pizza/selectors';
+import { useAppDispatch } from '../../src/redux/store';
+import { fetchSinglePizzaById } from '../../src/redux/slices/pizza/asyncActions';
+import { selectSinglePizzaLoadingStatus } from '../../src/redux/slices/pizza/selectors';
 
 const PizzaPage: React.FC = () => {
 	const dispatch = useAppDispatch();
-	const navigate = useNavigate();
+	const router = useRouter();
+
+	const { id } = router.query;
 
 	const [pizza, setPizza] = React.useState<PizzaInterface>();
 
@@ -22,15 +25,14 @@ const PizzaPage: React.FC = () => {
 		selectSinglePizzaLoadingStatus
 	);
 
-	const { id } = useParams();
-
+	// TODO: Мб вынести в GetProps, учитывая, что это не меняется
 	React.useEffect(() => {
 		const fetchPizza = async () => {
-			const data = await dispatch(fetchSinglePizzaById(id || ''));
+			const data = await dispatch(fetchSinglePizzaById(id as string));
 			setPizza(data.payload as PizzaInterface);
 		};
 		fetchPizza();
-	}, [id, navigate, dispatch]);
+	}, [id, dispatch]);
 
 	if (pizzaLoadingStatus === 'error') {
 		return (
@@ -38,7 +40,7 @@ const PizzaPage: React.FC = () => {
 				<h2>Ошибка при загрузке данных!</h2>
 				<br />
 				<br />
-				<Link to="../" className="button">
+				<Link href="/" className="button">
 					На главную
 				</Link>
 			</div>
@@ -59,8 +61,8 @@ const PizzaPage: React.FC = () => {
 			<h2>{pizza.title}</h2>
 			<h4>{pizza.price}</h4>
 			<br />
-			<Link to="../" className="button">
-				На главную
+			<Link href="/">
+				<span className="button">На главную</span>
 			</Link>
 		</div>
 	);

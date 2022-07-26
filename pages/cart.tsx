@@ -1,27 +1,25 @@
 // Libs
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { useSelector } from 'react-redux';
 
 // Assets
-import { ReactComponent as CartIconSvg } from '../assets/cart/cartIcon.svg';
-import { ReactComponent as ClearCartSvg } from '../assets/cart/clearCart.svg';
-import { ReactComponent as GoBackArrow } from '../assets/cart/goBackArrow.svg';
+import { CartIconSvg, ClearCartSvg, GoBackArrowSvg } from '../src/assets';
 
 // Components
-import { CartItem, EmptyCart } from '../components';
+import { CartItem, EmptyCart } from '../src/components';
 
 // Types
-import { CartPizzaInterface } from '../redux/slices/cart/types';
+import { CartPizzaInterface } from '../src/redux/slices/cart/types';
 
 // Redux
-import { useAppDispatch } from '../redux/store';
-import { clearCart } from '../redux/slices/cart/cartSlice';
+import { useAppDispatch } from '../src/redux/store';
+import { clearCart } from '../src/redux/slices/cart/cartSlice';
 import {
 	selectCartItems,
 	selectCartTotalItemsCost,
 	selectCartTotalItemsCount,
-} from '../redux/slices/cart/selectors';
+} from '../src/redux/slices/cart/selectors';
 
 const Cart: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -66,11 +64,11 @@ const Cart: React.FC = () => {
 						</span>
 					</div>
 					<div className="cart__bottom-buttons">
-						<Link
-							to="../"
-							className="button button--outline button--add go-back-btn">
-							<GoBackArrow />
-							<span>Вернуться назад</span>
+						<Link href="/">
+							<span className="button button--outline button--add go-back-btn">
+								<GoBackArrowSvg />
+								<span>Вернуться назад</span>
+							</span>
 						</Link>
 						<div className="button pay-btn">
 							<span>Оплатить сейчас</span>

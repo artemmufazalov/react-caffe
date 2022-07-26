@@ -1,18 +1,17 @@
 // Cart
-export { default as cartIconSvg } from './cart/cartIcon.svg';
-export { default as clearCartSvg } from './cart/clearCart.svg';
-export { default as crossSvg } from './cart/cross.svg';
-export { default as emptyCartPng } from './cart/emptyCart.png';
-export { default as goBackArrowSvg } from './cart/goBackArrow.svg';
-export { default as minusSvg } from './cart/minus.svg';
-export { default as plusSvg } from './cart/plus.svg';
+export { default as CartIconSvg } from './cart/CartIconSvg';
+export { default as ClearCartSvg } from './cart/ClearCartSvg';
+export { default as CrossSvg } from './cart/CrossSvg';
+export { default as GoBackArrowSvg } from './cart/GoBackArrowSvg';
+export { default as MinusSvg } from './cart/MinusSvg';
+export { default as PlusSvg } from './cart/PlusSvg';
 
 // Header
-export { default as headerCartIconSvg } from './header/headerCartIcon.svg';
-export { default as pizzaLogoSvg } from './header/pizzaLogo.svg';
-export { default as searchFieldCrossSvg } from './header/searchFieldCross.svg';
-export { default as searchIconSvg } from './header/searchIcon.svg';
-export { default as sortOrderSvg } from './header/sortOrder.svg';
+export { default as HeaderCartIconSvg } from './header/HeaderCartIconSvg';
+export { default as PizzaLogoSvg } from './header/PizzaLogoSvg';
+export { default as SearchFieldCrossSvg } from './header/SearchFieldCrossSvg';
+export { default as SearchIconSvg } from './header/SearchIconSvg';
+export { default as SortOrderSvg } from './header/SortOrderSvg';
 
 // PizzaBlock
-export { default as addPizzaPlus } from './pizzaBlock/addPizzaPlus.svg';
+export { default as AddPizzaPlusSvg } from './pizzaBlock/AddPizzaPlusSvg';

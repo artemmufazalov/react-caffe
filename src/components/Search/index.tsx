@@ -7,14 +7,13 @@ import debounce from 'lodash.debounce';
 import styles from './Search.module.scss';
 
 // Assets
-import { searchFieldCrossSvg, searchIconSvg } from '../../assets';
+import { SearchFieldCrossSvg, SearchIconSvg } from '../../assets';
 
 // Redux
 import { useAppDispatch } from '../../redux/store';
 import { setSearchValue as setGlobalSearchValue } from '../../redux/slices/filter/filterSlice';
 import { selectSearchValue } from '../../redux/slices/filter/selectors';
 
-// FIXME: fix fill value after clear field
 const Search: React.FC = () => {
 	const dispatch = useAppDispatch();
 
@@ -56,7 +55,7 @@ const Search: React.FC = () => {
 
 	return (
 		<div className={styles.root}>
-			<img src={searchIconSvg} className={styles.icon} alt="Поиск" />
+			<SearchIconSvg className={styles.icon} alt="Поиск" />
 			<input
 				className={styles.input}
 				type="text"
@@ -66,8 +65,7 @@ const Search: React.FC = () => {
 				ref={searchFieldRef}
 			/>
 			{componentSearchValue && (
-				<img
-					src={searchFieldCrossSvg}
+				<SearchFieldCrossSvg
 					onClick={onClearSearchField}
 					className={styles.clearIcon}
 					alt="Очистить поиск"

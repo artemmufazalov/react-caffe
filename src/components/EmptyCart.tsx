@@ -1,9 +1,6 @@
 // Libs
 import React from 'react';
-import { Link } from 'react-router-dom';
-
-// Assets
-import emptyCartPng from '../assets/cart/emptyCart.png';
+import Link from 'next/link';
 
 const EmptyCart: React.FC = () => {
 	return (
@@ -18,9 +15,11 @@ const EmptyCart: React.FC = () => {
 					Для того, чтобы заказать пиццу, перейдите на главную
 					страницу.
 				</p>
-				<img src={emptyCartPng} alt="Empty cart" />
-				<Link to="../" className="button button--black">
-					<span>Вернуться назад</span>
+				<img src="/assets/emptyCart.png" alt="Empty cart" />
+				<Link href="/">
+					<span className="button button--black">
+						Вернуться назад
+					</span>
 				</Link>
 			</div>
 		</div>

@@ -7,7 +7,7 @@ import { CartPizzaInterface, CartStateInterface } from './types';
 
 const initialState: CartStateInterface = {
 	doughTypes: ['Тонкое', 'Традиционное'],
-	pizzas: JSON.parse(localStorage.getItem('cart') || '') || [],
+	pizzas: [],
 };
 
 export const cartSlice = createSlice({

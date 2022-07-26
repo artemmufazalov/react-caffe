@@ -3,7 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 // Assets
-import { ReactComponent as SortOrderSvg } from '../assets/header/sortOrder.svg';
+import { SortOrderSvg } from '../assets';
 
 // Types
 import { SortOrder, SortProperty } from '../redux/slices/filter/types';

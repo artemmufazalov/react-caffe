@@ -1,8 +1,8 @@
 // Libs
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import qs from 'qs';
+import { useRouter } from 'next/router';
 
 // Components
 import {
@@ -11,24 +11,27 @@ import {
 	PizzaSkeleton,
 	PizzaBlock,
 	Pagination,
-} from '../components';
+} from '../src/components';
 
 // Types
-import { PizzaInterface } from '../redux/slices/generalTypes';
-import { LoadingStatusType } from '../redux/slices/pizza/types';
+import { PizzaInterface } from '../src/redux/slices/generalTypes';
+import { LoadingStatusType } from '../src/redux/slices/pizza/types';
 
 // Redux
-import { useAppDispatch } from '../redux/store';
-import { setCurrentPage, setFilters } from '../redux/slices/filter/filterSlice';
-import { fetchPizzas } from '../redux/slices/pizza/asyncActions';
-import { selectFilterValues } from '../redux/slices/filter/selectors';
+import { useAppDispatch } from '../src/redux/store';
+import {
+	setCurrentPage,
+	setFilters,
+} from '../src/redux/slices/filter/filterSlice';
+import { fetchPizzas } from '../src/redux/slices/pizza/asyncActions';
+import { selectFilterValues } from '../src/redux/slices/filter/selectors';
 import {
 	selectPizzasLoadingStatus,
 	selectItems,
-} from '../redux/slices/pizza/selectors';
+} from '../src/redux/slices/pizza/selectors';
 
 const Home: React.FC = () => {
-	const navigate = useNavigate();
+	const router = useRouter();
 	const dispatch = useAppDispatch();
 
 	// При первом рендере проверяем строку поиска.
@@ -73,14 +76,17 @@ const Home: React.FC = () => {
 	React.useEffect(() => {
 		if (isMount.current) {
 			const queryString = qs.stringify({
-				sort: activeSortingProperty.sortingProperty,
-				order: sortingOrder,
-				categoryId: activeCategoryIndex,
-				search: searchValue,
-				page: currentPage,
-			});
+					sort: activeSortingProperty.sortingProperty,
+					order: sortingOrder,
+					categoryId: activeCategoryIndex,
+					search: searchValue,
+					page: currentPage,
+				}),
+				currentQuery = qs.stringify(router.query);
 
-			navigate(`?${queryString}`);
+			if (currentQuery !== queryString) {
+				router.push(`?${queryString}`);
+			}
 		}
 		isMount.current = true;
 	}, [
@@ -89,7 +95,7 @@ const Home: React.FC = () => {
 		searchValue,
 		currentPage,
 		activeCategoryIndex,
-		navigate,
+		router,
 	]);
 
 	// Если параметры поиска спарсились или их нет, то производим запрос на бек за пиццами
@@ -107,11 +113,16 @@ const Home: React.FC = () => {
 		activeCategoryIndex,
 	]);
 
+	const [skeletons, setSkeletons] = React.useState<React.ReactNode[]>([]);
+
+	React.useEffect(() => {
+		setSkeletons(
+			[...new Array(4)].map((_, i) => <PizzaSkeleton key={i} />)
+		);
+	}, [items]);
+
 	const pizzaBlocks = items.map((pizza) => (
 		<PizzaBlock {...pizza} key={pizza['id']} />
-	));
-	const skeletons = [...new Array(4)].map((_, i) => (
-		<PizzaSkeleton key={i} />
 	));
 
 	return (

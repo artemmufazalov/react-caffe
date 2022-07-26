@@ -2,9 +2,7 @@
 import React from 'react';
 
 // Assets
-import { ReactComponent as MinusSvg } from '../assets/cart/minus.svg';
-import { ReactComponent as PlusSvg } from '../assets/cart/plus.svg';
-import { ReactComponent as CrossSvg } from '../assets/cart/cross.svg';
+import { MinusSvg, PlusSvg, CrossSvg } from '../assets';
 
 // Redux
 import { useAppDispatch } from '../redux/store';

@@ -1,10 +1,10 @@
 // Libs
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { useSelector } from 'react-redux';
 
 // Assets
-import { ReactComponent as AddPizzaPlus } from '../../assets/pizzaBlock/addPizzaPlus.svg';
+import { AddPizzaPlusSvg } from '../../assets';
 
 // Redux
 import { useAppDispatch } from '../../redux/store';
@@ -55,13 +55,15 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
 	return (
 		<div className="pizza-block-wrapper">
 			<div className="pizza-block">
-				<Link to={`pizza/${id}`}>
-					<img
-						className="pizza-block__image"
-						src={imageUrl}
-						alt="Pizza"
-					/>
-					<h4 className="pizza-block__title">{title}</h4>
+				<Link href={`/pizza/${id}`}>
+					<span className="cp">
+						<img
+							className="pizza-block__image"
+							src={imageUrl}
+							alt="Pizza"
+						/>
+						<h4 className="pizza-block__title">{title}</h4>
+					</span>
 				</Link>
 				<div className="pizza-block__selector">
 					<ul>
@@ -94,7 +96,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
 					<button
 						onClick={onClickAddPizza}
 						className="button button--outline button--add">
-						<AddPizzaPlus />
+						<AddPizzaPlusSvg />
 						<span>Добавить</span>
 						{quantity > 0 && <i>{quantity}</i>}
 					</button>
