@@ -1,5 +1,5 @@
 // Types
-import { SortOrder, TSortParam } from '../../redux/slices/filter/types';
+import { SortOrder, TSortParam } from '../redux/slices/filter/types';
 
 // Data
 import data from '../data/data.json';

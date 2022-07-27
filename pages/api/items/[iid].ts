@@ -2,7 +2,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 // Handler func
-import getSingleItem from '../../../src/server/api/getSingleItem';
+import { getSingleItem } from '../../../src/api';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
 	if (req.method === 'GET') {

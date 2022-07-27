@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { SortOrder, TSortParam } from '../../../src/redux/slices/filter/types';
 
 // Handler func
-import getItems from '../../../src/server/api/getItems';
+import { getItems } from '../../../src/api';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
 	if (req.method === 'GET') {
