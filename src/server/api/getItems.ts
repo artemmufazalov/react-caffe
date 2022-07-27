@@ -14,7 +14,7 @@ const getItems = (
 ) => {
 	let items = data;
 
-	searchValue = searchValue.toLowerCase().slice(1, -1);
+	searchValue = searchValue.toLowerCase();
 
 	let filteredByCategory = category
 		? items.filter((i) => i.category === category)
