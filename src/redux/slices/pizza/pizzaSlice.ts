@@ -8,8 +8,9 @@ import { PizzaStateInterface, LoadingStatusType } from './types';
 import { fetchPizzas, fetchSinglePizzaById } from './asyncActions';
 
 const initialState: PizzaStateInterface = {
-	baseUrl: 'https://629ccb9ee9358232f760bbe8.mockapi.io/api/items',
+	baseUrl: '/api/items',
 	items: [],
+	pagesCount: 1,
 	pizzasLoadingStatus: 'pending',
 	singlePizzaLoadingStatus: 'pending',
 };
@@ -29,6 +30,9 @@ export const pizzaSlice = createSlice({
 			action: PayloadAction<LoadingStatusType>
 		) => {
 			state.pizzasLoadingStatus = action.payload;
+		},
+		setPagesCount: (state, action: PayloadAction<number>) => {
+			state.pagesCount = action.payload;
 		},
 	},
 	extraReducers: (builder) => {
@@ -56,7 +60,10 @@ export const pizzaSlice = createSlice({
 	},
 });
 
-export const { togglePizzasLoadingStatus, toggleSinglePizzaLoadingStatus } =
-	pizzaSlice.actions;
+export const {
+	togglePizzasLoadingStatus,
+	toggleSinglePizzaLoadingStatus,
+	setPagesCount,
+} = pizzaSlice.actions;
 
 export default pizzaSlice.reducer;

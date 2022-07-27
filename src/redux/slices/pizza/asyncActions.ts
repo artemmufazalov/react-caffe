@@ -6,8 +6,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 import { PizzaInterface } from '../generalTypes';
 
-// Helpers
-import { applySearch } from './helpers';
+// Redux
+import { setPagesCount } from './pizzaSlice';
 
 export const fetchPizzas = createAsyncThunk<
 	PizzaInterface[],
@@ -40,15 +40,9 @@ export const fetchPizzas = createAsyncThunk<
 
 	const { data } = await axios.get(url);
 
-	// MockAPI не умеет работать одновременно с параметрами фильтрации и поиска,
-	// Если есть и те, и другие, то он отдает предпочтение первым.
-	// Поэтому, если указаны параметры фильтрации (категория), то применяем поиск на пришедший список
+	thunkAPI.dispatch(setPagesCount(Number(data.data.pageCount)));
 
-	let items = data;
-	if (category !== 0 && search) {
-		items = applySearch(data, search);
-	}
-	return items;
+	return data.data.results;
 });
 
 export const fetchSinglePizzaById = createAsyncThunk<
@@ -60,5 +54,6 @@ export const fetchSinglePizzaById = createAsyncThunk<
 
 	const url = getState().pizza.baseUrl;
 	const { data } = await axios.get(url + `/${id}`);
-	return data;
+
+	return data.result;
 });

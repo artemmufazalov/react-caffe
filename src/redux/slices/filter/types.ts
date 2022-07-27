@@ -1,9 +1,11 @@
 // Libs
 import qs from 'qs';
 
+export type TSortParam = 'price' | 'rating' | 'title';
+
 export type SortProperty = {
 	name: string;
-	sortingProperty: string;
+	sortingProperty: TSortParam;
 };
 
 export type SortOrder = 'desc' | 'asc';

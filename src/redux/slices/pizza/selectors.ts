@@ -13,3 +13,6 @@ export const selectPizzasLoadingStatus = (
 export const selectSinglePizzaLoadingStatus = (
 	state: RootState
 ): LoadingStatusType => state.pizza.singlePizzaLoadingStatus;
+
+export const selectPagesCount = (state: RootState): number =>
+	state.pizza.pagesCount;
