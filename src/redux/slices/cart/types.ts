@@ -1,15 +1,16 @@
 // Types
-import { PizzaInterface } from '../generalTypes';
+import { IItem } from '../generalTypes';
 
-export interface CartPizzaInterface extends PizzaInterface {
+export interface ICartItem extends IItem {
 	cartId: string;
 	quantity: number;
-	doughIndex: number;
-	doughType: string;
+	type: string;
+	typeIndex: number;
+	size: string;
 	sizeIndex: number;
+	cartPrice: number;
 }
 
-export interface CartStateInterface {
-	doughTypes: string[];
-	pizzas: CartPizzaInterface[];
+export interface ICartState {
+	items: ICartItem[];
 }

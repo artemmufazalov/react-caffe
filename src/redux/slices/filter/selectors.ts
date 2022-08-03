@@ -1,25 +1,25 @@
 // Types
 import { RootState } from '../../store';
-import { SortProperty, SortOrder, FilterStateInterface } from './types';
+import { TSortProperty, TSortOrder, IFilterState } from './types';
 
-export const selectActiveCategoryIndex = (state: RootState): number =>
-	state.filter.activeCategoryIndex;
+export const selectActiveProductType = (state: RootState): number =>
+	state.filter.activeProductType;
 
-export const selectCategories = (state: RootState): string[] =>
-	state.filter.categories;
+export const selectActiveProductCategory = (state: RootState): number =>
+	state.filter.activeProductCategory;
 
 export const selectSearchValue = (state: RootState): string =>
 	state.filter.searchValue;
 
-export const selectSortingProperties = (state: RootState): SortProperty[] =>
+export const selectSortingProperties = (state: RootState): TSortProperty[] =>
 	state.filter.sortingProperties;
 
-export const selectActiveSortingProperty = (state: RootState): SortProperty =>
+export const selectActiveSortingProperty = (state: RootState): TSortProperty =>
 	state.filter.activeSortingProperty;
 
-export const selectSortOrder = (state: RootState): SortOrder =>
+export const selectSortOrder = (state: RootState): TSortOrder =>
 	state.filter.sortingOrder;
 
-export const selectFilterValues = (state: RootState): FilterStateInterface => ({
+export const selectFilterValues = (state: RootState): IFilterState => ({
 	...state.filter,
 });

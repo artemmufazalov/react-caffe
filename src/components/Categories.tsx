@@ -1,20 +1,33 @@
 // Libs
 import React from 'react';
-import { useSelector } from 'react-redux';
+
+// Data
+import metaData from '../data/meta.json';
+import { IMeta } from '../data/dataTypes';
 
 // Redux
-import { useAppDispatch } from '../redux/store';
+import { useAppDispatch, useAppSelector } from '../redux/store';
 import { setCategory } from '../redux/slices/filter/filterSlice';
 import {
-	selectActiveCategoryIndex,
-	selectCategories,
+	selectActiveProductCategory,
+	selectActiveProductType,
 } from '../redux/slices/filter/selectors';
 
 const Categories: React.FC = React.memo(() => {
 	const dispatch = useAppDispatch();
 
-	const activeCategoryIndex: number = useSelector(selectActiveCategoryIndex);
-	const categories: string[] = useSelector(selectCategories);
+	const activeProductType: number = useAppSelector(selectActiveProductType);
+	const activeCategoryIndex: number = useAppSelector(
+		selectActiveProductCategory
+	);
+
+	const dataKey =
+		metaData['products_types'][activeProductType - 1][0] + '_categories';
+
+	const categories = [
+		metaData['universal_category'],
+		...(metaData as IMeta)[dataKey],
+	];
 
 	return (
 		<div>

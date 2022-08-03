@@ -1,5 +1,6 @@
 import React from 'react';
 
+// @TODO: change logo
 const PizzaLogoSvg = (props: any) => (
 	<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" {...props}>
 		<title>{props.alt}</title>

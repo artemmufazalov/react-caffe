@@ -1,5 +1,6 @@
 import React from 'react';
 
+// @TODO: Change to Item
 const AddPizzaPlusSvg = (props: any) => (
 	<svg
 		width="12"

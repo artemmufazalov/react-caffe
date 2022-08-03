@@ -1,6 +1,6 @@
 // Lib
 import { NextApiRequest, NextApiResponse } from 'next';
-import { SortOrder, TSortParam } from '../../../src/redux/slices/filter/types';
+import { TSortOrder, TSortParam } from '../../../src/redux/slices/filter/types';
 
 // Handler func
 import { getItems } from '../../../src/api';
@@ -8,15 +8,16 @@ import { getItems } from '../../../src/api';
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
 	if (req.method === 'GET') {
 		const { query } = req;
-		const { page, limit, sortBy, order, category, search } = query;
+		const { page, limit, sortBy, order, category, type, search } = query;
 
 		try {
 			let data = getItems(
 				Number(page) || 1,
 				Number(limit) || 4,
+				Number(type) || 0,
 				Number(category) || 0,
 				(sortBy as TSortParam) || 'rating',
-				(order as SortOrder) || 'desc',
+				(order as TSortOrder) || 'desc',
 				(search as string) || ''
 			);
 

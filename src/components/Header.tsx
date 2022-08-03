@@ -1,6 +1,5 @@
 // Libs
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import clsx from 'clsx';
@@ -13,9 +12,10 @@ import HeaderCartIconSvg from '../assets/cart/CartIconSvg';
 import { Search } from './index';
 
 // Types
-import { CartPizzaInterface } from '../redux/slices/cart/types';
+import { ICartItem } from '../redux/slices/cart/types';
 
 // Redux
+import { useAppSelector } from '../redux/store';
 import {
 	selectCartTotalItemsCount,
 	selectCartTotalItemsCost,
@@ -28,11 +28,11 @@ const Header: React.FC = () => {
 	const router = useRouter();
 	const pathname = router.pathname;
 
-	const totalCount: number = useSelector(selectCartTotalItemsCount);
-	const totalSum: number = useSelector(selectCartTotalItemsCost);
-	const cartItems: CartPizzaInterface[] = useSelector(selectCartItems);
+	const totalCount: number = useAppSelector(selectCartTotalItemsCount);
+	const totalSum: number = useAppSelector(selectCartTotalItemsCost);
+	const cartItems: ICartItem[] = useAppSelector(selectCartItems);
 
-	useCache<CartPizzaInterface[]>('cart', cartItems, setCartItems);
+	useCache<ICartItem[]>('cart', cartItems, setCartItems);
 
 	return (
 		<div className="header">

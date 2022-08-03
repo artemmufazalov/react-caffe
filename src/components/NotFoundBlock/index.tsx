@@ -4,6 +4,7 @@ import React from 'react';
 // Styles
 import styles from './NotFoundBlock.module.scss';
 
+// @TODO: link to the home page
 const NotFoundBlock: React.FC = () => {
 	return (
 		<div className={styles.root}>

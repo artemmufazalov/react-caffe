@@ -1,13 +1,13 @@
-export interface ItemInterface {
+export interface IItem {
 	id: string;
 	imageUrl: string;
+	productType: string;
 	title: string;
-	price: number;
+	types: number[];
+	sizes: string[];
+	price: number[][];
 	category: number;
 	rating: number;
-}
-
-export interface PizzaInterface extends ItemInterface {
-	types: number[];
-	sizes: number[];
+	isMetaType?: boolean;
+	types_names?: string[];
 }

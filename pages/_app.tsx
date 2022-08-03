@@ -24,12 +24,12 @@ const App = ({ Component, pageProps }: AppProps) => {
 				<meta name="theme-color" content="#000000" />
 				<meta
 					name="description"
-					content="Web site with the best pizzas"
+					content="Website of the best online caffe"
 				/>
 				<link rel="icon" href="/pizza_16.png" />
 				<link rel="apple-touch-icon" href="/pizza_192.png" />
 				<link rel="manifest" href="/manifest.json" />
-				<title>Pizza App</title>
+				<title>Caffe App</title>
 			</Head>
 			<MainLayout>
 				<Component {...pageProps} />

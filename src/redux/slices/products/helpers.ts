@@ -1,7 +1,7 @@
 // Types
-import { ItemInterface } from '../generalTypes';
+import { IItem } from '../generalTypes';
 
-export const applySearch = (items: ItemInterface[], value: string) =>
+export const applySearch = (items: IItem[], value: string) =>
 	items &&
 	items.filter(
 		(item) =>

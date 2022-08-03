@@ -7,7 +7,7 @@ import styles from './Pagination.module.scss';
 
 // Redux
 import { useAppSelector } from '../../redux/store';
-import { selectPagesCount } from '../../redux/slices/pizza/selectors';
+import { selectPagesCount } from '../../redux/slices/products/selectors';
 
 interface PaginationPropsInterface {
 	onPageChange: (page: number) => void;

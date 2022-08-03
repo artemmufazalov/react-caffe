@@ -2,7 +2,8 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
 
-const PizzaSkeleton: React.FC = () => (
+// @TODO: sizes of ItemBlock and Skeleton should be the same
+const ItemSkeleton: React.FC = () => (
 	<ContentLoader
 		className="pizza-block"
 		speed={2}
@@ -19,4 +20,4 @@ const PizzaSkeleton: React.FC = () => (
 	</ContentLoader>
 );
 
-export default PizzaSkeleton;
+export default ItemSkeleton;

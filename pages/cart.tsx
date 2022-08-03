@@ -10,7 +10,7 @@ import { CartIconSvg, ClearCartSvg, GoBackArrowSvg } from '../src/assets';
 import { CartItem, EmptyCart } from '../src/components';
 
 // Types
-import { CartPizzaInterface } from '../src/redux/slices/cart/types';
+import { ICartItem } from '../src/redux/slices/cart/types';
 
 // Redux
 import { useAppDispatch } from '../src/redux/store';
@@ -24,11 +24,11 @@ import {
 const Cart: React.FC = () => {
 	const dispatch = useAppDispatch();
 
-	const pizzas: CartPizzaInterface[] = useSelector(selectCartItems);
+	const items: ICartItem[] = useSelector(selectCartItems);
 	const totalCount: number = useSelector(selectCartTotalItemsCount);
 	const totalSum: number = useSelector(selectCartTotalItemsCost);
 
-	const cartItems = pizzas.map((p) => <CartItem {...p} key={p.cartId} />);
+	const cartItems = items.map((p) => <CartItem {...p} key={p.cartId} />);
 
 	const onClearCart = () => {
 		if (window.confirm('Вы уверены, что хотите очистить корзину?')) {
@@ -36,7 +36,7 @@ const Cart: React.FC = () => {
 		}
 	};
 
-	if (pizzas.length < 1) {
+	if (items.length < 1) {
 		return <EmptyCart />;
 	}
 
@@ -57,7 +57,7 @@ const Cart: React.FC = () => {
 				<div className="cart__bottom">
 					<div className="cart__bottom-details">
 						<span>
-							Всего пицц: <b>{totalCount} шт.</b>{' '}
+							Всего продуктов: <b>{totalCount} шт.</b>{' '}
 						</span>
 						<span>
 							Сумма заказа: <b>{totalSum} ₽</b>{' '}

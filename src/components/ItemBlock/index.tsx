@@ -6,41 +6,57 @@ import { useSelector } from 'react-redux';
 // Assets
 import { AddPizzaPlusSvg } from '../../assets';
 
+// Data
+import metaData from '../../data/meta.json';
+import { IMeta } from '../../data/dataTypes';
+
 // Redux
 import { useAppDispatch } from '../../redux/store';
-import { PizzaInterface } from '../../redux/slices/generalTypes';
-import {
-	selectDoughTypes,
-	selectPizzaQuantityById,
-} from '../../redux/slices/cart/selectors';
-import { addPizza } from '../../redux/slices/cart/cartSlice';
+import { IItem } from '../../redux/slices/generalTypes';
+import { selectItemQuantityById } from '../../redux/slices/cart/selectors';
+import { addItem } from '../../redux/slices/cart/cartSlice';
 
-interface PizzaBlockProps extends PizzaInterface {}
+interface ItemBlockProps extends IItem {}
 
-const PizzaBlock: React.FC<PizzaBlockProps> = ({
+const ItemBlock: React.FC<ItemBlockProps> = ({
 	id,
 	title,
+	productType,
 	price,
 	imageUrl,
 	sizes,
 	types,
 	category,
 	rating,
+	isMetaType,
+	types_names,
 }) => {
 	const dispatch = useAppDispatch();
 
-	const typesNames: string[] = useSelector(selectDoughTypes);
-	const quantity: number = useSelector(selectPizzaQuantityById(id));
+	const quantity: number = useSelector(selectItemQuantityById(id));
 
+	// @TODO: change naming
 	const [activePizzaSize, setActivePizzaSize] = React.useState<number>(0);
 	const [activePizzaType, setActivePizzaType] = React.useState<number>(0);
 
+	let productTypes: string[];
+
+	if (!isMetaType && types_names) {
+		productTypes = types_names;
+	} else {
+		const productTypesKey = productType + '_types';
+		productTypes = (metaData as IMeta)[productTypesKey];
+	}
+
 	const onClickAddPizza = () => {
-		let doughIndex = activePizzaType,
+		let typeIndex = activePizzaType,
+			type = productTypes[typeIndex],
 			sizeIndex = activePizzaSize,
-			pizza = {
+			size = sizes[sizeIndex],
+			item = {
 				sizes,
 				types,
+				productType,
 				id,
 				title,
 				price,
@@ -49,13 +65,13 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
 				rating,
 			};
 
-		dispatch(addPizza({ pizza, doughIndex, sizeIndex }));
+		dispatch(addItem({ item, type, typeIndex, sizeIndex, size }));
 	};
 
 	return (
 		<div className="pizza-block-wrapper">
 			<div className="pizza-block">
-				<Link href={`/pizza/${id}`}>
+				<Link href={`/product/${id}`}>
 					<span className="cp">
 						<img
 							className="pizza-block__image"
@@ -74,7 +90,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
 									index === activePizzaType ? 'active' : ''
 								}
 								onClick={() => setActivePizzaType(index)}>
-								{typesNames[type]}
+								{productTypes[type]}
 							</li>
 						))}
 					</ul>
@@ -86,13 +102,15 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
 									index === activePizzaSize ? 'active' : ''
 								}
 								onClick={() => setActivePizzaSize(index)}>
-								{size} см.
+								{size}
 							</li>
 						))}
 					</ul>
 				</div>
 				<div className="pizza-block__bottom">
-					<div className="pizza-block__price">от {price} ₽</div>
+					<div className="pizza-block__price">
+						от {price[activePizzaType][activePizzaSize]} ₽
+					</div>
 					<button
 						onClick={onClickAddPizza}
 						className="button button--outline button--add">
@@ -106,4 +124,4 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
 	);
 };
 
-export default PizzaBlock;
+export default ItemBlock;

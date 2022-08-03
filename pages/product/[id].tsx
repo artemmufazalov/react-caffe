@@ -5,36 +5,36 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 // Types
-import { PizzaInterface } from '../../src/redux/slices/generalTypes';
-import { LoadingStatusType } from '../../src/redux/slices/pizza/types';
+import { IItem } from '../../src/redux/slices/generalTypes';
+import { TLoadingStatus } from '../../src/redux/slices/products/types';
 
 // Redux
 import { useAppDispatch } from '../../src/redux/store';
-import { fetchSinglePizzaById } from '../../src/redux/slices/pizza/asyncActions';
-import { selectSinglePizzaLoadingStatus } from '../../src/redux/slices/pizza/selectors';
+import { fetchSingleProductById } from '../../src/redux/slices/products/asyncActions';
+import { selectSingleProductLoadingStatus } from '../../src/redux/slices/products/selectors';
 
-const PizzaPage: React.FC = () => {
+const ProductPage: React.FC = () => {
 	const dispatch = useAppDispatch();
 	const router = useRouter();
 
 	const { id } = router.query;
 
-	const [pizza, setPizza] = React.useState<PizzaInterface>();
+	const [product, setProduct] = React.useState<IItem>();
 
-	const pizzaLoadingStatus: LoadingStatusType = useSelector(
-		selectSinglePizzaLoadingStatus
+	const productLoadingStatus: TLoadingStatus = useSelector(
+		selectSingleProductLoadingStatus
 	);
 
 	// TODO: Мб вынести в GetProps, учитывая, что это не меняется
 	React.useEffect(() => {
-		const fetchPizza = async () => {
-			const data = await dispatch(fetchSinglePizzaById(id as string));
-			setPizza(data.payload as PizzaInterface);
+		const fetchProduct = async () => {
+			const data = await dispatch(fetchSingleProductById(id as string));
+			setProduct(data.payload as IItem);
 		};
-		fetchPizza();
+		fetchProduct();
 	}, [id, dispatch]);
 
-	if (pizzaLoadingStatus === 'error') {
+	if (productLoadingStatus === 'error') {
 		return (
 			<div className="container">
 				<h2>Ошибка при загрузке данных!</h2>
@@ -47,7 +47,7 @@ const PizzaPage: React.FC = () => {
 		);
 	}
 
-	if (!pizza) {
+	if (!product) {
 		return (
 			<div className="container">
 				<h2>Загрузка...</h2>
@@ -57,9 +57,14 @@ const PizzaPage: React.FC = () => {
 
 	return (
 		<div className="container">
-			<img src={pizza.imageUrl} alt={pizza.title} />
-			<h2>{pizza.title}</h2>
-			<h4>{pizza.price}</h4>
+			<img
+				src={product.imageUrl}
+				alt={product.title}
+				height="400"
+				width="400"
+			/>
+			<h2>{product.title}</h2>
+			<h4>От {product.price[0][0]} рублей</h4>
 			<br />
 			<Link href="/">
 				<span className="button">На главную</span>
@@ -68,4 +73,4 @@ const PizzaPage: React.FC = () => {
 	);
 };
 
-export default PizzaPage;
+export default ProductPage;

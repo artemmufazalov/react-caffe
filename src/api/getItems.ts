@@ -1,24 +1,33 @@
 // Types
-import { SortOrder, TSortParam } from '../redux/slices/filter/types';
+import { TSortOrder, TSortParam } from '../redux/slices/filter/types';
+import { IItem } from '../redux/slices/generalTypes';
 
 // Data
 import data from '../data/data.json';
+import metaData from '../data/meta.json';
 
 const getItems = (
 	page: number | undefined = 1,
 	quantity: number | undefined = 4,
+	type: number | undefined = 0,
 	category: number | undefined = 0,
 	sortParam: TSortParam | undefined = 'rating',
-	sortOrder: SortOrder | undefined = 'desc',
+	sortOrder: TSortOrder | undefined = 'desc',
 	searchValue: string | undefined = ''
 ) => {
 	let items = data;
 
 	searchValue = searchValue.toLowerCase();
 
-	let filteredByCategory = category
-		? items.filter((i) => i.category === category)
+	const productTypes = ['', ...metaData['products_types'].map((a) => a[0])];
+
+	let filteredByProductType = type
+		? items.filter((i) => i.productType === productTypes[type])
 		: items;
+
+	let filteredByCategory = category
+		? filteredByProductType.filter((i) => i.category === category)
+		: filteredByProductType;
 
 	let filteredBySearchValue = searchValue
 		? filteredByCategory.filter((i) =>
@@ -27,15 +36,19 @@ const getItems = (
 		: filteredByCategory;
 
 	let orderParam = sortOrder === 'desc' ? -1 : 1,
-		results;
+		results: IItem[] = [];
 
 	if (sortParam === 'title') {
 		results = filteredBySearchValue.sort(
 			(a, b) => a[sortParam].localeCompare(b[sortParam]) * orderParam
 		);
-	} else {
+	} else if (sortParam === 'rating') {
 		results = filteredBySearchValue.sort(
 			(a, b) => (a[sortParam] - b[sortParam]) * orderParam
+		);
+	} else if (sortParam === 'price') {
+		results = filteredBySearchValue.sort(
+			(a, b) => (a[sortParam][0][0] - b[sortParam][0][0]) * orderParam
 		);
 	}
 

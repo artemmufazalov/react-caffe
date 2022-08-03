@@ -8,14 +8,15 @@ import { useRouter } from 'next/router';
 import {
 	Categories,
 	Sort,
-	PizzaSkeleton,
-	PizzaBlock,
+	ItemSkeleton,
+	ItemBlock,
 	Pagination,
+	ProductTypes,
 } from '../src/components';
 
 // Types
-import { PizzaInterface } from '../src/redux/slices/generalTypes';
-import { LoadingStatusType } from '../src/redux/slices/pizza/types';
+import { IItem } from '../src/redux/slices/generalTypes';
+import { TLoadingStatus } from '../src/redux/slices/products/types';
 
 // Redux
 import { useAppDispatch } from '../src/redux/store';
@@ -23,12 +24,12 @@ import {
 	setCurrentPage,
 	setFilters,
 } from '../src/redux/slices/filter/filterSlice';
-import { fetchPizzas } from '../src/redux/slices/pizza/asyncActions';
+import { fetchProducts } from '../src/redux/slices/products/asyncActions';
 import { selectFilterValues } from '../src/redux/slices/filter/selectors';
 import {
-	selectPizzasLoadingStatus,
+	selectProductsLoadingStatus,
 	selectItems,
-} from '../src/redux/slices/pizza/selectors';
+} from '../src/redux/slices/products/selectors';
 
 const Home: React.FC = () => {
 	const router = useRouter();
@@ -41,18 +42,20 @@ const Home: React.FC = () => {
 	const isMount = React.useRef(false);
 
 	const {
-		activeCategoryIndex,
+		activeProductType,
+		activeProductCategory,
 		activeSortingProperty,
 		sortingOrder,
 		searchValue,
 		currentPage,
 	} = useSelector(selectFilterValues);
 
-	const items: PizzaInterface[] = useSelector(selectItems);
-	const pizzasLoadingStatus: LoadingStatusType = useSelector(
-		selectPizzasLoadingStatus
+	const items: IItem[] = useSelector(selectItems);
+	const productsLoadingStatus: TLoadingStatus = useSelector(
+		selectProductsLoadingStatus
 	);
 
+	// @TODO: Scroll to product types
 	const onPageChange = React.useCallback(
 		(page: number) => {
 			dispatch(setCurrentPage(page));
@@ -78,9 +81,10 @@ const Home: React.FC = () => {
 			const queryString = qs.stringify({
 					sort: activeSortingProperty.sortingProperty,
 					order: sortingOrder,
-					categoryId: activeCategoryIndex,
+					categoryId: activeProductCategory,
 					search: searchValue,
 					page: currentPage,
+					type: activeProductType,
 				}),
 				currentQuery = qs.stringify(router.query);
 
@@ -90,49 +94,57 @@ const Home: React.FC = () => {
 		}
 		isMount.current = true;
 	}, [
+		activeProductType,
 		activeSortingProperty,
 		sortingOrder,
 		searchValue,
 		currentPage,
-		activeCategoryIndex,
+		activeProductCategory,
 		router,
 	]);
 
 	// Если параметры поиска спарсились или их нет, то производим запрос на бек за пиццами
 	React.useEffect(() => {
 		if (!isParsingFirstInteractionUrlQuery.current) {
-			dispatch(fetchPizzas(''));
+			dispatch(fetchProducts(''));
 		}
 		isParsingFirstInteractionUrlQuery.current = false;
 	}, [
 		dispatch,
+		activeProductType,
 		activeSortingProperty,
 		sortingOrder,
 		searchValue,
 		currentPage,
-		activeCategoryIndex,
+		activeProductCategory,
 	]);
 
 	const [skeletons, setSkeletons] = React.useState<React.ReactNode[]>([]);
 
 	React.useEffect(() => {
-		setSkeletons(
-			[...new Array(4)].map((_, i) => <PizzaSkeleton key={i} />)
-		);
+		setSkeletons([...new Array(4)].map((_, i) => <ItemSkeleton key={i} />));
 	}, [items]);
 
-	const pizzaBlocks = items.map((pizza) => (
-		<PizzaBlock {...pizza} key={pizza['id']} />
+	const pizzaBlocks = items.map((item) => (
+		<ItemBlock {...item} key={item['id']} />
 	));
 
 	return (
 		<div className="container">
 			<div className="content__top">
-				<Categories />
+				<ProductTypes />
 				<Sort />
 			</div>
-			<h2 className="content__title">Все пиццы</h2>
-			{pizzasLoadingStatus === 'error' && (
+			{activeProductType !== 0 && activeProductType !== 5 ? (
+				<div className="content__top">
+					<Categories />
+				</div>
+			) : (
+				''
+			)}
+			<h2 className="content__title">Меню</h2>
+
+			{productsLoadingStatus === 'error' && (
 				<div className="content__error-info">
 					<h2>
 						Товаров не нашлось <span>😕</span>
@@ -145,9 +157,9 @@ const Home: React.FC = () => {
 				</div>
 			)}
 			<div className="content__items">
-				{pizzasLoadingStatus === 'pending' ? skeletons : pizzaBlocks}
+				{productsLoadingStatus === 'pending' ? skeletons : pizzaBlocks}
 			</div>
-			{pizzasLoadingStatus !== 'error' && (
+			{productsLoadingStatus !== 'error' && (
 				<Pagination
 					onPageChange={onPageChange}
 					currentPage={currentPage}

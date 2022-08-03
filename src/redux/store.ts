@@ -6,7 +6,7 @@ import { createWrapper } from 'next-redux-wrapper';
 // Slices
 import filterReducer from './slices/filter/filterSlice';
 import cartReducer from './slices/cart/cartSlice';
-import pizzaReducer from './slices/pizza/pizzaSlice';
+import productsReducer from './slices/products/productsSlice';
 
 // Middlewares
 import { errorsHandler } from './middlewares/errorHandler';
@@ -16,7 +16,7 @@ export const makeStore = () =>
 		reducer: {
 			filter: filterReducer,
 			cart: cartReducer,
-			pizza: pizzaReducer,
+			products: productsReducer,
 		},
 		middleware: (getDefaultMiddleware) =>
 			getDefaultMiddleware().concat(errorsHandler),

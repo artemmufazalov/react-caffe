@@ -1,27 +1,24 @@
 // Types
 import { RootState } from '../../store';
-import { CartPizzaInterface } from './types';
+import { ICartItem } from './types';
 
-export const selectCartItems = (state: RootState): CartPizzaInterface[] =>
-	state.cart.pizzas;
+export const selectCartItems = (state: RootState): ICartItem[] =>
+	state.cart.items;
 
-export const selectPizzaQuantityById =
+export const selectItemQuantityById =
 	(id: string) =>
 	(state: RootState): number => {
-		if (state.cart.pizzas.length < 1) return 0;
-		return state.cart.pizzas
+		if (state.cart.items.length < 1) return 0;
+		return state.cart.items
 			.filter((obj) => obj.id === id)
 			.reduce((prev, curr) => prev + curr.quantity, 0);
 	};
 
 export const selectCartTotalItemsCost = (state: RootState): number =>
-	state.cart.pizzas.reduce(
-		(prev, curr) => prev + curr.quantity * curr.price,
+	state.cart.items.reduce(
+		(prev, curr) => prev + curr.quantity * curr.cartPrice,
 		0
 	);
 
 export const selectCartTotalItemsCount = (state: RootState): number =>
-	state.cart.pizzas.reduce((prev, curr) => prev + curr.quantity, 0);
-
-export const selectDoughTypes = (state: RootState): string[] =>
-	state.cart.doughTypes;
+	state.cart.items.reduce((prev, curr) => prev + curr.quantity, 0);
