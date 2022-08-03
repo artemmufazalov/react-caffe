@@ -20,7 +20,10 @@ const combinedAppReducers = combineReducers({
 
 const reducer: Reducer = (state: RootState, action) => {
 	if (action.type === HYDRATE) {
-		return { ...cloneDeep(state), ...action.payload };
+		if (action.payload.products.productsSSFStatus) {
+			return { ...cloneDeep(state), products: action.payload.products };
+		}
+		return { ...cloneDeep(state) };
 	} else {
 		return combinedAppReducers(state, action);
 	}

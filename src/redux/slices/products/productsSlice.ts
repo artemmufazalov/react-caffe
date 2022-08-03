@@ -14,12 +14,16 @@ const initialState: IProductsState = {
 	pagesCount: 0,
 	productsLoadingStatus: 'idle',
 	singleProductLoadingStatus: 'idle',
+	productsSSFStatus: false,
 };
 
 export const productsSlice = createSlice({
 	name: 'products',
 	initialState,
 	reducers: {
+		setProductsSSFStatus: (state, action: PayloadAction<boolean>) => {
+			state.productsSSFStatus = action.payload;
+		},
 		toggleProductsLoadingStatus: (
 			state,
 			action: PayloadAction<TLoadingStatus>
@@ -65,6 +69,7 @@ export const productsSlice = createSlice({
 });
 
 export const {
+	setProductsSSFStatus,
 	toggleProductsLoadingStatus,
 	toggleSingleProductLoadingStatus,
 	setPagesCount,

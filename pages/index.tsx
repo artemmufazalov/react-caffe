@@ -19,8 +19,9 @@ import { IItem } from '../src/redux/slices/generalTypes';
 import { TLoadingStatus } from '../src/redux/slices/products/types';
 
 // Redux
-import { useAppDispatch } from '../src/redux/store';
+import { useAppDispatch, wrapper, RootStore } from '../src/redux/store';
 import {
+	dropFilters,
 	setCurrentPage,
 	setFilters,
 } from '../src/redux/slices/filter/filterSlice';
@@ -30,14 +31,17 @@ import {
 	selectProductsLoadingStatus,
 	selectItems,
 } from '../src/redux/slices/products/selectors';
+import { setServerUrl } from '../src/redux/slices/app/appSlice';
+import { setProductsSSFStatus } from '../src/redux/slices/products/productsSlice';
 
-const Home: React.FC = () => {
+const Home: React.FC = React.memo(() => {
 	const router = useRouter();
 	const dispatch = useAppDispatch();
 
 	// При первом рендере проверяем строку поиска.
 	// Если там есть параметры, то не производим первый рендер пицц, а ждем, пока спарсятся параметры
 	const isParsingFirstInteractionUrlQuery = React.useRef(false);
+	const lastQuery = React.useRef(router.asPath);
 
 	const isMount = React.useRef(false);
 
@@ -67,9 +71,8 @@ const Home: React.FC = () => {
 	// Проверяем url-параметры при первом рендере, если они есть, то записываем их в state
 	React.useEffect(() => {
 		if (window.location.search) {
-			const params: qs.ParsedQs = qs.parse(
-				window.location.search.substring(1)
-			);
+			const searchQuery = window.location.search.substring(1);
+			const params: qs.ParsedQs = qs.parse(searchQuery);
 			dispatch(setFilters(params));
 			isParsingFirstInteractionUrlQuery.current = true;
 		}
@@ -89,7 +92,7 @@ const Home: React.FC = () => {
 				currentQuery = qs.stringify(router.query);
 
 			if (currentQuery !== queryString) {
-				router.push(`?${queryString}`);
+				router.push(`?${queryString}`, undefined, { shallow: true });
 			}
 		}
 		isMount.current = true;
@@ -106,16 +109,20 @@ const Home: React.FC = () => {
 	// Если параметры поиска спарсились или их нет, то производим запрос на бек за пиццами
 	React.useEffect(() => {
 		if (!isParsingFirstInteractionUrlQuery.current) {
-			dispatch(fetchProducts(''));
+			if (lastQuery.current !== router.asPath) {
+				dispatch(fetchProducts(''));
+				lastQuery.current = router.asPath;
+			}
 		}
 		isParsingFirstInteractionUrlQuery.current = false;
 	}, [
+		router,
 		dispatch,
-		activeProductType,
 		activeSortingProperty,
 		sortingOrder,
 		searchValue,
 		currentPage,
+		activeProductType,
 		activeProductCategory,
 	]);
 
@@ -167,6 +174,37 @@ const Home: React.FC = () => {
 			)}
 		</div>
 	);
-};
+});
+
+export const getServerSideProps = wrapper.getServerSideProps(
+	(store: RootStore) =>
+		async ({ query, req, resolvedUrl, params }): Promise<any> => {
+			const requestUrl = req.headers.referer
+				?.replace(
+					process.env.NEXT_PUBLIC_VERCEL_URL ||
+						'http://localhost:3000',
+					''
+				)
+				.split('?')[0];
+
+			if (requestUrl && requestUrl !== '/') {
+				store.dispatch(setProductsSSFStatus(false));
+				return;
+			}
+
+			store.dispatch(
+				setServerUrl(
+					process.env.NEXT_PUBLIC_VERCEL_URL ||
+						'http://localhost:3000'
+				)
+			);
+			store.dispatch(setFilters(query));
+			await store.dispatch(fetchProducts(''));
+			store.dispatch(setProductsSSFStatus(true));
+
+			store.dispatch(dropFilters());
+			store.dispatch(setServerUrl(''));
+		}
+);
 
 export default Home;
