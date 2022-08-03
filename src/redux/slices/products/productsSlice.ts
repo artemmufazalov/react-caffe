@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // Types
 import { IProductsState, TLoadingStatus } from './types';
+import { IItem } from '../generalTypes';
 
 // Asyncs
 import { fetchProducts, fetchSingleProductById } from './asyncActions';
@@ -10,9 +11,9 @@ import { fetchProducts, fetchSingleProductById } from './asyncActions';
 const initialState: IProductsState = {
 	baseUrl: '/api/items',
 	items: [],
-	pagesCount: 1,
-	productsLoadingStatus: 'pending',
-	singleProductLoadingStatus: 'pending',
+	pagesCount: 0,
+	productsLoadingStatus: 'idle',
+	singleProductLoadingStatus: 'idle',
 };
 
 export const productsSlice = createSlice({
@@ -33,6 +34,9 @@ export const productsSlice = createSlice({
 		},
 		setPagesCount: (state, action: PayloadAction<number>) => {
 			state.pagesCount = action.payload;
+		},
+		setItems: (state, action: PayloadAction<IItem[]>) => {
+			state.items = action.payload;
 		},
 	},
 	extraReducers: (builder) => {
@@ -64,6 +68,7 @@ export const {
 	toggleProductsLoadingStatus,
 	toggleSingleProductLoadingStatus,
 	setPagesCount,
+	setItems,
 } = productsSlice.actions;
 
 export default productsSlice.reducer;

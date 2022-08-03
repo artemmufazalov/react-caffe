@@ -16,7 +16,8 @@ export const fetchProducts = createAsyncThunk<
 >('pizza/fetchPizzasStatus', async (_, thunkAPI) => {
 	const getState = thunkAPI.getState;
 
-	const baseUrl = getState().products.baseUrl;
+	const backendUrl = getState().app.backendUrl;
+	const baseUrl = backendUrl + getState().products.baseUrl;
 
 	const filterAndSortParams = getState().filter;
 
@@ -58,7 +59,8 @@ export const fetchSingleProductById = createAsyncThunk<
 >('pizza/fetchSingleProductByIdStatus', async (id: string, { getState }) => {
 	if (!id) return;
 
-	const url = getState().products.baseUrl;
+	const backendUrl = getState().app.backendUrl;
+	const url = backendUrl + getState().products.baseUrl;
 	const { data } = await axios.get(url + `/${id}`);
 
 	return data.result;

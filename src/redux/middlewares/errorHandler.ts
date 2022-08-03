@@ -9,11 +9,11 @@ import {
 export const errorsHandler: Middleware =
 	(api: MiddlewareAPI) => (next: Dispatch) => (action: Action) => {
 		if (isRejected(action)) {
-			console.log(action.error);
+			console.error(action.error);
 			if (
 				action.error.message === 'Request failed with status code 429'
 			) {
-				console.log('Слишком много запросов!');
+				console.error('Слишком много запросов!');
 			}
 		}
 

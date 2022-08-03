@@ -53,6 +53,10 @@ export const filterSlice = createSlice({
 			state.currentPage = action.payload;
 		},
 		setFilters: (state, action: PayloadAction<IFilterQueryInputParams>) => {
+			if (!action.payload) {
+				return;
+			}
+
 			if (action.payload.sort) {
 				let sortingPropery = state.sortingProperties.find(
 					(obj) => obj.sortingProperty === action.payload.sort

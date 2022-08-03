@@ -29,7 +29,7 @@ const Pagination: React.FC<PaginationPropsInterface> = ({
 				onPageChange={(event) => onPageChange(event.selected + 1)}
 				marginPagesDisplayed={1}
 				pageRangeDisplayed={3}
-				pageCount={pagesCount}
+				pageCount={pagesCount || 0}
 				renderOnZeroPageCount={() => null}
 				forcePage={currentPage - 1}
 			/>

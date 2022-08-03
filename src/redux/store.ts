@@ -3,21 +3,15 @@ import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 import { createWrapper } from 'next-redux-wrapper';
 
-// Slices
-import filterReducer from './slices/filter/filterSlice';
-import cartReducer from './slices/cart/cartSlice';
-import productsReducer from './slices/products/productsSlice';
+// Reducer
+import rootReducer from './rootReducer';
 
 // Middlewares
 import { errorsHandler } from './middlewares/errorHandler';
 
 export const makeStore = () =>
 	configureStore({
-		reducer: {
-			filter: filterReducer,
-			cart: cartReducer,
-			products: productsReducer,
-		},
+		reducer: rootReducer,
 		middleware: (getDefaultMiddleware) =>
 			getDefaultMiddleware().concat(errorsHandler),
 	});
