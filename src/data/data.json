@@ -225,7 +225,7 @@
 			[140, 260],
 			[140, 260]
 		],
-		"category": 2,
+		"category": 1,
 		"rating": 8
 	},
 	{
@@ -299,7 +299,7 @@
 	},
 	{
 		"id": "ot0",
-		"imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDNCalZvPcY9QeEL1n4w7YElbO0Hl4yijLVj7kl3eJTPDPbQPDuKkyTr20rt8H9z2qAdg&usqp=CAU",
+		"imageUrl": "https://mcdonaldsmenu.ru/image/cache/catalog/photo/salat_cezar_193-600x600.jpg",
 		"productType": "other",
 		"metaType": false,
 		"title": "Салат Цезарь",
