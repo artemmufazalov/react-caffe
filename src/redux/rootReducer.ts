@@ -1,9 +1,4 @@
-import { combineReducers, Reducer } from '@reduxjs/toolkit';
-import { HYDRATE } from 'next-redux-wrapper';
-import cloneDeep from 'lodash.clonedeep';
-
-// Types
-import { RootState } from './store';
+import { combineReducers } from '@reduxjs/toolkit';
 
 // Slices
 import filterReducer from './slices/filter/filterSlice';
@@ -18,15 +13,4 @@ const combinedAppReducers = combineReducers({
 	app: appReducer,
 });
 
-const reducer: Reducer = (state: RootState, action) => {
-	if (action.type === HYDRATE) {
-		if (action.payload.products.productsSSFStatus) {
-			return { ...cloneDeep(state), products: action.payload.products };
-		}
-		return { ...cloneDeep(state) };
-	} else {
-		return combinedAppReducers(state, action);
-	}
-};
-
-export default reducer;
+export default combinedAppReducers;

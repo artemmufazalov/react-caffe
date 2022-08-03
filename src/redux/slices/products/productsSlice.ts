@@ -1,9 +1,11 @@
 // Libs
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { HYDRATE } from 'next-redux-wrapper';
 
 // Types
 import { IProductsState, TLoadingStatus } from './types';
 import { IItem } from '../generalTypes';
+import { RootState } from '../../store';
 
 // Asyncs
 import { fetchProducts, fetchSingleProductById } from './asyncActions';
@@ -64,6 +66,12 @@ export const productsSlice = createSlice({
 		});
 		builder.addCase(fetchSingleProductById.rejected, (state) => {
 			state.singleProductLoadingStatus = 'error';
+		});
+		builder.addCase(HYDRATE, (state, action) => {
+			const payload = (action as PayloadAction<RootState>).payload;
+			if (payload.products.productsSSFStatus) {
+				state.items = payload.products.items;
+			}
 		});
 	},
 });
