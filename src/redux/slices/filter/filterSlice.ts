@@ -69,7 +69,7 @@ export const filterSlice = createSlice({
 			state.sortingOrder = (action.payload.order as TSortOrder) || 'desc';
 			state.searchValue = action.payload.search || '';
 			state.currentPage = Number(action.payload.page) || 1;
-			state.activeProductType = Number(action.payload.productType) || 0;
+			state.activeProductType = Number(action.payload.type) || 0;
 			state.activeProductCategory =
 				Number(action.payload.categoryId) || 0;
 		},
