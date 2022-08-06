@@ -30,8 +30,9 @@
 
 	&__logo {
 		display: flex;
+		cursor: pointer;
 
-		img {
+		svg {
 			margin-right: 15px;
 		}
 

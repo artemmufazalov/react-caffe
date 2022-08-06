@@ -3,21 +3,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // Types
 import {
-	FilterStateInterface,
-	SortProperty,
-	SortOrder,
-	FilterQueryInputParamsInterface,
+	IFilterState,
+	TSortProperty,
+	TSortOrder,
+	IFilterQueryInputParams,
 } from './types';
 
-const initialState: FilterStateInterface = {
-	categories: [
-		'Все',
-		'Мясные',
-		'Вегетарианская',
-		'Гриль',
-		'Острые',
-		'Закрытые',
-	],
+const initialState: IFilterState = {
 	sortingProperties: [
 		{ name: 'популярности', sortingProperty: 'rating' },
 		{ name: 'цене', sortingProperty: 'price' },
@@ -27,7 +19,8 @@ const initialState: FilterStateInterface = {
 		name: 'популярности',
 		sortingProperty: 'rating',
 	},
-	activeCategoryIndex: 0,
+	activeProductType: 0,
+	activeProductCategory: 0,
 	sortingOrder: 'desc',
 	searchValue: '',
 	currentPage: 1,
@@ -37,13 +30,20 @@ export const filterSlice = createSlice({
 	name: 'filter',
 	initialState,
 	reducers: {
+		setProductType: (state, action: PayloadAction<number>) => {
+			state.activeProductType = action.payload;
+			state.currentPage = 1;
+			state.activeProductCategory = 0;
+		},
 		setCategory: (state, action: PayloadAction<number>) => {
-			state.activeCategoryIndex = action.payload;
+			state.activeProductCategory = action.payload;
+			state.currentPage = 1;
 		},
 		setSearchValue: (state, action: PayloadAction<string>) => {
 			state.searchValue = action.payload;
+			state.currentPage = 1;
 		},
-		setSortingProperty: (state, action: PayloadAction<SortProperty>) => {
+		setSortingProperty: (state, action: PayloadAction<TSortProperty>) => {
 			state.activeSortingProperty = action.payload;
 		},
 		toggleSortingOrder: (state) => {
@@ -52,10 +52,11 @@ export const filterSlice = createSlice({
 		setCurrentPage: (state, action: PayloadAction<number>) => {
 			state.currentPage = action.payload;
 		},
-		setFilters: (
-			state,
-			action: PayloadAction<FilterQueryInputParamsInterface>
-		) => {
+		setFilters: (state, action: PayloadAction<IFilterQueryInputParams>) => {
+			if (!action.payload) {
+				return;
+			}
+
 			if (action.payload.sort) {
 				let sortingPropery = state.sortingProperties.find(
 					(obj) => obj.sortingProperty === action.payload.sort
@@ -65,10 +66,12 @@ export const filterSlice = createSlice({
 				}
 			}
 
-			state.sortingOrder = (action.payload.order as SortOrder) || 'desc';
+			state.sortingOrder = (action.payload.order as TSortOrder) || 'desc';
 			state.searchValue = action.payload.search || '';
 			state.currentPage = Number(action.payload.page) || 1;
-			state.activeCategoryIndex = Number(action.payload.categoryId) || 0;
+			state.activeProductType = Number(action.payload.type) || 0;
+			state.activeProductCategory =
+				Number(action.payload.categoryId) || 0;
 		},
 		dropFilters: (state) => {
 			state.activeSortingProperty = {
@@ -78,12 +81,14 @@ export const filterSlice = createSlice({
 			state.sortingOrder = 'desc';
 			state.searchValue = '';
 			state.currentPage = 1;
-			state.activeCategoryIndex = 0;
+			state.activeProductType = 0;
+			state.activeProductCategory = 0;
 		},
 	},
 });
 
 export const {
+	setProductType,
 	setCategory,
 	setSearchValue,
 	setSortingProperty,

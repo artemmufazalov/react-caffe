@@ -1,41 +1,48 @@
 // Libs
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import clsx from 'clsx';
 
 // Assets
-import { pizzaLogoSvg } from '../assets';
-import { ReactComponent as HeaderCartIconSvg } from '../assets/header/headerCartIcon.svg';
+import { PizzaLogoSvg } from '../assets';
+import HeaderCartIconSvg from '../assets/cart/CartIconSvg';
 
 // Components
-import { Search } from '.';
+import { Search } from './index';
 
 // Types
-import { CartPizzaInterface } from '../redux/slices/cart/types';
+import { ICartItem } from '../redux/slices/cart/types';
 
 // Redux
+import { useAppSelector } from '../redux/store';
 import {
 	selectCartTotalItemsCount,
 	selectCartTotalItemsCost,
 	selectCartItems,
 } from '../redux/slices/cart/selectors';
 import { useCache } from '../redux/reduxCustomHooks/useCache';
+import { setCartItems } from '../redux/slices/cart/cartSlice';
 
 const Header: React.FC = () => {
-	const { pathname } = useLocation();
+	const router = useRouter();
+	const pathname = router.pathname;
 
-	const totalCount: number = useSelector(selectCartTotalItemsCount);
-	const totalSum: number = useSelector(selectCartTotalItemsCost);
-	const cartItems: CartPizzaInterface[] = useSelector(selectCartItems);
+	const totalCount: number = useAppSelector(selectCartTotalItemsCount);
+	const totalSum: number = useAppSelector(selectCartTotalItemsCost);
+	const cartItems: ICartItem[] = useAppSelector(selectCartItems);
 
-	useCache<CartPizzaInterface[]>('cart', cartItems);
+	useCache<ICartItem[]>('cart', cartItems, setCartItems);
 
 	return (
 		<div className="header">
 			<div className="container">
-				<Link to="">
-					<div className="header__logo">
-						<img width="38" src={pizzaLogoSvg} alt="Pizza logo" />
+				<Link href="/">
+					<div
+						className={clsx('header__logo', {
+							wdpe: pathname === '' || pathname === '/',
+						})}>
+						<PizzaLogoSvg width="38" alt="На главную" />
 						<div>
 							<h1>React Pizza</h1>
 							<p>самая вкусная пицца во вселенной</p>
@@ -46,11 +53,13 @@ const Header: React.FC = () => {
 				{!pathname.includes('/cart') && <Search />}
 				{!pathname.includes('/cart') && (
 					<div className="header__cart">
-						<Link to="cart" className="button button--cart">
-							<span>{totalSum} ₽</span>
-							<div className="button__delimiter"></div>
-							<HeaderCartIconSvg />
-							<span>{totalCount}</span>
+						<Link href="/cart">
+							<div className="button button--cart">
+								<span>{totalSum} ₽</span>
+								<div className="button__delimiter"></div>
+								<HeaderCartIconSvg />
+								<span>{totalCount}</span>
+							</div>
 						</Link>
 					</div>
 				)}

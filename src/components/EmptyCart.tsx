@@ -1,9 +1,6 @@
 // Libs
 import React from 'react';
-import { Link } from 'react-router-dom';
-
-// Assets
-import emptyCartPng from '../assets/cart/emptyCart.png';
+import Link from 'next/link';
 
 const EmptyCart: React.FC = () => {
 	return (
@@ -13,14 +10,16 @@ const EmptyCart: React.FC = () => {
 					Корзина пустая <span>😕</span>
 				</h2>
 				<p>
-					Вероятней всего, вы не заказывали ещё пиццу.
+					Вероятней всего, вы еще ничего в нее не добавили.
 					<br />
-					Для того, чтобы заказать пиццу, перейдите на главную
+					Для того, чтобы добавить товар, перейдите на главную
 					страницу.
 				</p>
-				<img src={emptyCartPng} alt="Empty cart" />
-				<Link to="../" className="button button--black">
-					<span>Вернуться назад</span>
+				<img src="/assets/emptyCart.png" alt="Empty cart" />
+				<Link href="/">
+					<span className="button button--black">
+						Вернуться назад
+					</span>
 				</Link>
 			</div>
 		</div>

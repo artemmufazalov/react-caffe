@@ -18,6 +18,8 @@ test.js
 
 # production
 /build
+.next
+/out
 
 # misc
 .DS_Store

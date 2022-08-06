@@ -1,24 +1,26 @@
 // Libs
 import qs from 'qs';
 
-export type SortProperty = {
+export type TSortParam = 'price' | 'rating' | 'title';
+
+export type TSortProperty = {
 	name: string;
-	sortingProperty: string;
+	sortingProperty: TSortParam;
 };
 
-export type SortOrder = 'desc' | 'asc';
+export type TSortOrder = 'desc' | 'asc';
 
-export interface FilterStateInterface {
-	categories: string[];
-	sortingProperties: SortProperty[];
-	activeSortingProperty: SortProperty;
-	activeCategoryIndex: number;
-	sortingOrder: SortOrder;
+export interface IFilterState {
+	sortingProperties: TSortProperty[];
+	activeSortingProperty: TSortProperty;
+	activeProductType: number;
+	activeProductCategory: number;
+	sortingOrder: TSortOrder;
 	searchValue: string;
 	currentPage: number;
 }
 
-export interface FilterQueryInputParamsInterface extends qs.ParsedQs {
+export interface IFilterQueryInputParams extends qs.ParsedQs {
 	sort?: string;
 	order?: string;
 	categoryId?: string;

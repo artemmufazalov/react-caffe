@@ -2,30 +2,27 @@
 import React from 'react';
 
 // Assets
-import { ReactComponent as MinusSvg } from '../assets/cart/minus.svg';
-import { ReactComponent as PlusSvg } from '../assets/cart/plus.svg';
-import { ReactComponent as CrossSvg } from '../assets/cart/cross.svg';
+import { MinusSvg, PlusSvg, CrossSvg } from '../assets';
 
 // Redux
 import { useAppDispatch } from '../redux/store';
-import { CartPizzaInterface } from '../redux/slices/cart/types';
+import { ICartItem } from '../redux/slices/cart/types';
 import {
-	increasePizzaQuantity,
-	decreasePizzaQuantity,
-	removePizzaFromCart,
+	increaseItemQuantity,
+	decreaseItemQuantity,
+	removeItemFromCart,
 } from '../redux/slices/cart/cartSlice';
 
-interface CartItemPropsInterface extends CartPizzaInterface {}
+interface CartItemPropsInterface extends ICartItem {}
 
 const CartItem: React.FC<CartItemPropsInterface> = ({
 	cartId,
 	title,
-	price,
 	imageUrl,
 	quantity,
-	sizes,
-	sizeIndex,
-	doughType,
+	type,
+	size,
+	cartPrice,
 }) => {
 	const dispatch = useAppDispatch();
 
@@ -35,7 +32,7 @@ const CartItem: React.FC<CartItemPropsInterface> = ({
 				'Вы уверены, что хотите удалить эту пиццу из корзины?'
 			)
 		) {
-			dispatch(removePizzaFromCart(cartId));
+			dispatch(removeItemFromCart(cartId));
 		}
 	};
 
@@ -51,7 +48,7 @@ const CartItem: React.FC<CartItemPropsInterface> = ({
 			<div className="cart__item-info">
 				<h3>{title}</h3>
 				<p>
-					{doughType} тесто, {sizes[sizeIndex]} см.
+					{type}, {size}
 				</p>
 			</div>
 			<div className="cart__item-count">
@@ -59,7 +56,7 @@ const CartItem: React.FC<CartItemPropsInterface> = ({
 					disabled={quantity < 2}
 					className="button button--outline button--circle cart__item-count-minus"
 					onClick={() => {
-						dispatch(decreasePizzaQuantity(cartId));
+						dispatch(decreaseItemQuantity(cartId));
 					}}>
 					<MinusSvg />
 				</button>
@@ -67,13 +64,13 @@ const CartItem: React.FC<CartItemPropsInterface> = ({
 				<button
 					className="button button--outline button--circle cart__item-count-plus"
 					onClick={() => {
-						dispatch(increasePizzaQuantity(cartId));
+						dispatch(increaseItemQuantity(cartId));
 					}}>
 					<PlusSvg />
 				</button>
 			</div>
 			<div className="cart__item-price">
-				<b>{price * quantity} ₽</b>
+				<b>{cartPrice * quantity} ₽</b>
 			</div>
 			<div className="cart__item-remove">
 				<button

@@ -1,4 +1,6 @@
 @import './_variables.scss';
+@import './_fonts.scss';
+@import './_helpers.scss';
 @import './libs/_normalize.scss';
 
 @import './components/all.scss';
@@ -76,6 +78,8 @@ body {
 		justify-content: space-between;
 
 		max-width: 100%;
+
+		margin-bottom: 10px;
 
 		@media (min-width: 1330px) {
 			.sort {

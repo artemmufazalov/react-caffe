@@ -1,15 +1,14 @@
 // Libs
 import React from 'react';
-import { useSelector } from 'react-redux';
 
 // Assets
-import { ReactComponent as SortOrderSvg } from '../assets/header/sortOrder.svg';
+import { SortOrderSvg } from '../assets';
 
 // Types
-import { SortOrder, SortProperty } from '../redux/slices/filter/types';
+import { TSortOrder, TSortProperty } from '../redux/slices/filter/types';
 
 // Redux
-import { useAppDispatch } from '../redux/store';
+import { useAppDispatch, useAppSelector } from '../redux/store';
 import {
 	setSortingProperty,
 	toggleSortingOrder,
@@ -23,13 +22,13 @@ import {
 const Sort: React.FC = React.memo(() => {
 	const dispatch = useAppDispatch();
 
-	const sortingProperties: SortProperty[] = useSelector(
+	const sortingProperties: TSortProperty[] = useAppSelector(
 		selectSortingProperties
 	);
-	const activeSortingProperty: SortProperty = useSelector(
+	const activeSortingProperty: TSortProperty = useAppSelector(
 		selectActiveSortingProperty
 	);
-	const sortingOrder: SortOrder = useSelector(selectSortOrder);
+	const sortingOrder: TSortOrder = useAppSelector(selectSortOrder);
 
 	const [isPopupActive, setPopusStatus] = React.useState<boolean>(false);
 

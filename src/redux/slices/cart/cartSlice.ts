@@ -2,97 +2,105 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // Types
-import { PizzaInterface } from '../generalTypes';
-import { CartPizzaInterface, CartStateInterface } from './types';
+import { IItem } from '../generalTypes';
+import { ICartItem, ICartState } from './types';
 
-const initialState: CartStateInterface = {
-	doughTypes: ['Тонкое', 'Традиционное'],
-	pizzas: JSON.parse(localStorage.getItem('cart') as string) || [],
+const initialState: ICartState = {
+	items: [],
 };
 
 export const cartSlice = createSlice({
 	name: 'cart',
 	initialState,
 	reducers: {
-		addPizza: (
+		addItem: (
 			state,
 			action: PayloadAction<{
-				pizza: PizzaInterface;
-				doughIndex: number;
+				item: IItem;
+				typeIndex: number;
+				type: string;
 				sizeIndex: number;
+				size: string;
 			}>
 		) => {
-			const newPizza = {
-				...action.payload.pizza,
-				doughIndex: action.payload.doughIndex,
+			const cartPrice =
+				action.payload.item.price[action.payload.typeIndex][
+					action.payload.sizeIndex
+				];
+
+			const newItem = {
+				...action.payload.item,
+				typeIndex: action.payload.typeIndex,
+				type: action.payload.type,
 				sizeIndex: action.payload.sizeIndex,
+				size: action.payload.size,
+				cartPrice,
 			};
 
-			const pizzaInCart = state.pizzas.find(
+			const itemInCart = state.items.find(
 				(obj) =>
-					obj.id === newPizza.id &&
-					obj.doughIndex === newPizza.doughIndex &&
-					obj.sizeIndex === newPizza.sizeIndex
+					obj.id === newItem.id &&
+					obj.typeIndex === newItem.typeIndex &&
+					obj.sizeIndex === newItem.sizeIndex
 			);
 
-			if (pizzaInCart) {
-				pizzaInCart.quantity += 1;
+			if (itemInCart) {
+				itemInCart.quantity += 1;
 			} else {
 				let cartId =
-					newPizza.id +
+					newItem.id +
 					'' +
-					newPizza.sizeIndex +
+					newItem.sizeIndex +
 					'' +
-					newPizza.doughIndex;
+					newItem.typeIndex;
 
-				state.pizzas.push({
-					...newPizza,
+				state.items.push({
+					...newItem,
 					cartId,
 					quantity: 1,
-					doughType: state.doughTypes[newPizza.doughIndex],
 				});
 			}
 
-			state.pizzas.sort(
+			state.items.sort(
 				(a, b) =>
 					a.title.localeCompare(b.title) ||
 					a.sizeIndex - b.sizeIndex ||
-					a.doughIndex - b.doughIndex
+					a.typeIndex - b.typeIndex
 			);
 		},
-		increasePizzaQuantity: (state, action: PayloadAction<string>) => {
-			const pizza = state.pizzas.find(
+		increaseItemQuantity: (state, action: PayloadAction<string>) => {
+			const item = state.items.find(
 				(obj) => obj.cartId === action.payload
 			);
-			pizza && pizza.quantity++;
+			item && item.quantity++;
 		},
-		decreasePizzaQuantity: (state, action: PayloadAction<string>) => {
-			const pizza = state.pizzas.find(
+		decreaseItemQuantity: (state, action: PayloadAction<string>) => {
+			const item = state.items.find(
 				(obj) => obj.cartId === action.payload
 			);
-			if (pizza && pizza.quantity > 1) {
-				pizza.quantity--;
+			if (item && item.quantity > 1) {
+				item.quantity--;
 			}
 		},
-		removePizzaFromCart: (state, action: PayloadAction<string>) => {
-			state.pizzas = state.pizzas.filter(
-				(p) => p.cartId !== action.payload
+		removeItemFromCart: (state, action: PayloadAction<string>) => {
+			state.items = state.items.filter(
+				(i) => i.cartId !== action.payload
 			);
 		},
 		clearCart: (state) => {
-			state.pizzas = [];
+			state.items = [];
 		},
-		setCartItems: (state, action: PayloadAction<CartPizzaInterface[]>) => {
-			state.pizzas = action.payload;
+		setCartItems: (state, action: PayloadAction<ICartItem[]>) => {
+			state.items = action.payload;
 		},
 	},
 });
 
 export const {
-	addPizza,
-	increasePizzaQuantity,
-	decreasePizzaQuantity,
-	removePizzaFromCart,
+	addItem,
+	increaseItemQuantity,
+	decreaseItemQuantity,
+	removeItemFromCart,
 	clearCart,
 	setCartItems,
 } = cartSlice.actions;
