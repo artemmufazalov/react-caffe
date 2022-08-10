@@ -32,7 +32,7 @@ import {
 	selectItems,
 } from '../src/redux/slices/products/selectors';
 import { setServerUrl } from '../src/redux/slices/app/appSlice';
-import { setProductsSSFStatus } from '../src/redux/slices/products/productsSlice';
+import { setItemsNeedUpdateStatus } from '../src/redux/slices/products/productsSlice';
 
 const Home: React.FC = React.memo(() => {
 	const router = useRouter();
@@ -187,11 +187,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
 				)
 				.split('?')[0];
 
-			if (requestUrl && requestUrl !== '/') {
-				store.dispatch(setProductsSSFStatus(false));
-				return;
-			}
-
 			store.dispatch(
 				setServerUrl(
 					process.env.NEXT_PUBLIC_VERCEL_URL ||
@@ -200,8 +195,19 @@ export const getServerSideProps = wrapper.getServerSideProps(
 			);
 			store.dispatch(setFilters(query));
 			await store.dispatch(fetchProducts(''));
-			store.dispatch(setProductsSSFStatus(true));
 
+			/* Для отмены новой загрузки товаров при переходе на главную страницу с других страниц.
+			Так как в этом случае может использоваться ссылка без query параметров, 
+			продукты загружаются без фильтров, при этом сами фильтры не сбрасываются, 
+			поэтому получаем результат без фильтров, когда они активны, что не правильно  */
+
+			if (requestUrl && requestUrl !== '/') {
+				store.dispatch(setItemsNeedUpdateStatus(false));
+			} else {
+				store.dispatch(setItemsNeedUpdateStatus(true));
+			}
+
+			// Сбрасываем значения в сторе до начальных, чтобы не устанавливать их на клиенте
 			store.dispatch(dropFilters());
 			store.dispatch(setServerUrl(''));
 		}

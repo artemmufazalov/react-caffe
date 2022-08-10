@@ -8,5 +8,5 @@ export interface IProductsState {
 	pagesCount: number;
 	productsLoadingStatus: TLoadingStatus;
 	singleProductLoadingStatus: TLoadingStatus;
-	productsSSFStatus?: boolean;
+	itemsNeedUpdateStatus?: boolean;
 }

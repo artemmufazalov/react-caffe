@@ -16,15 +16,15 @@ const initialState: IProductsState = {
 	pagesCount: 0,
 	productsLoadingStatus: 'idle',
 	singleProductLoadingStatus: 'idle',
-	productsSSFStatus: false,
+	itemsNeedUpdateStatus: false,
 };
 
 export const productsSlice = createSlice({
 	name: 'products',
 	initialState,
 	reducers: {
-		setProductsSSFStatus: (state, action: PayloadAction<boolean>) => {
-			state.productsSSFStatus = action.payload;
+		setItemsNeedUpdateStatus: (state, action: PayloadAction<boolean>) => {
+			state.itemsNeedUpdateStatus = action.payload;
 		},
 		toggleProductsLoadingStatus: (
 			state,
@@ -69,7 +69,11 @@ export const productsSlice = createSlice({
 		});
 		builder.addCase(HYDRATE, (state, action) => {
 			const payload = (action as PayloadAction<RootState>).payload;
-			if (payload.products.productsSSFStatus) {
+
+			if (
+				payload.products.itemsNeedUpdateStatus ||
+				state.items.length < 1
+			) {
 				state.items = payload.products.items;
 				state.pagesCount = payload.products.pagesCount;
 			}
@@ -78,7 +82,7 @@ export const productsSlice = createSlice({
 });
 
 export const {
-	setProductsSSFStatus,
+	setItemsNeedUpdateStatus,
 	toggleProductsLoadingStatus,
 	toggleSingleProductLoadingStatus,
 	setPagesCount,
