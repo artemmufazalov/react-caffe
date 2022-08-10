@@ -71,6 +71,7 @@ export const productsSlice = createSlice({
 			const payload = (action as PayloadAction<RootState>).payload;
 			if (payload.products.productsSSFStatus) {
 				state.items = payload.products.items;
+				state.pagesCount = payload.products.pagesCount;
 			}
 		});
 	},
