@@ -1,8 +1,10 @@
 # ignore file extensions
 *.png
 *.jpg
+*.jpeg
 *.txt
 *.ico
+*.webp
 
 # Configuration files
 .tsconfig.json
