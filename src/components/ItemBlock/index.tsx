@@ -50,7 +50,7 @@ const ItemBlock: React.FC<ItemBlockProps> = ({
 
 	const onClickAddPizza = () => {
 		let typeIndex = activePizzaType,
-			type = productTypes[typeIndex],
+			type = productTypes[types[typeIndex]],
 			sizeIndex = activePizzaSize,
 			size = sizes[sizeIndex],
 			item = {
