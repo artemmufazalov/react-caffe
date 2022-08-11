@@ -45,8 +45,8 @@ const Home: React.FC = React.memo(() => {
 	// Если там есть параметры, то не производим первый рендер продуктов, а ждем, пока спарсятся параметры
 	const isParsingFirstInteractionUrlQuery = React.useRef(false);
 	const lastQuery = React.useRef(router.asPath);
-
 	const isMount = React.useRef(false);
+	const contentTopRef = React.useRef<HTMLDivElement>(null);
 
 	const {
 		activeProductType,
@@ -62,11 +62,10 @@ const Home: React.FC = React.memo(() => {
 		selectProductsLoadingStatus
 	);
 
-	// @TODO: Scroll to product types
 	const onPageChange = React.useCallback(
 		(page: number) => {
 			dispatch(setCurrentPage(page));
-			window.scrollTo(0, 0);
+			contentTopRef.current?.scrollIntoView();
 		},
 		[dispatch]
 	);
@@ -141,7 +140,7 @@ const Home: React.FC = React.memo(() => {
 
 	return (
 		<div className="container">
-			<div className="content__top">
+			<div className="content__top" ref={contentTopRef}>
 				<ProductTypes />
 				<Sort />
 			</div>
