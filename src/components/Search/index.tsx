@@ -40,9 +40,6 @@ const Search: React.FC = () => {
 		setComponentSearchValue('');
 		initSearch.cancel();
 		dispatch(setGlobalSearchValue(''));
-
-		// Оператор опциональной последовательности,
-		// последовательность после ? выполняется только если с объектом searchFieldRef.current все ок
 		searchFieldRef.current?.focus();
 	};
 
@@ -59,7 +56,7 @@ const Search: React.FC = () => {
 			<input
 				className={styles.input}
 				type="text"
-				placeholder="Поиск пиццы..."
+				placeholder="Поиск товара..."
 				onChange={onSearchFieldChange}
 				value={componentSearchValue}
 				ref={searchFieldRef}

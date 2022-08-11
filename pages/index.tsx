@@ -39,7 +39,7 @@ const Home: React.FC = React.memo(() => {
 	const dispatch = useAppDispatch();
 
 	// При первом рендере проверяем строку поиска.
-	// Если там есть параметры, то не производим первый рендер пицц, а ждем, пока спарсятся параметры
+	// Если там есть параметры, то не производим первый рендер продуктов, а ждем, пока спарсятся параметры
 	const isParsingFirstInteractionUrlQuery = React.useRef(false);
 	const lastQuery = React.useRef(router.asPath);
 
@@ -106,7 +106,7 @@ const Home: React.FC = React.memo(() => {
 		router,
 	]);
 
-	// Если параметры поиска спарсились или их нет, то производим запрос на бек за пиццами
+	// Если параметры поиска спарсились или их нет, то производим запрос на бек за продуктами
 	React.useEffect(() => {
 		if (!isParsingFirstInteractionUrlQuery.current) {
 			if (lastQuery.current !== router.asPath) {
@@ -132,7 +132,7 @@ const Home: React.FC = React.memo(() => {
 		setSkeletons([...new Array(4)].map((_, i) => <ItemSkeleton key={i} />));
 	}, [items]);
 
-	const pizzaBlocks = items.map((item) => (
+	const itemBlocks = items.map((item) => (
 		<ItemBlock {...item} key={item['id']} />
 	));
 
@@ -164,7 +164,7 @@ const Home: React.FC = React.memo(() => {
 				</div>
 			)}
 			<div className="content__items">
-				{productsLoadingStatus === 'pending' ? skeletons : pizzaBlocks}
+				{productsLoadingStatus === 'pending' ? skeletons : itemBlocks}
 			</div>
 			{productsLoadingStatus !== 'error' && (
 				<Pagination

@@ -29,7 +29,7 @@ const CartItem: React.FC<CartItemPropsInterface> = ({
 	const onClickRemove = () => {
 		if (
 			window.confirm(
-				'Вы уверены, что хотите удалить эту пиццу из корзины?'
+				'Вы уверены, что хотите удалить этот товар из корзины?'
 			)
 		) {
 			dispatch(removeItemFromCart(cartId));
@@ -39,11 +39,7 @@ const CartItem: React.FC<CartItemPropsInterface> = ({
 	return (
 		<div className="cart__item">
 			<div className="cart__item-img">
-				<img
-					className="pizza-block__image"
-					src={imageUrl}
-					alt="Pizza"
-				/>
+				<img className="item-block__image" src={imageUrl} alt={title} />
 			</div>
 			<div className="cart__item-info">
 				<h3>{title}</h3>

@@ -13,7 +13,7 @@ export const fetchProducts = createAsyncThunk<
 	IItem[],
 	any,
 	{ state: RootState }
->('pizza/fetchPizzasStatus', async (_, thunkAPI) => {
+>('products/fetchProductsStatus', async (_, thunkAPI) => {
 	const getState = thunkAPI.getState;
 
 	const backendUrl = getState().app.backendUrl;
@@ -56,7 +56,7 @@ export const fetchSingleProductById = createAsyncThunk<
 	IItem,
 	string,
 	{ state: RootState }
->('pizza/fetchSingleProductByIdStatus', async (id: string, { getState }) => {
+>('products/fetchSingleProductByIdStatus', async (id: string, { getState }) => {
 	if (!id) return;
 
 	const backendUrl = getState().app.backendUrl;

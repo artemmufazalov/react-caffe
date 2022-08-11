@@ -5,7 +5,7 @@ import ContentLoader from 'react-content-loader';
 // @TODO: sizes of ItemBlock and Skeleton should be the same
 const ItemSkeleton: React.FC = () => (
 	<ContentLoader
-		className="pizza-block"
+		className="item-block"
 		speed={2}
 		width={280}
 		height={465}

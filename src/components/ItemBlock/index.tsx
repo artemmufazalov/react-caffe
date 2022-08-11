@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useSelector } from 'react-redux';
 
 // Assets
-import { AddPizzaPlusSvg } from '../../assets';
+import { AddItemPlusSvg } from '../../assets';
 
 // Data
 import metaData from '../../data/meta.json';
@@ -35,9 +35,8 @@ const ItemBlock: React.FC<ItemBlockProps> = ({
 
 	const quantity: number = useSelector(selectItemQuantityById(id));
 
-	// @TODO: change naming
-	const [activePizzaSize, setActivePizzaSize] = React.useState<number>(0);
-	const [activePizzaType, setActivePizzaType] = React.useState<number>(0);
+	const [activeItemSize, setActiveItemSize] = React.useState<number>(0);
+	const [activeItemType, setActiveItemType] = React.useState<number>(0);
 
 	let productTypes: string[];
 
@@ -48,10 +47,10 @@ const ItemBlock: React.FC<ItemBlockProps> = ({
 		productTypes = (metaData as IMeta)[productTypesKey];
 	}
 
-	const onClickAddPizza = () => {
-		let typeIndex = activePizzaType,
+	const onClickAddItem = () => {
+		let typeIndex = activeItemType,
 			type = productTypes[types[typeIndex]],
-			sizeIndex = activePizzaSize,
+			sizeIndex = activeItemSize,
 			size = sizes[sizeIndex],
 			item = {
 				sizes,
@@ -69,27 +68,27 @@ const ItemBlock: React.FC<ItemBlockProps> = ({
 	};
 
 	return (
-		<div className="pizza-block-wrapper">
-			<div className="pizza-block">
+		<div className="item-block-wrapper">
+			<div className="item-block">
 				<Link href={`/product/${id}`}>
 					<span className="cp">
 						<img
-							className="pizza-block__image"
+							className="item-block__image"
 							src={imageUrl}
-							alt="Pizza"
+							alt={title}
 						/>
-						<h4 className="pizza-block__title">{title}</h4>
+						<h4 className="item-block__title">{title}</h4>
 					</span>
 				</Link>
-				<div className="pizza-block__selector">
+				<div className="item-block__selector">
 					<ul>
 						{types.map((type, index) => (
 							<li
 								key={index}
 								className={
-									index === activePizzaType ? 'active' : ''
+									index === activeItemType ? 'active' : ''
 								}
-								onClick={() => setActivePizzaType(index)}>
+								onClick={() => setActiveItemType(index)}>
 								{productTypes[type]}
 							</li>
 						))}
@@ -99,22 +98,22 @@ const ItemBlock: React.FC<ItemBlockProps> = ({
 							<li
 								key={index}
 								className={
-									index === activePizzaSize ? 'active' : ''
+									index === activeItemSize ? 'active' : ''
 								}
-								onClick={() => setActivePizzaSize(index)}>
+								onClick={() => setActiveItemSize(index)}>
 								{size}
 							</li>
 						))}
 					</ul>
 				</div>
-				<div className="pizza-block__bottom">
-					<div className="pizza-block__price">
-						от {price[activePizzaType][activePizzaSize]} ₽
+				<div className="item-block__bottom">
+					<div className="item-block__price">
+						от {price[activeItemType][activeItemSize]} ₽
 					</div>
 					<button
-						onClick={onClickAddPizza}
+						onClick={onClickAddItem}
 						className="button button--outline button--add">
-						<AddPizzaPlusSvg />
+						<AddItemPlusSvg />
 						<span>Добавить</span>
 						{quantity > 0 && <i>{quantity}</i>}
 					</button>
