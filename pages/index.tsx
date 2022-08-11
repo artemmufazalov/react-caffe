@@ -18,6 +18,9 @@ import {
 import { IItem } from '../src/redux/slices/generalTypes';
 import { TLoadingStatus } from '../src/redux/slices/products/types';
 
+// Helpers
+import { getSelfUrl } from '../src/heplers/getSelfUrl';
+
 // Redux
 import { useAppDispatch, wrapper, RootStore } from '../src/redux/store';
 import {
@@ -180,11 +183,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 	(store: RootStore) =>
 		async ({ query, req, resolvedUrl, params }): Promise<any> => {
 			const requestUrl = req.headers.referer
-				?.replace(
-					process.env.NEXT_PUBLIC_VERCEL_URL ||
-						'http://localhost:3000',
-					''
-				)
+				?.replace(getSelfUrl(), '')
 				.split('?')[0];
 
 			store.dispatch(
