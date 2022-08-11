@@ -14,6 +14,7 @@ export interface IProductsState {
 	productsLoadingStatus: TLoadingStatus;
 	singleProductLoadingStatus: TLoadingStatus;
 	itemsNeedUpdateStatus?: boolean;
+	itemsFetchedStatus?: boolean;
 }
 
 export type TRejectedApiCallPayload = {

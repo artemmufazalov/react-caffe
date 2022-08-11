@@ -21,6 +21,7 @@ const initialState: IProductsState = {
 	productsLoadingStatus: 'idle',
 	singleProductLoadingStatus: 'idle',
 	itemsNeedUpdateStatus: false,
+	itemsFetchedStatus: false,
 };
 
 export const productsSlice = createSlice({
@@ -29,6 +30,9 @@ export const productsSlice = createSlice({
 	reducers: {
 		setItemsNeedUpdateStatus: (state, action: PayloadAction<boolean>) => {
 			state.itemsNeedUpdateStatus = action.payload;
+		},
+		setItemsFetched: (state, action: PayloadAction<boolean>) => {
+			state.itemsFetchedStatus = action.payload;
 		},
 		toggleProductsLoadingStatus: (
 			state,
@@ -82,7 +86,7 @@ export const productsSlice = createSlice({
 
 			if (
 				payload.products.itemsNeedUpdateStatus ||
-				state.items.length < 1
+				(!payload.products.itemsFetchedStatus && state.items.length < 1)
 			) {
 				state.items = payload.products.items;
 				state.pagesCount = payload.products.pagesCount;
@@ -93,6 +97,7 @@ export const productsSlice = createSlice({
 
 export const {
 	setItemsNeedUpdateStatus,
+	setItemsFetched,
 	toggleProductsLoadingStatus,
 	toggleSingleProductLoadingStatus,
 	setPagesCount,

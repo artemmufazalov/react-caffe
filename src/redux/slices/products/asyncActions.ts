@@ -7,7 +7,7 @@ import { RootState } from '../../store';
 import { IItem } from '../generalTypes';
 
 // Redux
-import { setPagesCount } from './productsSlice';
+import { setItemsFetched, setPagesCount } from './productsSlice';
 import { TRejectedApiCallPayload } from './types';
 
 export const fetchProducts = createAsyncThunk<
@@ -49,6 +49,7 @@ export const fetchProducts = createAsyncThunk<
 	const { data } = await axios.get(url);
 
 	thunkAPI.dispatch(setPagesCount(Number(data.data.pageCount)));
+	thunkAPI.dispatch(setItemsFetched(true));
 
 	return data.data.results;
 });

@@ -35,7 +35,10 @@ import {
 	selectItems,
 } from '../src/redux/slices/products/selectors';
 import { setServerUrl } from '../src/redux/slices/app/appSlice';
-import { setItemsNeedUpdateStatus } from '../src/redux/slices/products/productsSlice';
+import {
+	setItemsFetched,
+	setItemsNeedUpdateStatus,
+} from '../src/redux/slices/products/productsSlice';
 
 const Home: React.FC = React.memo(() => {
 	const router = useRouter();
@@ -153,7 +156,7 @@ const Home: React.FC = React.memo(() => {
 			)}
 			<h2 className="content__title">Меню</h2>
 
-			{productsLoadingStatus === 'error' && (
+			{(productsLoadingStatus === 'error' || items.length < 1) && (
 				<div className="content__error-info">
 					<h2>
 						Товаров не нашлось <span>😕</span>
@@ -205,6 +208,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 				store.dispatch(setItemsNeedUpdateStatus(true));
 			}
 
+			store.dispatch(setItemsFetched(true));
 			// Сбрасываем значения в сторе до начальных, чтобы не устанавливать их на клиенте
 			store.dispatch(dropFilters());
 			store.dispatch(setServerUrl(''));
