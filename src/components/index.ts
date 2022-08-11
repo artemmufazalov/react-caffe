@@ -12,8 +12,8 @@ export { default as Categories } from './Categories';
 export { default as Sort } from './Sort';
 
 // Products page
-export { default as ItemBlock } from './ItemBlock';
-export { default as ItemSkeleton } from './ItemSkeleton';
+export { default as ItemBlock } from './ItemCard/ItemBlock';
+export { default as ItemSkeleton } from './ItemCard/ItemSkeleton';
 
 // Cart Page
 export { default as EmptyCart } from './EmptyCart';

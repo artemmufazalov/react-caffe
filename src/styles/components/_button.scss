@@ -1,3 +1,4 @@
+@use '../libs/mixins';
 @import '../_variables.scss';
 
 .button {
@@ -11,7 +12,7 @@
 	transition: background-color $duration ease-in-out,
 		border-color $duration ease-in-out;
 	border: 1px solid transparent;
-	@include noselect();
+	@include mixins.noselect();
 
 	&,
 	span {

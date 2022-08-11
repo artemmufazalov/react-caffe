@@ -6,6 +6,9 @@ import { useSelector } from 'react-redux';
 // Assets
 import { AddItemPlusSvg } from '../../assets';
 
+// Styles
+import styles from './ItemCard.module.scss';
+
 // Data
 import metaData from '../../data/meta.json';
 import { IMeta } from '../../data/dataTypes';
@@ -68,25 +71,27 @@ const ItemBlock: React.FC<ItemBlockProps> = ({
 	};
 
 	return (
-		<div className="item-block-wrapper">
-			<div className="item-block">
+		<div className={styles.root}>
+			<div className={styles.block}>
 				<Link href={`/product/${id}`}>
 					<span className="cp">
 						<img
-							className="item-block__image"
+							className={styles.image}
 							src={imageUrl}
 							alt={title}
 						/>
-						<h4 className="item-block__title">{title}</h4>
+						<h4 className={styles.title}>{title}</h4>
 					</span>
 				</Link>
-				<div className="item-block__selector">
+				<div className={styles.selector}>
 					<ul>
 						{types.map((type, index) => (
 							<li
 								key={index}
 								className={
-									index === activeItemType ? 'active' : ''
+									index === activeItemType
+										? styles.active
+										: ''
 								}
 								onClick={() => setActiveItemType(index)}>
 								{productTypes[type]}
@@ -98,7 +103,9 @@ const ItemBlock: React.FC<ItemBlockProps> = ({
 							<li
 								key={index}
 								className={
-									index === activeItemSize ? 'active' : ''
+									index === activeItemSize
+										? styles.active
+										: ''
 								}
 								onClick={() => setActiveItemSize(index)}>
 								{size}
@@ -106,8 +113,8 @@ const ItemBlock: React.FC<ItemBlockProps> = ({
 						))}
 					</ul>
 				</div>
-				<div className="item-block__bottom">
-					<div className="item-block__price">
+				<div className={styles.bottom}>
+					<div className={styles.price}>
 						от {price[activeItemType][activeItemSize]} ₽
 					</div>
 					<button
