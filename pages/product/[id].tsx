@@ -13,7 +13,6 @@ import { useAppDispatch } from '../../src/redux/store';
 import { fetchSingleProductById } from '../../src/redux/slices/products/asyncActions';
 import { selectSingleProductLoadingStatus } from '../../src/redux/slices/products/selectors';
 
-// @TODO: Add Item not found
 const ProductPage: React.FC = () => {
 	const dispatch = useAppDispatch();
 	const router = useRouter();
@@ -35,15 +34,25 @@ const ProductPage: React.FC = () => {
 		fetchProduct();
 	}, [id, dispatch]);
 
+	if (productLoadingStatus === 'not_found') {
+		return (
+			<div className="container">
+				<h2>Продукта с предоставленным ID не существует!</h2>
+				<br />
+				<br />
+				<Link href="/">
+					<span className="button">На главную</span>
+				</Link>
+			</div>
+		);
+	}
 	if (productLoadingStatus === 'error') {
 		return (
 			<div className="container">
 				<h2>Ошибка при загрузке данных!</h2>
 				<br />
 				<br />
-				<Link href="/" className="button">
-					На главную
-				</Link>
+				<Link href="/"></Link>
 			</div>
 		);
 	}

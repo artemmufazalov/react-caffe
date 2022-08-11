@@ -3,7 +3,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
 
 // Types
-import { IProductsState, TLoadingStatus } from './types';
+import {
+	IProductsState,
+	TLoadingStatus,
+	TRejectedApiCallPayload,
+} from './types';
 import { IItem } from '../generalTypes';
 import { RootState } from '../../store';
 
@@ -64,8 +68,14 @@ export const productsSlice = createSlice({
 		builder.addCase(fetchSingleProductById.fulfilled, (state) => {
 			state.singleProductLoadingStatus = 'success';
 		});
-		builder.addCase(fetchSingleProductById.rejected, (state) => {
-			state.singleProductLoadingStatus = 'error';
+		builder.addCase(fetchSingleProductById.rejected, (state, action) => {
+			if (
+				(action.payload as TRejectedApiCallPayload).statusCode === 404
+			) {
+				state.singleProductLoadingStatus = 'not_found';
+			} else {
+				state.singleProductLoadingStatus = 'error';
+			}
 		});
 		builder.addCase(HYDRATE, (state, action) => {
 			const payload = (action as PayloadAction<RootState>).payload;

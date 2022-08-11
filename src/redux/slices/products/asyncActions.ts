@@ -1,5 +1,5 @@
 // Libs
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 // Types
@@ -8,6 +8,7 @@ import { IItem } from '../generalTypes';
 
 // Redux
 import { setPagesCount } from './productsSlice';
+import { TRejectedApiCallPayload } from './types';
 
 export const fetchProducts = createAsyncThunk<
 	IItem[],
@@ -53,15 +54,24 @@ export const fetchProducts = createAsyncThunk<
 });
 
 export const fetchSingleProductById = createAsyncThunk<
-	IItem,
+	IItem | TRejectedApiCallPayload,
 	string,
 	{ state: RootState }
->('products/fetchSingleProductByIdStatus', async (id: string, { getState }) => {
-	if (!id) return;
+>(
+	'products/fetchSingleProductByIdStatus',
+	async (id: string, { getState, rejectWithValue }) => {
+		if (!id) return;
 
-	const backendUrl = getState().app.backendUrl;
-	const url = backendUrl + getState().products.baseUrl;
-	const { data } = await axios.get(url + `/${id}`);
-
-	return data.result;
-});
+		const backendUrl = getState().app.backendUrl;
+		const url = backendUrl + getState().products.baseUrl;
+		try {
+			const res = await axios.get(url + `/${id}`);
+			return res.data.result;
+		} catch (err) {
+			return rejectWithValue({
+				message: 'Rejected',
+				statusCode: (err as AxiosError).response?.status,
+			});
+		}
+	}
+);
