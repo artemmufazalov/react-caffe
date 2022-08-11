@@ -1,10 +1,10 @@
 // Libs
 import React from 'react';
+import Link from 'next/link';
 
 // Styles
 import styles from './NotFoundBlock.module.scss';
 
-// @TODO: link to the home page
 const NotFoundBlock: React.FC = () => {
 	return (
 		<div className={styles.root}>
@@ -16,6 +16,10 @@ const NotFoundBlock: React.FC = () => {
 			<p className={styles.desription}>
 				К сожалению, данная страница отсутствует на нашем сайте
 			</p>
+
+			<Link href="/">
+				<span className="button button--black">Вернуться назад</span>
+			</Link>
 		</div>
 	);
 };
