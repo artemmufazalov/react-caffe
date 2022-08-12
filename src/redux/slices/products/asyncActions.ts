@@ -8,15 +8,12 @@ import { IItem } from '../generalTypes';
 
 // Redux
 import { setItemsFetched, setPagesCount } from './productsSlice';
-import { TRejectedApiCallPayload } from './types';
 
 export const fetchProducts = createAsyncThunk<
 	IItem[],
 	any,
 	{ state: RootState }
->('products/fetchProductsStatus', async (_, thunkAPI) => {
-	const getState = thunkAPI.getState;
-
+>('products/fetchProductsStatus', async (_, { dispatch, getState }) => {
 	const backendUrl = getState().app.backendUrl;
 	const baseUrl = backendUrl + getState().products.baseUrl;
 
@@ -48,14 +45,14 @@ export const fetchProducts = createAsyncThunk<
 
 	const { data } = await axios.get(url);
 
-	thunkAPI.dispatch(setPagesCount(Number(data.data.pageCount)));
-	thunkAPI.dispatch(setItemsFetched(true));
+	dispatch(setPagesCount(Number(data.data.pageCount)));
+	dispatch(setItemsFetched(true));
 
 	return data.data.results;
 });
 
 export const fetchSingleProductById = createAsyncThunk<
-	IItem | TRejectedApiCallPayload,
+	IItem,
 	string,
 	{ state: RootState }
 >(
@@ -63,8 +60,9 @@ export const fetchSingleProductById = createAsyncThunk<
 	async (id: string, { getState, rejectWithValue }) => {
 		if (!id) return;
 
-		const backendUrl = getState().app.backendUrl;
-		const url = backendUrl + getState().products.baseUrl;
+		const backendUrl: string = getState().app.backendUrl;
+		const url: string = backendUrl + getState().products.baseUrl;
+
 		try {
 			const res = await axios.get(url + `/${id}`);
 			return res.data.result;

@@ -13,6 +13,7 @@ export interface IProductsState {
 	pagesCount: number;
 	productsLoadingStatus: TLoadingStatus;
 	singleProductLoadingStatus: TLoadingStatus;
+	singleProduct: IItem | null;
 	itemsNeedUpdateStatus?: boolean;
 	itemsFetchedStatus?: boolean;
 }

@@ -35,10 +35,7 @@ import {
 	selectItems,
 } from '../src/redux/slices/products/selectors';
 import { setServerUrl } from '../src/redux/slices/app/appSlice';
-import {
-	setItemsFetched,
-	setItemsNeedUpdateStatus,
-} from '../src/redux/slices/products/productsSlice';
+import { setItemsNeedUpdateStatus } from '../src/redux/slices/products/productsSlice';
 
 const Home: React.FC = React.memo(() => {
 	const router = useRouter();
@@ -183,17 +180,12 @@ const Home: React.FC = React.memo(() => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
 	(store: RootStore) =>
-		async ({ query, req, resolvedUrl, params }): Promise<any> => {
+		async ({ query, req }): Promise<any> => {
 			const requestUrl = req.headers.referer
 				?.replace(getSelfUrl(), '')
 				.split('?')[0];
 
-			store.dispatch(
-				setServerUrl(
-					process.env.NEXT_PUBLIC_VERCEL_URL ||
-						'http://localhost:3000'
-				)
-			);
+			store.dispatch(setServerUrl(getSelfUrl()));
 			store.dispatch(setFilters(query));
 			await store.dispatch(fetchProducts(''));
 
@@ -208,7 +200,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
 				store.dispatch(setItemsNeedUpdateStatus(true));
 			}
 
-			store.dispatch(setItemsFetched(true));
 			// Сбрасываем значения в сторе до начальных, чтобы не устанавливать их на клиенте
 			store.dispatch(dropFilters());
 			store.dispatch(setServerUrl(''));

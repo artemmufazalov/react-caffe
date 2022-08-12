@@ -19,6 +19,7 @@ const initialState: IProductsState = {
 	items: [],
 	pagesCount: 0,
 	productsLoadingStatus: 'idle',
+	singleProduct: null,
 	singleProductLoadingStatus: 'idle',
 	itemsNeedUpdateStatus: false,
 	itemsFetchedStatus: false,
@@ -52,6 +53,9 @@ export const productsSlice = createSlice({
 		setItems: (state, action: PayloadAction<IItem[]>) => {
 			state.items = action.payload;
 		},
+		setSingleItem: (state, action: PayloadAction<IItem>) => {
+			state.singleProduct = action.payload;
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchProducts.pending, (state) => {
@@ -69,7 +73,8 @@ export const productsSlice = createSlice({
 		builder.addCase(fetchSingleProductById.pending, (state) => {
 			state.singleProductLoadingStatus = 'pending';
 		});
-		builder.addCase(fetchSingleProductById.fulfilled, (state) => {
+		builder.addCase(fetchSingleProductById.fulfilled, (state, action) => {
+			state.singleProduct = action.payload;
 			state.singleProductLoadingStatus = 'success';
 		});
 		builder.addCase(fetchSingleProductById.rejected, (state, action) => {
@@ -84,11 +89,19 @@ export const productsSlice = createSlice({
 		builder.addCase(HYDRATE, (state, action) => {
 			const payload = (action as PayloadAction<RootState>).payload;
 
+			if (payload.products.singleProduct !== null) {
+				state.singleProduct = payload.products.singleProduct;
+				state.singleProductLoadingStatus =
+					payload.products.singleProductLoadingStatus;
+				return;
+			}
+
 			if (
 				payload.products.itemsNeedUpdateStatus ||
-				(!payload.products.itemsFetchedStatus && state.items.length < 1)
+				(!state.itemsFetchedStatus && state.items.length < 1)
 			) {
 				state.items = payload.products.items;
+				state.itemsFetchedStatus = true;
 				state.pagesCount = payload.products.pagesCount;
 			}
 		});
@@ -102,6 +115,7 @@ export const {
 	toggleSingleProductLoadingStatus,
 	setPagesCount,
 	setItems,
+	setSingleItem,
 } = productsSlice.actions;
 
 export default productsSlice.reducer;
