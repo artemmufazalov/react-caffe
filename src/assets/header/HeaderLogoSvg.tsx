@@ -7,7 +7,9 @@ const HeaderLogoSvg = (props: any) => (
 		viewBox="0 0 572.196 639.549"
 		xmlSpace="preserve"
 		xmlns="http://www.w3.org/2000/svg"
-		xmlnsXlink="http://www.w3.org/1999/xlink">
+		xmlnsXlink="http://www.w3.org/1999/xlink"
+		{...props}>
+		<title>{props.alt}</title>
 		<g id="_x31_2-Hot_tea">
 			<g>
 				<path

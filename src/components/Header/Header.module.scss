@@ -1,0 +1,138 @@
+@import '../../styles/_variables.scss';
+
+.header {
+	border-bottom: 1px solid $gray-line;
+	padding: 40px 0;
+
+	.container {
+		width: $container-width;
+		margin: 0 auto;
+
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		gap: 20px;
+
+		@media (min-width: 980px) {
+			.searchBlock {
+				display: flex;
+				input {
+					width: 400px;
+				}
+			}
+		}
+
+		@media (max-width: 870px) {
+			.searchBlock {
+				display: flex;
+				width: 100%;
+				text-align: center;
+				align-items: center;
+				justify-content: center;
+				order: 3;
+				input {
+					width: 450px;
+				}
+			}
+		}
+
+		@media (max-width: 600px) {
+			.searchBlock {
+				input {
+					width: 75vw;
+				}
+			}
+			.logo {
+				align-items: center;
+			}
+
+			.logo__text {
+				display: none;
+			}
+		}
+		@media (max-width: 480px) {
+			.logo__header {
+				display: none;
+			}
+		}
+
+		@media (max-width: 400px) {
+			.searchBlock {
+				input {
+					width: 80vw;
+					min-width: 250px;
+				}
+			}
+		}
+
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.logo {
+		display: flex;
+		cursor: pointer;
+		flex-direction: row;
+		align-items: flex-start;
+
+		svg {
+			margin-right: 15px;
+			height: 45px;
+			width: 45px;
+		}
+
+		h1 {
+			color: #181818;
+			font-size: 22px;
+			letter-spacing: 1%;
+			text-transform: uppercase;
+			font-weight: 800;
+		}
+
+		p {
+			font-size: 16px;
+			color: #7b7b7b;
+		}
+	}
+
+	.iconsWrapper {
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-end;
+		align-items: flex-end;
+
+		svg {
+			cursor: pointer;
+			width: 45px;
+			height: 45px;
+			fill: white;
+			stroke: $main-color;
+		}
+
+		.heartLogo {
+			svg {
+				stroke-width: 30;
+			}
+			:hover {
+				fill: $main-color;
+			}
+		}
+		.cartLogo {
+			svg {
+				stroke-width: 3;
+			}
+			:hover {
+				fill: $main-color;
+			}
+		}
+		.personLogo {
+			svg {
+				stroke-width: 30;
+			}
+			:hover {
+				fill: $main-color;
+			}
+		}
+	}
+}
