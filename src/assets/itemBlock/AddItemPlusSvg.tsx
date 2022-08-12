@@ -1,7 +1,6 @@
 import React from 'react';
 
-// @TODO: Change to Item
-const AddPizzaPlusSvg = (props: any) => (
+const AddItemPlusSvg = (props: any) => (
 	<svg
 		width="12"
 		height="12"
@@ -17,4 +16,4 @@ const AddPizzaPlusSvg = (props: any) => (
 	</svg>
 );
 
-export default AddPizzaPlusSvg;
+export default AddItemPlusSvg;

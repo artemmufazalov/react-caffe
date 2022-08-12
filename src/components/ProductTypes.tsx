@@ -9,7 +9,6 @@ import { useAppDispatch, useAppSelector } from '../redux/store';
 import { setProductType } from '../redux/slices/filter/filterSlice';
 import { selectActiveProductType } from '../redux/slices/filter/selectors';
 
-// @TODO: set autoscrolling to Types on category or type change (not to top)
 const ProductTypes: React.FC = React.memo(() => {
 	const dispatch = useAppDispatch();
 

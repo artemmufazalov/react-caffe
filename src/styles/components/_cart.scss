@@ -1,3 +1,5 @@
+@use '../libs/mixins';
+
 .cart {
 	&__top {
 		display: flex;
@@ -31,7 +33,7 @@
 		display: flex;
 		align-items: center;
 		cursor: pointer;
-		@include noselect();
+		@include mixins.noselect();
 
 		span {
 			display: inline-block;
@@ -181,7 +183,7 @@
 
 				&:last-of-type {
 					b {
-						color: $orange;
+						color: $main-color;
 					}
 				}
 			}

@@ -1,7 +1,7 @@
 [
 	{
 		"id": "dc0",
-		"imageUrl": "https://cdn.dodostatic.net/static/Img/Products/5a945ed86ef943ac9583c4a6413d9ad0_1875x1875.jpeg",
+		"imageUrl": "/assets/products/dc0.jpeg",
 		"productType": "drink",
 		"metaType": true,
 		"title": "Coca-Cola",
@@ -13,7 +13,7 @@
 	},
 	{
 		"id": "dc1",
-		"imageUrl": "https://cdn.dodostatic.net/static/Img/Products/73eb242273e0477e9544104ca9b1d42f_366x366.jpeg",
+		"imageUrl": "/assets/products/dc1.jpeg",
 		"productType": "drink",
 		"metaType": true,
 		"title": "Sprite",
@@ -25,7 +25,7 @@
 	},
 	{
 		"id": "dh0",
-		"imageUrl": "https://cdn.dodostatic.net/static/Img/Products/45cfe78da1e6403e86bde79f9c6bede0_366x366.jpeg",
+		"imageUrl": "/assets/products/dh0.jpeg",
 		"productType": "drink",
 		"metaType": true,
 		"title": "Латте",
@@ -37,7 +37,7 @@
 	},
 	{
 		"id": "dh1",
-		"imageUrl": "https://cdn.dodostatic.net/static/Img/Products/8c6f4026dad743c599e85819ffff3e9c_366x366.jpeg",
+		"imageUrl": "/assets/products/dh1.jpeg",
 		"productType": "drink",
 		"metaType": true,
 		"title": "Американо",
@@ -49,7 +49,7 @@
 	},
 	{
 		"id": "dh2",
-		"imageUrl": "https://cdn.dodostatic.net/static/Img/Products/22d4b4fd475e4242a7b9305c502b38e4_366x366.jpeg",
+		"imageUrl": "/assets/products/dh2.jpeg",
 		"productType": "drink",
 		"metaType": true,
 		"title": "Капучино",
@@ -61,7 +61,7 @@
 	},
 	{
 		"id": "do1",
-		"imageUrl": "https://kfc-gid.ru/wp-content/uploads/2021/06/milkshejk-banan.jpg",
+		"imageUrl": "/assets/products/do1.jpg",
 		"productType": "drink",
 		"metaType": true,
 		"title": "Милкшейк",
@@ -74,7 +74,7 @@
 
 	{
 		"id": "pz0",
-		"imageUrl": "https://dodopizza.azureedge.net/static/Img/Products/f035c7f46c0844069722f2bb3ee9f113_584x584.jpeg",
+		"imageUrl": "/assets/products/pz0.jpeg",
 		"productType": "pizza",
 		"title": "Пепперони Фреш с перцем",
 		"types": [0, 1],
@@ -88,7 +88,7 @@
 	},
 	{
 		"id": "pz1",
-		"imageUrl": "https://dodopizza.azureedge.net/static/Img/Products/Pizza/ru-RU/2ffc31bb-132c-4c99-b894-53f7107a1441.jpg",
+		"imageUrl": "/assets/products/pz1.jpg",
 		"productType": "pizza",
 		"title": "Сырная пицца",
 		"types": [0],
@@ -99,7 +99,7 @@
 	},
 	{
 		"id": "pz2",
-		"imageUrl": "https://dodopizza.azureedge.net/static/Img/Products/Pizza/ru-RU/6652fec1-04df-49d8-8744-232f1032c44b.jpg",
+		"imageUrl": "/assets/products/pz2.jpg",
 		"productType": "pizza",
 		"title": "Цыпленок барбекю",
 		"types": [0],
@@ -110,7 +110,7 @@
 	},
 	{
 		"id": "pz3",
-		"imageUrl": "https://dodopizza.azureedge.net/static/Img/Products/Pizza/ru-RU/af553bf5-3887-4501-b88e-8f0f55229429.jpg",
+		"imageUrl": "/assets/products/pz3.jpg",
 		"productType": "pizza",
 		"title": "Кисло-сладкий цыпленок",
 		"types": [1],
@@ -121,7 +121,7 @@
 	},
 	{
 		"id": "pz4",
-		"imageUrl": "https://dodopizza.azureedge.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg",
+		"imageUrl": "/assets/products/pz4.jpg",
 		"productType": "pizza",
 		"title": "Чизбургер-пицца",
 		"types": [0, 1],
@@ -135,7 +135,7 @@
 	},
 	{
 		"id": "pz5",
-		"imageUrl": "https://dodopizza.azureedge.net/static/Img/Products/Pizza/ru-RU/1e1a6e80-b3ba-4a44-b6b9-beae5b1fbf27.jpg",
+		"imageUrl": "/assets/products/pz5.jpg",
 		"productType": "pizza",
 		"title": "Крэйзи пепперони",
 		"types": [0],
@@ -146,7 +146,7 @@
 	},
 	{
 		"id": "pz6",
-		"imageUrl": "https://dodopizza.azureedge.net/static/Img/Products/Pizza/ru-RU/d2e337e9-e07a-4199-9cc1-501cc44cb8f8.jpg",
+		"imageUrl": "/assets/products/pz6.jpg",
 		"productType": "pizza",
 		"title": "Пепперони",
 		"types": [0, 1],
@@ -160,7 +160,7 @@
 	},
 	{
 		"id": "pz7",
-		"imageUrl": "https://dodopizza.azureedge.net/static/Img/Products/Pizza/ru-RU/d48003cd-902c-420d-9f28-92d9dc5f73b4.jpg",
+		"imageUrl": "/assets/products/pz7.jpg",
 		"productType": "pizza",
 		"title": "Маргарита",
 		"types": [0, 1],
@@ -174,7 +174,7 @@
 	},
 	{
 		"id": "pz8",
-		"imageUrl": "https://dodopizza.azureedge.net/static/Img/Products/Pizza/ru-RU/ec29465e-606b-4a04-a03e-da3940d37e0e.jpg",
+		"imageUrl": "/assets/products/pz8.jpg",
 		"productType": "pizza",
 		"title": "Четыре сезона",
 		"types": [0, 1],
@@ -188,7 +188,7 @@
 	},
 	{
 		"id": "pz9",
-		"imageUrl": "https://dodopizza.azureedge.net/static/Img/Products/Pizza/ru-RU/30367198-f3bd-44ed-9314-6f717960da07.jpg",
+		"imageUrl": "/assets/products/pz9.jpg",
 		"productType": "pizza",
 		"title": "Овощи и грибы 🌱",
 		"types": [0, 1],
@@ -202,7 +202,7 @@
 	},
 	{
 		"id": "bg0",
-		"imageUrl": "https://vkusnoitchka.ru/wp-content/uploads/2021/05/chikenburger.png",
+		"imageUrl": "/assets/products/bg0.png",
 		"productType": "burger",
 		"title": "Чикенбургер",
 		"types": [0, 1],
@@ -216,7 +216,7 @@
 	},
 	{
 		"id": "bg1",
-		"imageUrl": "https://vkusnoitchka.ru/wp-content/uploads/2021/05/gamburger.png",
+		"imageUrl": "/assets/products/bg1.png",
 		"productType": "burger",
 		"title": "Гамбургер",
 		"types": [0, 1],
@@ -230,7 +230,7 @@
 	},
 	{
 		"id": "bg2",
-		"imageUrl": "https://vkusnoitchka.ru/wp-content/uploads/2021/05/gamburger.png",
+		"imageUrl": "/assets/products/bg2.png",
 		"productType": "burger",
 		"title": "Гранд Де Люкс",
 		"types": [0],
@@ -241,7 +241,7 @@
 	},
 	{
 		"id": "bg3",
-		"imageUrl": "https://vkusnoitchka.ru/wp-content/uploads/2021/05/file-o-fish.png",
+		"imageUrl": "/assets/products/bg3.png",
 		"productType": "burger",
 		"title": "Бургер с соевой котлетой",
 		"types": [0, 1],
@@ -252,7 +252,7 @@
 	},
 	{
 		"id": "sh0",
-		"imageUrl": "https://tur-gid.net/wp-content/uploads/2019/05/Shaurma_4_28113656-400x268.jpg",
+		"imageUrl": "/assets/products/sh0.jpg",
 		"productType": "shaverma",
 		"title": "Классическая",
 		"types": [0, 1],
@@ -266,7 +266,7 @@
 	},
 	{
 		"id": "sh1",
-		"imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsqvi0O1FTRdHOV0VS0Cs47IzsAfFF2U8heZJjxKE7Mv0tsWTkVfrkWW3tVDICDcNxcYI&usqp=CAU",
+		"imageUrl": "/assets/products/sh1.jpg",
 		"productType": "shaverma",
 		"title": "Двойная",
 		"types": [0, 1],
@@ -277,7 +277,7 @@
 	},
 	{
 		"id": "sh2",
-		"imageUrl": "https://eda.yandex/images/3504598/6b9bfe5bb2e8b24bfb5e0f70f4b2a787-400x400nocrop.jpeg",
+		"imageUrl": "/assets/products/sh2.png",
 		"productType": "shaverma",
 		"title": "Баварская",
 		"types": [1],
@@ -288,7 +288,7 @@
 	},
 	{
 		"id": "sh3",
-		"imageUrl": "https://ru.foodsoul.pro/uploads/branches/5788/images/items/medium/798de1acc837e7bbb0dc474c03e974ec.jpg",
+		"imageUrl": "/assets/products/sh3.jpg",
 		"productType": "shaverma",
 		"title": "Фруктовая",
 		"types": [0],
@@ -299,7 +299,7 @@
 	},
 	{
 		"id": "ot0",
-		"imageUrl": "https://mcdonaldsmenu.ru/image/cache/catalog/photo/salat_cezar_193-600x600.jpg",
+		"imageUrl": "/assets/products/ot0.jpg",
 		"productType": "other",
 		"metaType": false,
 		"title": "Салат Цезарь",

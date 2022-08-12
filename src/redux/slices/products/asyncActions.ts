@@ -1,5 +1,5 @@
 // Libs
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 // Types
@@ -7,15 +7,13 @@ import { RootState } from '../../store';
 import { IItem } from '../generalTypes';
 
 // Redux
-import { setPagesCount } from './productsSlice';
+import { setItemsFetched, setPagesCount } from './productsSlice';
 
 export const fetchProducts = createAsyncThunk<
 	IItem[],
 	any,
 	{ state: RootState }
->('pizza/fetchPizzasStatus', async (_, thunkAPI) => {
-	const getState = thunkAPI.getState;
-
+>('products/fetchProductsStatus', async (_, { dispatch, getState }) => {
 	const backendUrl = getState().app.backendUrl;
 	const baseUrl = backendUrl + getState().products.baseUrl;
 
@@ -47,7 +45,8 @@ export const fetchProducts = createAsyncThunk<
 
 	const { data } = await axios.get(url);
 
-	thunkAPI.dispatch(setPagesCount(Number(data.data.pageCount)));
+	dispatch(setPagesCount(Number(data.data.pageCount)));
+	dispatch(setItemsFetched(true));
 
 	return data.data.results;
 });
@@ -56,12 +55,22 @@ export const fetchSingleProductById = createAsyncThunk<
 	IItem,
 	string,
 	{ state: RootState }
->('pizza/fetchSingleProductByIdStatus', async (id: string, { getState }) => {
-	if (!id) return;
+>(
+	'products/fetchSingleProductByIdStatus',
+	async (id: string, { getState, rejectWithValue }) => {
+		if (!id) return;
 
-	const backendUrl = getState().app.backendUrl;
-	const url = backendUrl + getState().products.baseUrl;
-	const { data } = await axios.get(url + `/${id}`);
+		const backendUrl: string = getState().app.backendUrl;
+		const url: string = backendUrl + getState().products.baseUrl;
 
-	return data.result;
-});
+		try {
+			const res = await axios.get(url + `/${id}`);
+			return res.data.result;
+		} catch (err) {
+			return rejectWithValue({
+				message: 'Rejected',
+				statusCode: (err as AxiosError).response?.status,
+			});
+		}
+	}
+);

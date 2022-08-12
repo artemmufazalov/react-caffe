@@ -5,7 +5,7 @@ import Link from 'next/link';
 import clsx from 'clsx';
 
 // Assets
-import { PizzaLogoSvg } from '../assets';
+import { HeaderLogoSvg } from '../assets';
 import HeaderCartIconSvg from '../assets/cart/CartIconSvg';
 
 // Components
@@ -42,10 +42,10 @@ const Header: React.FC = () => {
 						className={clsx('header__logo', {
 							wdpe: pathname === '' || pathname === '/',
 						})}>
-						<PizzaLogoSvg width="38" alt="На главную" />
+						<HeaderLogoSvg width="38" alt="На главную" />
 						<div>
-							<h1>React Pizza</h1>
-							<p>самая вкусная пицца во вселенной</p>
+							<h1>React Caffe</h1>
+							<p>лучшее онлайн кафе</p>
 						</div>
 					</div>
 				</Link>

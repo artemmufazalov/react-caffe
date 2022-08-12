@@ -1,48 +1,49 @@
 // Libs
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 // Types
-import { IItem } from '../../src/redux/slices/generalTypes';
 import { TLoadingStatus } from '../../src/redux/slices/products/types';
 
+// Helpers
+import { getSelfUrl } from '../../src/heplers/getSelfUrl';
+
 // Redux
-import { useAppDispatch } from '../../src/redux/store';
+import { RootStore, useAppSelector, wrapper } from '../../src/redux/store';
 import { fetchSingleProductById } from '../../src/redux/slices/products/asyncActions';
-import { selectSingleProductLoadingStatus } from '../../src/redux/slices/products/selectors';
+import {
+	selectSingleProductLoadingStatus,
+	selectSingleProduct,
+} from '../../src/redux/slices/products/selectors';
+import { setServerUrl } from '../../src/redux/slices/app/appSlice';
 
 const ProductPage: React.FC = () => {
-	const dispatch = useAppDispatch();
-	const router = useRouter();
-
-	const { id } = router.query;
-
-	const [product, setProduct] = React.useState<IItem>();
+	const product = useAppSelector(selectSingleProduct);
 
 	const productLoadingStatus: TLoadingStatus = useSelector(
 		selectSingleProductLoadingStatus
 	);
 
-	// TODO: Мб вынести в GetProps, учитывая, что это не меняется
-	React.useEffect(() => {
-		const fetchProduct = async () => {
-			const data = await dispatch(fetchSingleProductById(id as string));
-			setProduct(data.payload as IItem);
-		};
-		fetchProduct();
-	}, [id, dispatch]);
-
+	if (productLoadingStatus === 'not_found') {
+		return (
+			<div className="container">
+				<h2>Продукта с предоставленным ID не существует!</h2>
+				<br />
+				<br />
+				<Link href="/">
+					<span className="button">На главную</span>
+				</Link>
+			</div>
+		);
+	}
 	if (productLoadingStatus === 'error') {
 		return (
 			<div className="container">
 				<h2>Ошибка при загрузке данных!</h2>
 				<br />
 				<br />
-				<Link href="/" className="button">
-					На главную
-				</Link>
+				<Link href="/"></Link>
 			</div>
 		);
 	}
@@ -72,5 +73,14 @@ const ProductPage: React.FC = () => {
 		</div>
 	);
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(
+	(store: RootStore) =>
+		async ({ query }): Promise<any> => {
+			const { id } = query;
+			store.dispatch(setServerUrl(getSelfUrl()));
+			await store.dispatch(fetchSingleProductById(String(id)));
+		}
+);
 
 export default ProductPage;

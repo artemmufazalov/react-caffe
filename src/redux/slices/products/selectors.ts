@@ -14,3 +14,6 @@ export const selectSingleProductLoadingStatus = (
 
 export const selectPagesCount = (state: RootState): number =>
 	state.products.pagesCount;
+
+export const selectSingleProduct = (state: RootState): IItem | null =>
+	state.products.singleProduct;

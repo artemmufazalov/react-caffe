@@ -1,6 +1,11 @@
 import { IItem } from '../generalTypes';
 
-export type TLoadingStatus = 'idle' | 'pending' | 'success' | 'error';
+export type TLoadingStatus =
+	| 'idle'
+	| 'pending'
+	| 'success'
+	| 'not_found'
+	| 'error';
 
 export interface IProductsState {
 	baseUrl: string;
@@ -8,5 +13,12 @@ export interface IProductsState {
 	pagesCount: number;
 	productsLoadingStatus: TLoadingStatus;
 	singleProductLoadingStatus: TLoadingStatus;
-	productsSSFStatus?: boolean;
+	singleProduct: IItem | null;
+	itemsNeedUpdateStatus?: boolean;
+	itemsFetchedStatus?: boolean;
 }
+
+export type TRejectedApiCallPayload = {
+	message: string;
+	statusCode: number;
+};

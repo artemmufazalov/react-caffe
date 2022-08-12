@@ -26,10 +26,10 @@ const App = ({ Component, pageProps }: AppProps) => {
 					name="description"
 					content="Website of the best online caffe"
 				/>
-				<link rel="icon" href="/pizza_16.png" />
-				<link rel="apple-touch-icon" href="/pizza_192.png" />
+				<link rel="icon" href="/icon.svg" />
+				<link rel="apple-touch-icon" href="/icon.svg" />
 				<link rel="manifest" href="/manifest.json" />
-				<title>Caffe App</title>
+				<title>React Caffe</title>
 			</Head>
 			<MainLayout>
 				<Component {...pageProps} />

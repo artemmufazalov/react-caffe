@@ -8,10 +8,10 @@ export { default as PlusSvg } from './cart/PlusSvg';
 
 // Header
 export { default as HeaderCartIconSvg } from './header/HeaderCartIconSvg';
-export { default as PizzaLogoSvg } from './header/PizzaLogoSvg';
+export { default as HeaderLogoSvg } from './header/HeaderLogoSvg';
 export { default as SearchFieldCrossSvg } from './header/SearchFieldCrossSvg';
 export { default as SearchIconSvg } from './header/SearchIconSvg';
 export { default as SortOrderSvg } from './header/SortOrderSvg';
 
-// PizzaBlock
-export { default as AddPizzaPlusSvg } from './pizzaBlock/AddPizzaPlusSvg';
+// ItemBlock
+export { default as AddItemPlusSvg } from './itemBlock/AddItemPlusSvg';

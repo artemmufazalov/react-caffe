@@ -18,6 +18,9 @@ import {
 import { IItem } from '../src/redux/slices/generalTypes';
 import { TLoadingStatus } from '../src/redux/slices/products/types';
 
+// Helpers
+import { getSelfUrl } from '../src/heplers/getSelfUrl';
+
 // Redux
 import { useAppDispatch, wrapper, RootStore } from '../src/redux/store';
 import {
@@ -32,18 +35,18 @@ import {
 	selectItems,
 } from '../src/redux/slices/products/selectors';
 import { setServerUrl } from '../src/redux/slices/app/appSlice';
-import { setProductsSSFStatus } from '../src/redux/slices/products/productsSlice';
+import { setItemsNeedUpdateStatus } from '../src/redux/slices/products/productsSlice';
 
 const Home: React.FC = React.memo(() => {
 	const router = useRouter();
 	const dispatch = useAppDispatch();
 
 	// При первом рендере проверяем строку поиска.
-	// Если там есть параметры, то не производим первый рендер пицц, а ждем, пока спарсятся параметры
+	// Если там есть параметры, то не производим первый рендер продуктов, а ждем, пока спарсятся параметры
 	const isParsingFirstInteractionUrlQuery = React.useRef(false);
 	const lastQuery = React.useRef(router.asPath);
-
 	const isMount = React.useRef(false);
+	const contentTopRef = React.useRef<HTMLDivElement>(null);
 
 	const {
 		activeProductType,
@@ -59,11 +62,10 @@ const Home: React.FC = React.memo(() => {
 		selectProductsLoadingStatus
 	);
 
-	// @TODO: Scroll to product types
 	const onPageChange = React.useCallback(
 		(page: number) => {
 			dispatch(setCurrentPage(page));
-			window.scrollTo(0, 0);
+			contentTopRef.current?.scrollIntoView();
 		},
 		[dispatch]
 	);
@@ -106,7 +108,7 @@ const Home: React.FC = React.memo(() => {
 		router,
 	]);
 
-	// Если параметры поиска спарсились или их нет, то производим запрос на бек за пиццами
+	// Если параметры поиска спарсились или их нет, то производим запрос на бек за продуктами
 	React.useEffect(() => {
 		if (!isParsingFirstInteractionUrlQuery.current) {
 			if (lastQuery.current !== router.asPath) {
@@ -132,13 +134,13 @@ const Home: React.FC = React.memo(() => {
 		setSkeletons([...new Array(4)].map((_, i) => <ItemSkeleton key={i} />));
 	}, [items]);
 
-	const pizzaBlocks = items.map((item) => (
+	const itemBlocks = items.map((item) => (
 		<ItemBlock {...item} key={item['id']} />
 	));
 
 	return (
 		<div className="container">
-			<div className="content__top">
+			<div className="content__top" ref={contentTopRef}>
 				<ProductTypes />
 				<Sort />
 			</div>
@@ -151,7 +153,7 @@ const Home: React.FC = React.memo(() => {
 			)}
 			<h2 className="content__title">Меню</h2>
 
-			{productsLoadingStatus === 'error' && (
+			{(productsLoadingStatus === 'error' || items.length < 1) && (
 				<div className="content__error-info">
 					<h2>
 						Товаров не нашлось <span>😕</span>
@@ -164,7 +166,7 @@ const Home: React.FC = React.memo(() => {
 				</div>
 			)}
 			<div className="content__items">
-				{productsLoadingStatus === 'pending' ? skeletons : pizzaBlocks}
+				{productsLoadingStatus === 'pending' ? skeletons : itemBlocks}
 			</div>
 			{productsLoadingStatus !== 'error' && (
 				<Pagination
@@ -178,30 +180,27 @@ const Home: React.FC = React.memo(() => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
 	(store: RootStore) =>
-		async ({ query, req, resolvedUrl, params }): Promise<any> => {
+		async ({ query, req }): Promise<any> => {
 			const requestUrl = req.headers.referer
-				?.replace(
-					process.env.NEXT_PUBLIC_VERCEL_URL ||
-						'http://localhost:3000',
-					''
-				)
+				?.replace(getSelfUrl(), '')
 				.split('?')[0];
 
-			if (requestUrl && requestUrl !== '/') {
-				store.dispatch(setProductsSSFStatus(false));
-				return;
-			}
-
-			store.dispatch(
-				setServerUrl(
-					process.env.NEXT_PUBLIC_VERCEL_URL ||
-						'http://localhost:3000'
-				)
-			);
+			store.dispatch(setServerUrl(getSelfUrl()));
 			store.dispatch(setFilters(query));
 			await store.dispatch(fetchProducts(''));
-			store.dispatch(setProductsSSFStatus(true));
 
+			/* Для отмены новой загрузки товаров при переходе на главную страницу с других страниц.
+			Так как в этом случае может использоваться ссылка без query параметров, 
+			продукты загружаются без фильтров, при этом сами фильтры не сбрасываются, 
+			поэтому получаем результат без фильтров, когда они активны, что не правильно  */
+
+			if (requestUrl && requestUrl !== '/') {
+				store.dispatch(setItemsNeedUpdateStatus(false));
+			} else {
+				store.dispatch(setItemsNeedUpdateStatus(true));
+			}
+
+			// Сбрасываем значения в сторе до начальных, чтобы не устанавливать их на клиенте
 			store.dispatch(dropFilters());
 			store.dispatch(setServerUrl(''));
 		}
