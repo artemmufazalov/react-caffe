@@ -62,19 +62,25 @@ const Header: React.FC = () => {
 				<div className={styles.iconsWrapper}>
 					<span className={styles.heartLogo}>
 						<Link href="/favorites">
-							<HeartIconSvg />
+							<span>
+								<HeartIconSvg />
+							</span>
 						</Link>
 					</span>
 					{!pathname.includes('/cart') && (
 						<div className={styles.cartLogo}>
 							<Link href="/cart">
-								<HeaderCartIconSvg />
+								<span>
+									<HeaderCartIconSvg />
+								</span>
 							</Link>
 						</div>
 					)}
 					<span className={styles.personLogo}>
 						<Link href="/account">
-							<PersonIconSvg />
+							<span>
+								<PersonIconSvg />
+							</span>
 						</Link>
 					</span>
 				</div>

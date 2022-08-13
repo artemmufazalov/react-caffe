@@ -16,5 +16,6 @@ export { default as ItemBlock } from './ItemCard/ItemBlock';
 export { default as ItemSkeleton } from './ItemCard/ItemSkeleton';
 
 // Cart Page
-export { default as EmptyCart } from './EmptyCart';
-export { default as CartItem } from './CartItem';
+export { default as CartComponent } from './Cart/CartComponent';
+export { default as EmptyCart } from './Cart/EmptyCart';
+export { default as CartItem } from './Cart/CartItem';

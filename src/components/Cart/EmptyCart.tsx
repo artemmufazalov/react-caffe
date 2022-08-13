@@ -2,10 +2,13 @@
 import React from 'react';
 import Link from 'next/link';
 
+// Styles
+import styles from './Cart.module.scss';
+
 const EmptyCart: React.FC = () => {
 	return (
 		<div>
-			<div className="cart cart--empty">
+			<div className={styles.emptyCart}>
 				<h2>
 					Корзина пустая <span>😕</span>
 				</h2>
@@ -17,9 +20,12 @@ const EmptyCart: React.FC = () => {
 				</p>
 				<img src="/assets/emptyCart.png" alt="Empty cart" />
 				<Link href="/">
-					<span className="button button--black">
-						Вернуться назад
-					</span>
+					<button
+						className={
+							'button button--black ' + styles.emptyCart__button
+						}>
+						<span>Вернуться назад</span>
+					</button>
 				</Link>
 			</div>
 		</div>
