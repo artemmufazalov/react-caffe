@@ -119,7 +119,10 @@ const ItemBlock: React.FC<ItemBlockProps> = ({
 					</div>
 					<button
 						onClick={onClickAddItem}
-						className="button button--outline button--add">
+						className={
+							'button button--outline button--add ' +
+							styles.addBtn
+						}>
 						<AddItemPlusSvg />
 						<span>Добавить</span>
 						{quantity > 0 && <i>{quantity}</i>}

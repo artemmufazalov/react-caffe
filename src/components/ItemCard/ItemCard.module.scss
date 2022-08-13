@@ -1,25 +1,39 @@
 @use '../../styles/libs/mixins';
 @import '../../styles/variables';
 
+$blockWidthFull: 280px;
+$blockWidth400: 240px;
+
 .root {
 	display: flex;
 	justify-content: center;
-}
 
-.skeleton {
-	width: 300px;
-	padding-right: 10px;
-	padding-left: 10px;
-	text-align: center;
-	margin-bottom: 65px;
-	transition: all 0.2s ease-in-out;
+	@media (max-width: 400px) {
+		width: $blockWidth400;
+		margin-right: 10px;
+		margin-left: 10px;
+	}
+	@media (max-width: 350px) {
+		margin-right: 0px;
+		margin-left: 0px;
+	}
 }
 
 .block {
-	width: 280px;
-	text-align: center;
+	width: $blockWidthFull;
+
+	margin-top: 0;
+	margin-right: 0;
+	margin-left: 0;
 	margin-bottom: 65px;
+
 	transition: all 0.2s ease-in-out;
+
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
 
 	.image {
 		width: 220px;
@@ -27,6 +41,7 @@
 	}
 
 	.title {
+		width: $blockWidthFull;
 		font-size: 20px;
 		font-weight: 900;
 		letter-spacing: 1%;
@@ -35,6 +50,7 @@
 
 	.selector {
 		display: flex;
+		width: $blockWidthFull;
 		background-color: #f3f3f3;
 		border-radius: 10px;
 		flex-direction: column;
@@ -71,6 +87,7 @@
 		align-items: center;
 		justify-content: space-between;
 		margin-top: 20px;
+		width: $blockWidthFull;
 	}
 
 	.price {
@@ -82,5 +99,145 @@
 
 	&:hover {
 		transform: scale(1.03);
+	}
+
+	@media (max-width: 400px) {
+		width: $blockWidth400;
+		margin-bottom: 40px;
+
+		.image {
+			width: 160px;
+			height: 160px;
+		}
+		.title {
+			width: $blockWidth400;
+			font-size: 18px;
+		}
+		.selector {
+			width: $blockWidth400;
+		}
+		.bottom {
+			width: $blockWidth400;
+		}
+		.price {
+			font-size: 18px;
+		}
+		.addBtn {
+			width: 140px;
+			padding-right: 5px;
+			padding-left: 5px;
+			span {
+				font-size: 16px;
+			}
+			i {
+				font-size: 14px;
+			}
+		}
+	}
+}
+
+.skeleton {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	margin-bottom: 65px;
+	transition: all 0.2s ease-in-out;
+
+	$skeletonGradient: #dcdbdb;
+	$skeletonBC: #d8d6d6;
+
+	@mixin bcAnimation() {
+		background: linear-gradient(
+			110deg,
+			$skeletonBC 8%,
+			$skeletonGradient 18%,
+			$skeletonBC 33%
+		);
+		background-size: 200% 100%;
+		animation: 1.5s shine linear infinite;
+
+		@keyframes shine {
+			to {
+				background-position-x: -200%;
+			}
+		}
+	}
+
+	width: 280px;
+
+	.image {
+		display: flex;
+		width: 220px;
+		height: 220px;
+		border-radius: 220px;
+		margin-top: 5px;
+		margin-bottom: 5px;
+		background-color: $skeletonBC;
+		@include bcAnimation();
+	}
+
+	.title {
+		height: 25px;
+		width: 100%;
+		border-radius: 10px;
+		margin-top: 7px;
+		margin-bottom: 15px;
+		background-color: $skeletonBC;
+		@include bcAnimation();
+	}
+
+	.selector {
+		width: 100%;
+		height: 88px;
+		padding: 6px;
+		border-radius: 10px;
+		background-color: $skeletonBC;
+		@include bcAnimation();
+	}
+
+	.bottom {
+		margin-top: 20px;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+
+		width: 100%;
+		height: 45px;
+
+		.price {
+			display: flex;
+			height: 27px;
+			width: 77px;
+			border-radius: 30px;
+			background-color: $skeletonBC;
+			@include bcAnimation();
+		}
+
+		.addBtn {
+			display: flex;
+			height: 45px;
+			width: 152px;
+			border-radius: 30px;
+			background-color: $skeletonBC;
+			@include bcAnimation();
+		}
+	}
+
+	@media (max-width: 400px) {
+		width: $blockWidth400;
+		margin-bottom: 40px;
+
+		.image {
+			width: 160px;
+			height: 160px;
+		}
+		.selector {
+			width: $blockWidth400;
+		}
+		.bottom {
+			width: $blockWidth400;
+		}
 	}
 }

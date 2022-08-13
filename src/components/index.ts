@@ -12,6 +12,7 @@ export { default as Categories } from './Categories';
 export { default as Sort } from './Sort';
 
 // Products page
+export { default as Shop } from './Shop';
 export { default as ItemBlock } from './ItemCard/ItemBlock';
 export { default as ItemSkeleton } from './ItemCard/ItemSkeleton';
 

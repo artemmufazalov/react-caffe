@@ -5,14 +5,7 @@ import qs from 'qs';
 import { useRouter } from 'next/router';
 
 // Components
-import {
-	Categories,
-	Sort,
-	ItemSkeleton,
-	ItemBlock,
-	Pagination,
-	ProductTypes,
-} from '../src/components';
+import { ItemSkeleton, ItemBlock, Shop } from '../src/components';
 
 // Types
 import { IItem } from '../src/redux/slices/generalTypes';
@@ -46,7 +39,6 @@ const Home: React.FC = React.memo(() => {
 	const isParsingFirstInteractionUrlQuery = React.useRef(false);
 	const lastQuery = React.useRef(router.asPath);
 	const isMount = React.useRef(false);
-	const contentTopRef = React.useRef<HTMLDivElement>(null);
 
 	const {
 		activeProductType,
@@ -65,7 +57,6 @@ const Home: React.FC = React.memo(() => {
 	const onPageChange = React.useCallback(
 		(page: number) => {
 			dispatch(setCurrentPage(page));
-			contentTopRef.current?.scrollIntoView();
 		},
 		[dispatch]
 	);
@@ -139,42 +130,17 @@ const Home: React.FC = React.memo(() => {
 	));
 
 	return (
-		<div className="container">
-			<div className="content__top" ref={contentTopRef}>
-				<ProductTypes />
-				<Sort />
-			</div>
-			{activeProductType !== 0 && activeProductType !== 5 ? (
-				<div className="content__top">
-					<Categories />
-				</div>
-			) : (
-				''
-			)}
-			<h2 className="content__title">Меню</h2>
-
-			{(productsLoadingStatus === 'error' || items.length < 1) && (
-				<div className="content__error-info">
-					<h2>
-						Товаров не нашлось <span>😕</span>
-					</h2>
-					<br />
-					<p>
-						К сожалению, по вашему запросу нет товаров. Попробуйте
-						изменить параметры поиска!
-					</p>
-				</div>
-			)}
-			<div className="content__items">
-				{productsLoadingStatus === 'pending' ? skeletons : itemBlocks}
-			</div>
-			{productsLoadingStatus !== 'error' && (
-				<Pagination
-					onPageChange={onPageChange}
-					currentPage={currentPage}
-				/>
-			)}
-		</div>
+		<Shop
+			{...{
+				items,
+				itemBlocks,
+				skeletons,
+				currentPage,
+				activeProductType,
+				productsLoadingStatus,
+				onPageChange,
+			}}
+		/>
 	);
 });
 
