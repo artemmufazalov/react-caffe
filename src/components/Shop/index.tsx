@@ -52,7 +52,8 @@ const Shop: React.FC<IShopProps> = ({
 			)}
 			<h2 className={styles.title}>Меню</h2>
 
-			{(productsLoadingStatus === 'error' || items.length < 1) && (
+			{(productsLoadingStatus === 'error' ||
+				(items.length < 1 && productsLoadingStatus === 'success')) && (
 				<div className={styles.errorInfo}>
 					<h2>
 						Товаров не нашлось <span>😕</span>
