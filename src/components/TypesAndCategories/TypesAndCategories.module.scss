@@ -1,18 +1,28 @@
-@use '../libs/mixins';
-@import '../_variables.scss';
+@use '../../styles/vars/mixins';
+@import '../../styles/vars/_variables.scss';
 
 .categories {
+	p {
+		font-size: 18px;
+		font-weight: bold;
+		padding: 13px 10px;
+	}
+
 	ul {
 		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		gap: 10px;
 
 		li {
 			background-color: #f9f9f9;
-			padding: 13px 30px;
+			padding: 11px 25px;
 			border-radius: 30px;
 			margin-right: 10px;
 			font-weight: bold;
 			cursor: pointer;
 			transition: background-color 0.1s ease-in-out;
+
 			@include mixins.noselect();
 
 			&:hover {
@@ -26,6 +36,26 @@
 			&.active {
 				background-color: #282828;
 				color: #fff;
+			}
+		}
+	}
+
+	@media (max-width: 760px) {
+		ul {
+			li {
+				padding: 8px 20px;
+			}
+		}
+	}
+	@media (max-width: 500px) {
+		p {
+			font-size: 16px;
+		}
+
+		ul {
+			li {
+				font-size: 12px;
+				padding: 6px 10px;
 			}
 		}
 	}

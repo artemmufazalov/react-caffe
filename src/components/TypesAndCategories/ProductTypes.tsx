@@ -1,13 +1,16 @@
 // Libs
 import React from 'react';
 
+// Styles
+import styles from './TypesAndCategories.module.scss';
+
 // Data
-import metaData from '../data/meta.json';
+import metaData from '../../data/meta.json';
 
 // Redux
-import { useAppDispatch, useAppSelector } from '../redux/store';
-import { setProductType } from '../redux/slices/filter/filterSlice';
-import { selectActiveProductType } from '../redux/slices/filter/selectors';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
+import { setProductType } from '../../redux/slices/filter/filterSlice';
+import { selectActiveProductType } from '../../redux/slices/filter/selectors';
 
 const ProductTypes: React.FC = React.memo(() => {
 	const dispatch = useAppDispatch();
@@ -21,13 +24,15 @@ const ProductTypes: React.FC = React.memo(() => {
 
 	return (
 		<div>
-			<div className="categories">
+			<div className={styles.categories}>
+				<p>Продукт</p>
+
 				<ul>
 					{productTypesLabels.map((pt, index) => (
 						<li
 							key={index}
 							className={
-								activeProductType === index ? 'active' : ''
+								activeProductType === index ? styles.active : ''
 							}
 							onClick={() => dispatch(setProductType(index))}>
 							{pt}

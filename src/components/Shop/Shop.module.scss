@@ -1,4 +1,4 @@
-@import '../../styles/variables';
+@import '../../styles/vars/variables';
 
 .title {
 	margin: 35px 0;
@@ -72,44 +72,9 @@
 	margin-bottom: 10px;
 }
 
-// @TODO: rework sort and categories on smaller media
-
 .top {
-	@media (min-width: 1330px) {
-		.sort {
-			margin-left: 30px;
-		}
-	}
-
 	@media (max-width: 1330px) {
 		flex-direction: column-reverse;
-
-		.categories {
-			margin-top: 30px;
-			max-width: 80vw;
-			overflow: auto;
-		}
-	}
-	@media (max-width: 950px) {
-		.categories {
-			margin-top: 30px;
-			max-width: 70vw;
-			min-width: 250px;
-			overflow: auto;
-
-			ul {
-				width: 785px;
-			}
-		}
-	}
-
-	@media (max-width: 760px) {
-		.categories {
-			ul {
-				li {
-					padding: 8px 20px;
-				}
-			}
-		}
+		align-items: flex-start;
 	}
 }

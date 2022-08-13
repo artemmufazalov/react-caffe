@@ -1,5 +1,5 @@
-@use '../libs/mixins';
-@import '../_variables.scss';
+@use '../vars/mixins';
+@import '../vars/_variables.scss';
 
 .button {
 	display: inline-block;

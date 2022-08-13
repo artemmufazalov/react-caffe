@@ -7,8 +7,8 @@ export { default as Header } from './Header';
 export { default as Search } from './Search';
 
 // Filters
-export { default as ProductTypes } from './ProductTypes';
-export { default as Categories } from './Categories';
+export { default as ProductTypes } from './TypesAndCategories/ProductTypes';
+export { default as Categories } from './TypesAndCategories/Categories';
 export { default as Sort } from './Sort';
 
 // Products page

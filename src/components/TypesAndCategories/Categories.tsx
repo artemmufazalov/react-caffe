@@ -1,17 +1,20 @@
 // Libs
 import React from 'react';
 
+// Styles
+import styles from './TypesAndCategories.module.scss';
+
 // Data
-import metaData from '../data/meta.json';
-import { IMeta } from '../data/dataTypes';
+import metaData from '../../data/meta.json';
+import { IMeta } from '../../data/dataTypes';
 
 // Redux
-import { useAppDispatch, useAppSelector } from '../redux/store';
-import { setCategory } from '../redux/slices/filter/filterSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
+import { setCategory } from '../../redux/slices/filter/filterSlice';
 import {
 	selectActiveProductCategory,
 	selectActiveProductType,
-} from '../redux/slices/filter/selectors';
+} from '../../redux/slices/filter/selectors';
 
 const Categories: React.FC = React.memo(() => {
 	const dispatch = useAppDispatch();
@@ -31,13 +34,17 @@ const Categories: React.FC = React.memo(() => {
 
 	return (
 		<div>
-			<div className="categories">
+			<div className={styles.categories}>
+				<p>Категория</p>
+
 				<ul>
 					{categories.map((cat, index) => (
 						<li
 							key={index}
 							className={
-								activeCategoryIndex === index ? 'active' : ''
+								activeCategoryIndex === index
+									? styles.active
+									: ''
 							}
 							onClick={() => dispatch(setCategory(index))}>
 							{cat}

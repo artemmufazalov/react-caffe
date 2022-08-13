@@ -2,22 +2,25 @@
 import React from 'react';
 
 // Assets
-import { SortOrderSvg } from '../assets';
+import { SortOrderSvg } from '../../assets';
+
+// Styles
+import styles from './Sort.module.scss';
 
 // Types
-import { TSortOrder, TSortProperty } from '../redux/slices/filter/types';
+import { TSortOrder, TSortProperty } from '../../redux/slices/filter/types';
 
 // Redux
-import { useAppDispatch, useAppSelector } from '../redux/store';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
 import {
 	setSortingProperty,
 	toggleSortingOrder,
-} from '../redux/slices/filter/filterSlice';
+} from '../../redux/slices/filter/filterSlice';
 import {
 	selectSortingProperties,
 	selectActiveSortingProperty,
 	selectSortOrder,
-} from '../redux/slices/filter/selectors';
+} from '../../redux/slices/filter/selectors';
 
 const Sort: React.FC = React.memo(() => {
 	const dispatch = useAppDispatch();
@@ -48,8 +51,8 @@ const Sort: React.FC = React.memo(() => {
 	}, []);
 
 	return (
-		<div className="sort" ref={sortRef}>
-			<div className="sort__label">
+		<div className={styles.sort} ref={sortRef}>
+			<div className={styles.label}>
 				<SortOrderSvg
 					transform={
 						sortingOrder === 'asc' ? 'rotate(0)' : 'rotate(180)'
@@ -64,7 +67,7 @@ const Sort: React.FC = React.memo(() => {
 				</span>
 			</div>
 			{isPopupActive && (
-				<div className="sort__popup">
+				<div className={styles.popup}>
 					<ul>
 						{sortingProperties.map((obj, index: number) => (
 							<li
@@ -72,7 +75,7 @@ const Sort: React.FC = React.memo(() => {
 								className={
 									obj.sortingProperty ===
 									activeSortingProperty.sortingProperty
-										? 'active'
+										? styles.active
 										: ''
 								}
 								onClick={() => {
