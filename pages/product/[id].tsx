@@ -61,8 +61,8 @@ const ProductPage: React.FC = () => {
 			<img
 				src={product.imageUrl}
 				alt={product.title}
-				height="400"
-				width="400"
+				height="200"
+				width="200"
 			/>
 			<h2>{product.title}</h2>
 			<h4>От {product.price[0][0]} рублей</h4>

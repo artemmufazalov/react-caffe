@@ -10,6 +10,7 @@ import {
 	HeartIconSvg,
 	PersonIconSvg,
 	HeaderCartIconSvg,
+	ShopIconSvg,
 } from '../../assets';
 
 // Styles
@@ -60,29 +61,45 @@ const Header: React.FC = () => {
 				)}
 
 				<div className={styles.iconsWrapper}>
-					<span className={styles.heartLogo}>
-						<Link href="/favorites">
-							<span>
-								<HeartIconSvg />
-							</span>
-						</Link>
-					</span>
-					{!pathname.includes('/cart') && (
-						<div className={styles.cartLogo}>
-							<Link href="/cart">
+					{pathname !== '/' && (
+						<div className={styles.shopLogo}>
+							<Link href="/">
 								<span>
-									<HeaderCartIconSvg />
+									<ShopIconSvg alt="Витрина" />
 								</span>
 							</Link>
 						</div>
 					)}
-					<span className={styles.personLogo}>
-						<Link href="/account">
-							<span>
-								<PersonIconSvg />
-							</span>
-						</Link>
-					</span>
+
+					{!pathname.includes('/favorites') && (
+						<span className={styles.heartLogo}>
+							<Link href="/favorites">
+								<span>
+									<HeartIconSvg alt="Избранное" />
+								</span>
+							</Link>
+						</span>
+					)}
+
+					{!pathname.includes('/cart') && (
+						<div className={styles.cartLogo}>
+							<Link href="/cart">
+								<span>
+									<HeaderCartIconSvg alt="Корзина" />
+								</span>
+							</Link>
+						</div>
+					)}
+
+					{!pathname.includes('/account') && (
+						<span className={styles.personLogo}>
+							<Link href="/account">
+								<span>
+									<PersonIconSvg alt="Личный кабинет" />
+								</span>
+							</Link>
+						</span>
+					)}
 				</div>
 			</div>
 		</div>

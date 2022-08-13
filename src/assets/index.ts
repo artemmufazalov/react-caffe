@@ -14,6 +14,7 @@ export { default as SearchIconSvg } from './header/SearchIconSvg';
 export { default as SortOrderSvg } from './header/SortOrderSvg';
 export { default as HeartIconSvg } from './header/HeartIconSvg';
 export { default as PersonIconSvg } from './header/PersonIconSvg';
+export { default as ShopIconSvg } from './header/ShopIconSvg';
 
 // ItemBlock
 export { default as AddItemPlusSvg } from './itemBlock/AddItemPlusSvg';

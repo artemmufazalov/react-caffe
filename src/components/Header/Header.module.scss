@@ -113,6 +113,7 @@
 		flex-direction: row;
 		justify-content: flex-end;
 		align-items: flex-end;
+		gap: 10px;
 
 		svg {
 			cursor: pointer;
@@ -126,6 +127,15 @@
 			svg {
 				width: 35px;
 				height: 35px;
+			}
+		}
+
+		.shopLogo {
+			svg {
+				stroke-width: 30;
+			}
+			:hover {
+				fill: $main-color;
 			}
 		}
 
