@@ -18,7 +18,9 @@ const NotFoundBlock: React.FC = () => {
 			</p>
 
 			<Link href="/">
-				<span className="button button--black">Вернуться назад</span>
+				<span className={'button button--black ' + styles.button}>
+					Вернуться назад
+				</span>
 			</Link>
 		</div>
 	);

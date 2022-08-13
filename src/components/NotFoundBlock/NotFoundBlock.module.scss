@@ -16,12 +16,35 @@
 		font-size: 22px;
 	}
 
-	:global {
+	.button {
+		margin-top: 20px;
+		width: 300px;
+		font-weight: 600;
+		font-size: 20px;
+	}
+
+	@media (max-width: 500px) {
+		padding: 20px;
+	}
+	@media (max-width: 400px) {
+		padding: 20px;
+
+		span {
+			font-size: 56px;
+		}
+
+		h1 {
+			font-size: 26px;
+		}
+		.desription {
+			font-size: 18px;
+		}
+
 		.button {
 			margin-top: 20px;
-			width: 300px;
+			width: 200px;
 			font-weight: 600;
-			font-size: 20px;
+			font-size: 16px;
 		}
 	}
 }
