@@ -1,6 +1,5 @@
 // Libs
 import React from 'react';
-import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
 // Types
@@ -21,7 +20,7 @@ import { setServerUrl } from '../../src/redux/slices/app/appSlice';
 const ProductPage: React.FC = () => {
 	const product = useAppSelector(selectSingleProduct);
 
-	const productLoadingStatus: TLoadingStatus = useSelector(
+	const productLoadingStatus: TLoadingStatus = useAppSelector(
 		selectSingleProductLoadingStatus
 	);
 

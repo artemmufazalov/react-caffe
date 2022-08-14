@@ -1,6 +1,5 @@
 // Libs
 import React from 'react';
-import { useSelector } from 'react-redux';
 import debounce from 'lodash.debounce';
 
 // Styles
@@ -10,7 +9,7 @@ import styles from './Search.module.scss';
 import { SearchFieldCrossSvg, SearchIconSvg } from '../../assets';
 
 // Redux
-import { useAppDispatch } from '../../redux/store';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { setSearchValue as setGlobalSearchValue } from '../../redux/slices/filter/filterSlice';
 import { selectSearchValue } from '../../redux/slices/filter/selectors';
 
@@ -19,7 +18,7 @@ const Search: React.FC = () => {
 
 	const searchFieldRef = React.useRef<HTMLInputElement>(null);
 
-	const searchValue: string = useSelector(selectSearchValue);
+	const searchValue: string = useAppSelector(selectSearchValue);
 
 	const [componentSearchValue, setComponentSearchValue] =
 		React.useState<string>('');

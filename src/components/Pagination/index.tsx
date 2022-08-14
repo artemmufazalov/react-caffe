@@ -20,6 +20,10 @@ const Pagination: React.FC<PaginationPropsInterface> = ({
 }) => {
 	const pagesCount = useAppSelector(selectPagesCount);
 
+	if (pagesCount < 2) {
+		return <div className={styles.root}></div>;
+	}
+
 	return (
 		<div className={styles.root}>
 			<ReactPaginate

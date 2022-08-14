@@ -1,6 +1,5 @@
 // Libs
 import React from 'react';
-import { useSelector } from 'react-redux';
 import qs from 'qs';
 import { useRouter } from 'next/router';
 
@@ -15,7 +14,12 @@ import { TLoadingStatus } from '../src/redux/slices/products/types';
 import { getSelfUrl } from '../src/heplers/getSelfUrl';
 
 // Redux
-import { useAppDispatch, wrapper, RootStore } from '../src/redux/store';
+import {
+	useAppDispatch,
+	wrapper,
+	RootStore,
+	useAppSelector,
+} from '../src/redux/store';
 import {
 	dropFilters,
 	setCurrentPage,
@@ -47,10 +51,10 @@ const Home: React.FC = React.memo(() => {
 		sortingOrder,
 		searchValue,
 		currentPage,
-	} = useSelector(selectFilterValues);
+	} = useAppSelector(selectFilterValues);
 
-	const items: IItem[] = useSelector(selectItems);
-	const productsLoadingStatus: TLoadingStatus = useSelector(
+	const items: IItem[] = useAppSelector(selectItems);
+	const productsLoadingStatus: TLoadingStatus = useAppSelector(
 		selectProductsLoadingStatus
 	);
 

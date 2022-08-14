@@ -1,7 +1,6 @@
 // Libs
 import React from 'react';
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
 
 // Assets
 import { AddItemPlusSvg } from '../../assets';
@@ -14,7 +13,7 @@ import metaData from '../../data/meta.json';
 import { IMeta } from '../../data/dataTypes';
 
 // Redux
-import { useAppDispatch } from '../../redux/store';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { IItem } from '../../redux/slices/generalTypes';
 import { selectItemQuantityById } from '../../redux/slices/cart/selectors';
 import { addItem } from '../../redux/slices/cart/cartSlice';
@@ -36,7 +35,7 @@ const ItemBlock: React.FC<ItemBlockProps> = ({
 }) => {
 	const dispatch = useAppDispatch();
 
-	const quantity: number = useSelector(selectItemQuantityById(id));
+	const quantity: number = useAppSelector(selectItemQuantityById(id));
 
 	const [activeItemSize, setActiveItemSize] = React.useState<number>(0);
 	const [activeItemType, setActiveItemType] = React.useState<number>(0);
